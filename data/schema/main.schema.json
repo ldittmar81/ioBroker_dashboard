@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Main Page Schema",
+  "description": "Schema für die einzelnen Hauptseiten (z.B. Räume, Funktionen, Informationen)",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Der Name der Hauptseite (z.B. 'Räume').",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "description": "Typ der Seite - auch Ordner für img und data/devices",
+      "minLength": 1
+    },
+    "icon": {
+      "type": "string",
+      "description": "Der Name des FontAwesome-Icons (z.B. 'fa-door-open').",
+      "pattern": "^fa[a-zA-Z-]*$"
+    },
+    "pin": {
+      "type": "string",
+      "description": "Optionale 4-stellige PIN.",
+      "pattern": "^\\d{4}$"
+    },
+    "authorization": {
+      "type": "array",
+      "description": "Liste der autorisierten Benutzer.",
+      "items": {
+        "type": "string",
+        "description": "Benutzername aus users.json"
+      },
+      "minItems": 1
+    },
+    "content": {
+      "type": "array",
+      "description": "Liste der Kategorien und deren Kacheln in der Hauptseite.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Der Name der Kategorie (z.B. 'Erdgeschoss'). Kann leer sein.",
+            "minLength": 0
+          },
+          "collapsed": {
+            "type": "boolean",
+            "description": "Kategorie ist zusammengeklappt"
+          },
+          "authorization": {
+            "type": "array",
+            "description": "Liste der autorisierten Benutzer auf Kategorieebene.",
+            "items": {
+              "type": "string",
+              "description": "Benutzername aus users.json"
+            },
+            "minItems": 1
+          },
+          "tiles": {
+            "type": "array",
+            "description": "Liste der Kacheln in der Kategorie.",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Der Name der Kachel (z.B. 'Wohn- und Esszimmer').",
+                  "minLength": 1
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Der Dateiname des Bildes (z.B. 'WohnEsszimmer.webp').",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.(webp|jpg|jpeg|png)$"
+                },
+                "authorization": {
+                  "type": "array",
+                  "description": "Liste der autorisierten Benutzer auf Kachelebene.",
+                  "items": {
+                    "type": "string",
+                    "description": "Benutzername aus users.json"
+                  },
+                  "minItems": 1
+                },
+                "status": {
+                  "type": "array",
+                  "description": "Liste der Statusobjekte, die verschiedene Statuswerte anzeigen.",
+                  "minItems": 0,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "description": "Das Label des Status (z.B. 'Lüftung').",
+                        "minLength": 1
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "ID aus ioBroker (z.B. 'alias.0.Wohnzimmer.Durchlüftung.TIMER')."
+                      },
+                      "icon": {
+                        "type": "string",
+                        "description": "Der Name des FontAwesome-Icons (z.B. 'fa-wind').",
+                        "pattern": "^fa[a-zA-Z-]*$"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "description": "Die Einheit (z.B. '°C', '%', 'min').",
+                        "minLength": 1
+                      },
+                      "decimal": {
+                        "type": "integer",
+                        "description": "Anzahl der Dezimalstellen (z.B. 2).",
+                        "minimum": 0
+                      },
+                      "error": {
+                        "type": "string",
+                        "description": "Ausdruck für Fehlerbedingung (z.B. 'val == 0 || !val').",
+                        "minLength": 1
+                      },
+                      "warning": {
+                        "type": "string",
+                        "description": "Ausdruck für Warnungsbedingung (z.B. 'val < 5').",
+                        "minLength": 1
+                      },
+                      "alarm": {
+                        "type": "boolean",
+                        "description": "Warnung oder Fehler markanter anzeigen"
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "status"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "category",
+          "tiles"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "name",
+    "icon",
+    "content"
+  ],
+  "additionalProperties": false
+}

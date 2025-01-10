@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Music Channels Schema",
+  "description": "Schema für die Definition von Musikkanälen oder Playlists",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "label": {
+        "type": "string",
+        "description": "Der Name oder die Beschreibung des Kanals/der Playlist"
+      },
+      "image": {
+        "type": "string",
+        "description": "Der Pfad oder Dateiname des Bildes"
+      },
+      "id_suffix": {
+        "type": "string",
+        "description": "Der Suffix für die ID zur Identifikation des Kanals"
+      },
+      "sendValue": {
+        "type": "string",
+        "description": "Der Wert, der gesendet werden soll (nur optional für spezifische Kanäle/Playlists)"
+      }
+    },
+    "required": [
+      "label",
+      "id_suffix"
+    ],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,601 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Overview Schema",
+  "description": "Schema für die overview.json Datei",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Der Name der Übersicht"
+    },
+    "type": {
+      "type": "string",
+      "description": "Der Typ der Seite (sollte 'overview' sein)",
+      "const": "overview"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon-Klasse für die Darstellung"
+    },
+    "content": {
+      "type": "array",
+      "description": "Inhalt der Übersicht, bestehend aus Kategorien",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Der Name der Kategorie"
+          },
+          "collapsed": {
+            "type": "boolean",
+            "description": "Kategorie ist zusammengeklappt"
+          },
+          "authorization": {
+            "type": "array",
+            "description": "Liste der autorisierten Benutzer auf Kategorieebene",
+            "items": {
+              "type": "string",
+              "description": "Benutzername aus users.json"
+            },
+            "minItems": 1
+          },
+          "authorization_read": {
+            "type": "array",
+            "description": "Liste der Benutzer mit Leserechten auf Kategorieebene",
+            "items": {
+              "type": "string",
+              "description": "Benutzername aus users.json"
+            },
+            "minItems": 1
+          },
+          "devices": {
+            "type": "array",
+            "description": "Liste der Geräte in der Kategorie",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Der Name des Geräts"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Der Typ des Geräts",
+                  "enum": [
+                    "light",
+                    "heater",
+                    "window",
+                    "button",
+                    "door",
+                    "plug",
+                    "media",
+                    "temperature",
+                    "ioBroker_ical",
+                    "iframe"
+                  ]
+                },
+                "iconset": {
+                  "type": "string",
+                  "description": "Andere Icons auswählen"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Der Wert oder Pfad des Geräts"
+                },
+                "hidden": {
+                  "type": "string",
+                  "description": "ioBroker ID zum Ausblenden des Gerätes"
+                },
+                "state": {
+                  "type": "string",
+                  "description": "Zustand des Geräts"
+                },
+                "dimmer": {
+                  "type": "string",
+                  "description": "Dimmer-Wert (nur für 'light')"
+                },
+                "rgb": {
+                  "type": "string",
+                  "description": "RGB-Wert (nur für 'light', 'button' und 'plug')"
+                },
+                "hue": {
+                  "type": "string",
+                  "description": "HUE-Wert (nur für 'light')"
+                },
+                "temperature": {
+                  "type": "string",
+                  "description": "Temperaturwert (für 'light' und 'heater')"
+                },
+                "temperature_set": {
+                  "type": "string",
+                  "description": "Eingestellte Temperatur (nur für 'heater')"
+                },
+                "humidity": {
+                  "type": "string",
+                  "description": "Luftfeuchtigkeit (nur für 'heater')"
+                },
+                "lock": {
+                  "type": "string",
+                  "description": "Tür abgeschlossen (nur für 'door')"
+                },
+                "icon": {
+                  "type": "string",
+                  "description": "FontAwesome Icon-Klasse für das Gerät (nur für 'button')"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Bilddatei für den Button (nur für 'button')"
+                },
+                "imageOn": {
+                  "type": "string",
+                  "description": "Bilddatei für den 'An'-Zustand (nur für 'plug')"
+                },
+                "imageOff": {
+                  "type": "string",
+                  "description": "Bilddatei für den 'Aus'-Zustand (nur für 'plug')"
+                },
+                "command": {
+                  "type": "string",
+                  "description": "Befehleingabe für Gerät (nur für 'media')"
+                },
+                "authorization": {
+                  "type": "array",
+                  "description": "Liste der autorisierten Benutzer auf Geräteebene",
+                  "items": {
+                    "type": "string",
+                    "description": "Benutzername aus users.json"
+                  },
+                  "minItems": 1
+                },
+                "authorization_read": {
+                  "type": "array",
+                  "description": "Liste der Benutzer mit Leserechten auf Geräteebene",
+                  "items": {
+                    "type": "string",
+                    "description": "Benutzername aus users.json"
+                  },
+                  "minItems": 1
+                },
+                "controls": {
+                  "$ref": "#/definitions/controls"
+                },
+                "channels": {
+                  "$ref": "#/definitions/channels"
+                },
+                "channellists": {
+                  "$ref": "#/definitions/channellists"
+                },
+                "mediainfo": {
+                  "$ref": "#/definitions/mediainfo"
+                },
+                "hardware": {
+                  "type": "array",
+                  "description": "Liste der Hardware-Komponenten des Geräts",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "description": "Bezeichnung der Hardware-Komponente"
+                      },
+                      "info": {
+                        "type": "string",
+                        "description": "Infos zur Hardware-Komponente"
+                      },
+                      "unreach": {
+                        "type": "string",
+                        "description": "Unreach-Status der Hardware-Komponente"
+                      },
+                      "rssi": {
+                        "type": "string",
+                        "description": "Signalstärke der Hardware-Komponente"
+                      },
+                      "lowbat": {
+                        "type": "string",
+                        "description": "Batteriestatus der Hardware-Komponente"
+                      },
+                      "errorID": {
+                        "type": "string",
+                        "description": "Fehler-ID der Hardware-Komponente"
+                      }
+                    },
+                    "required": [
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "status": {
+                  "type": "array",
+                  "description": "Liste der zusätzlichen Statusinformationen des Geräts",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "ioBroker ID des Statuswerts"
+                      },
+                      "icon": {
+                        "type": "string",
+                        "description": "FontAwesome Icon-Klasse"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "description": "Einheit des Statuswerts"
+                      },
+                      "decimal": {
+                        "type": "integer",
+                        "description": "Anzahl der Dezimalstellen für die Anzeige"
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "icon"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "info": {
+                  "type": "array",
+                  "description": "Liste der zusätzlichen Geräteinformationen",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "description": "Label der Information"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "ioBroker ID des Informationswerts"
+                      },
+                      "unit": {
+                        "type": "string",
+                        "description": "Einheit des Informationswerts"
+                      },
+                      "decimal": {
+                        "type": "integer",
+                        "description": "Anzahl der Dezimalstellen für die Anzeige"
+                      },
+                      "warning": {
+                        "type": "string",
+                        "description": "Bedingung für eine Warnung"
+                      },
+                      "error": {
+                        "type": "string",
+                        "description": "Bedingung für einen Fehler"
+                      }
+                    },
+                    "required": [
+                      "label",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "heater"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "temperature": {
+                        "type": "string"
+                      },
+                      "temperature_set": {
+                        "type": "string"
+                      },
+                      "humidity": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value",
+                      "temperature",
+                      "temperature_set"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "plug"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "imageOn": {
+                        "type": "string"
+                      },
+                      "imageOff": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "media"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "controls": {
+                        "$ref": "#/definitions/controls"
+                      },
+                      "mediainfo": {
+                        "$ref": "#/definitions/mediainfo"
+                      }
+                    },
+                    "required": [
+                      "controls",
+                      "mediainfo"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "ioBroker_ical"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "calendars": {
+                        "type": "array",
+                        "description": "Liste der Kalender für ioBroker_ical",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "cal": {
+                              "type": "string"
+                            },
+                            "rgb": {
+                              "type": "string",
+                              "pattern": "^#([A-Fa-f0-9]{6})$"
+                            },
+                            "image": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "cal",
+                            "rgb"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "calendars"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "iframe"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "page": {
+                        "type": "string",
+                        "description": "URL oder Pfad zur anzuzeigenden HTML-Seite"
+                      }
+                    },
+                    "required": [
+                      "page"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "category",
+        "devices"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "content"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "controls": {
+      "type": "array",
+      "description": "Liste von Steuerfunktionen für das Gerät",
+      "items": {
+        "type": "object",
+        "properties": {
+          "function": {
+            "type": "string",
+            "description": "Name der Funktion"
+          },
+          "id": {
+            "type": "string",
+            "description": "ioBroker ID der Steuerfunktion"
+          },
+          "step": {
+            "type": "integer",
+            "description": "Schrittweite (für type number)"
+          },
+          "min": {
+            "type": "integer",
+            "description": "Mindestwert (für type number und colorList)"
+          },
+          "max": {
+            "type": "integer",
+            "description": "Maximalwert (für type number und colorList)"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Einheit der Funktion"
+          },
+          "allowed": {
+            "type": "string",
+            "description": "Bedingung, die die Nutzung der Funktion erlaubt"
+          },
+          "type": {
+            "type": "string",
+            "description": "Datentyp der Funktion (Standard: button)",
+            "enum": [
+              "button",
+              "boolean",
+              "number",
+              "text",
+              "color",
+              "colorList",
+              "list"
+            ]
+          },
+          "values": {
+            "type": "array",
+            "description": "Liste der möglichen Werte (nur für type list)"
+          },
+          "json": {
+            "type": "boolean",
+            "description": "Liste als JSON zurückgeben (nur für colorList)"
+          },
+          "separator": {
+            "type": "string",
+            "description": "Wie eine Liste zurückgegeben werden soll (nur für colorList)"
+          },
+          "sendValue": {
+            "type": "string",
+            "description": "Wert der zurückgegeben werden soll (nur für button und boolean)"
+          },
+          "sendValueOff": {
+            "type": "string",
+            "description": "Wert der zurückgegeben werden soll (nur für boolean)"
+          },
+          "labelOn": {
+            "type": "string",
+            "description": "Label für eingeschalteten Zustand (nur für boolean)"
+          },
+          "labelOff": {
+            "type": "string",
+            "description": "Label für ausgeschalteten Zustand (nur für boolean)"
+          }
+        },
+        "required": [
+          "function",
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "channellists": {
+      "type": "array",
+      "description": "Liste der verfügbaren Kanallisten",
+      "items": {
+        "type": "object",
+        "properties": {
+          "list": {
+            "type": "string",
+            "description": "Pfad zur Kanalliste"
+          },
+          "id_prefix": {
+            "type": "string",
+            "description": "Präfix für die IDs in der Kanalliste"
+          }
+        },
+        "required": [
+          "list",
+          "id_prefix"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "mediainfo": {
+      "type": "array",
+      "description": "Liste der Media-Informationen",
+      "items": {
+        "type": "object",
+        "properties": {
+          "function": {
+            "type": "string",
+            "description": "Art der Media-Information (z. B. album, artist, title)"
+          },
+          "id": {
+            "type": "string",
+            "description": "ioBroker ID für die Media-Information"
+          },
+          "imageTyp": {
+            "type": "string",
+            "description": "Bildformat (z. B. png, jpg)"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Einheit (z. B. Sekunden)"
+          }
+        },
+        "required": [
+          "function",
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "channels": {
+      "type": "array",
+      "description": "Liste der von Kanälen die angezeigt werden sollen",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Der Name oder die Beschreibung des Kanals/der Playlist"
+          },
+          "image": {
+            "type": "string",
+            "description": "Dateiname des Bildes"
+          },
+          "id": {
+            "type": "string",
+            "description": "ID zum Senden des Befehls"
+          },
+          "sendValue": {
+            "type": "string",
+            "description": "Der Wert, der gesendet werden soll (wenn leer wird label gesendet)"
+          }
+        },
+        "required": [
+          "label",
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

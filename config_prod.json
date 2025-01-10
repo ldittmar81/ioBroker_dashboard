@@ -1,0 +1,11 @@
+{
+  "connLink": "http://192.168.0.50:8089",
+  "socketSession": "",
+  "mode": "live",
+  "console": false,
+  "pages": [
+    "rooms.json",
+    "functions.json",
+    "informations.json"
+  ]
+}

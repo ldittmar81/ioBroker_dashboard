@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ioBroker Dashboard starten" type="JavascriptDebugType" uri="http://localhost:63342/ioBroker_dashboard/dist/index.html" useBuiltInWebServerPort="true">
+    <method v="2">
+      <option name="GulpBeforeRunTask" enabled="true">
+        <node-interpreter>project</node-interpreter>
+        <node-options />
+        <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+        <tasks />
+        <arguments />
+        <envs />
+      </option>
+    </method>
+  </configuration>
+</component>

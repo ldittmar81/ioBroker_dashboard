@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sidebar Schema",
+  "description": "Schema für die Sidebar-Konfiguration",
+  "type": "object",
+  "properties": {
+    "clock": {
+      "type": "string",
+      "description": "Art der Uhr, die in der Sidebar angezeigt wird",
+      "enum": ["none", "default", "analog"],
+      "default": "default"
+    },
+    "openWeatherMap": {
+      "type": "object",
+      "description": "Konfiguration für die Wetteranzeige über OpenWeatherMap",
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "imageSet": { "type": "integer", "default": 1 },
+        "imageType": {
+          "type": "string",
+          "enum": ["gif", "svg", "png"],
+          "default": "gif"
+        },
+        "location": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" },
+        "apiKey": { "type": "string" }
+      },
+      "anyOf": [
+        { "required": ["enabled", "lat", "lon", "apiKey"] },
+        { "required": ["enabled", "location", "apiKey"] }
+      ],
+      "additionalProperties": false
+    },
+    "ioBroker_ical": {
+      "type": "object",
+      "description": "Konfiguration für ioBroker.ical",
+      "properties": {
+        "enabled": { "type": "boolean", "default": false },
+        "calendars": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cal": { "type": "string" },
+              "rgb": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
+              "image": { "type": "string" }
+            },
+            "required": ["cal", "rgb"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["enabled", "calendars"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["clock"],
+  "additionalProperties": false
+}

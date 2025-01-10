@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="config.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="Config JSON" />
+              <option name="name" value="config.schema" />
+              <option name="relativePathToSchema" value="data/schema/config.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="data/config.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="devices.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="Devices JSON" />
+              <option name="name" value="devices.schema" />
+              <option name="relativePathToSchema" value="data/schema/devices.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="data/devices" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="main.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="Main JSON" />
+              <option name="name" value="main.schema" />
+              <option name="relativePathToSchema" value="data/schema/main.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="data/main" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="mediaChannelLists.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="ChannelList JSON" />
+              <option name="name" value="mediaChannelLists.schema" />
+              <option name="relativePathToSchema" value="data/schema/mediaChannelLists.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="data/helpers/mediaChannelLists" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="overview.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="Overview JSON" />
+              <option name="name" value="overview.schema" />
+              <option name="relativePathToSchema" value="data/schema/overview.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="data/overview*.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="sidebar.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="Sidebar JSON" />
+              <option name="name" value="sidebar.schema" />
+              <option name="relativePathToSchema" value="data/schema/sidebar.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="data/sidebar.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="users.schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="Users JSON" />
+              <option name="name" value="users.schema" />
+              <option name="relativePathToSchema" value="data/schema/users.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="data/users.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>
