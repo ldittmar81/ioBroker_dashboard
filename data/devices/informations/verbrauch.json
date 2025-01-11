@@ -1,0 +1,22 @@
+[
+  {
+    "category": "Energie",
+    "devices": [
+      {
+        "name": "Stromverbrauch",
+        "type": "iframe",
+        "page": "http://192.168.0.50:8082/energiefluss/index.html?instance=0"
+      },
+      {
+        "name": "Test",
+        "type": "iframe",
+        "html": "fahrplan.0.DepartureTimetable0.HTML"
+      },
+      {
+        "name": "Test",
+        "type": "iframe",
+        "html": "mihome-vacuum.0.history.allTableHTML"
+      }
+    ]
+  }
+]

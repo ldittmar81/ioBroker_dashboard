@@ -1,0 +1,241 @@
+[
+  {
+    "category": "Medien",
+    "devices": [
+      {
+        "name": "Alexa",
+        "type": "media",
+        "value": "alias.0.Test.Alexa.STATE",
+        "command": "alias.0.Test.Alexa.COMMAND",
+        "image": "echo.png",
+        "controls": [
+          {
+            "function": "volume",
+            "id": "alias.0.Test.Alexa.VOLUME",
+            "step": 10,
+            "unit": "%"
+          },
+          {
+            "function": "play",
+            "id": "alias.0.Test.Alexa.PLAY",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowPlayPause"
+          },
+          {
+            "function": "pause",
+            "id": "alias.0.Test.Alexa.PAUSE",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowPlayPause"
+          },
+          {
+            "function": "rewind",
+            "id": "alias.0.Test.Alexa.REWIND"
+          },
+          {
+            "function": "forward",
+            "id": "alias.0.Test.Alexa.FORWARD"
+          },
+          {
+            "function": "previous",
+            "id": "alias.0.Test.Alexa.PLAY",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowPrevious"
+          },
+          {
+            "function": "next",
+            "id": "alias.0.Test.Alexa.NEXT",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowNext"
+          },
+          {
+            "function": "repeat",
+            "id": "alias.0.Test.Alexa.REPEAT",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowRepeat",
+            "type": "boolean"
+          },
+          {
+            "function": "shuffle",
+            "id": "alias.0.Test.Alexa.SHUFFLE",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowShuffle",
+            "type": "boolean"
+          },
+          {
+            "function": "stop",
+            "id": "alias.0.Test.Alexa.STOP"
+          }
+        ],
+        "channels": [
+          {
+            "label": "SWR3",
+            "image": "swr3.png",
+            "id": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Music-Provider.TuneIn",
+            "sendValue": "SWR3"
+          },
+          {
+            "label": "Salsa Musik",
+            "image": "salsa.png",
+            "id": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Music-Provider.Spotify-Playlist",
+            "sendValue": "Super Salsa"
+          }
+        ],
+        "mediainfo": [
+          {
+            "function": "album",
+            "id": "alias.0.Test.Alexa.ALBUM"
+          },
+          {
+            "function": "artist",
+            "id": "alias.0.Test.Alexa.ARTIST"
+          },
+          {
+            "function": "title",
+            "id": "alias.0.Test.Alexa.TITLE"
+          },
+          {
+            "function": "imageURL",
+            "id": "alias.0.Test.Alexa.COVER_URL"
+          },
+          {
+            "function": "provider",
+            "id": "alias.0.Test.Alexa.SOURCE",
+            "imageTyp": "png"
+          },
+          {
+            "function": "length",
+            "id": "alias.0.Test.Alexa.DURATION",
+            "unit": "s"
+          },
+          {
+            "function": "progress",
+            "id": "alias.0.Test.Alexa.ELAPSED",
+            "unit": "s"
+          }
+        ],
+        "hardware": [
+          {
+            "label": "Echo",
+            "unreach": "alias.0.Test.Alexa.UNREACH",
+            "rssi": "alias.0.Test.Alexa.RSSI",
+            "info": "Echo Dot 3.Gen"
+          }
+        ]
+      },
+      {
+        "name": "Alexa",
+        "type": "media",
+        "value": "alias.0.Test.Alexa.STATE",
+        "command": "alias.0.Test.Alexa.COMMAND",
+        "image": "echo.png",
+        "controls": [
+          {
+            "function": "volumeValue",
+            "id": "alias.0.Test.Alexa.VOLUME_VALUE"
+          },
+          {
+            "function": "volumeUp",
+            "id": "alias.0.Test.Alexa.VOLUME_UP"
+          },
+          {
+            "function": "volumeDown",
+            "id": "alias.0.Test.Alexa.VOLUME_DOWN"
+          },
+          {
+            "function": "play",
+            "id": "alias.0.Test.Alexa.PLAY",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowPlayPause"
+          },
+          {
+            "function": "pause",
+            "id": "alias.0.Test.Alexa.PAUSE",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowPlayPause"
+          },
+          {
+            "function": "rewind",
+            "id": "alias.0.Test.Alexa.REWIND"
+          },
+          {
+            "function": "forward",
+            "id": "alias.0.Test.Alexa.FORWARD"
+          },
+          {
+            "function": "previous",
+            "id": "alias.0.Test.Alexa.PLAY",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowPrevious"
+          },
+          {
+            "function": "next",
+            "id": "alias.0.Test.Alexa.NEXT",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowNext"
+          },
+          {
+            "function": "repeat",
+            "id": "alias.0.Test.Alexa.REPEAT",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowRepeat",
+            "type": "boolean"
+          },
+          {
+            "function": "shuffle",
+            "id": "alias.0.Test.Alexa.SHUFFLE",
+            "allowed": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Player.allowShuffle",
+            "type": "boolean"
+          },
+          {
+            "function": "stop",
+            "id": "alias.0.Test.Alexa.STOP"
+          }
+        ],
+        "channels": [
+          {
+            "label": "SWR3",
+            "image": "swr3.png",
+            "id": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Music-Provider.TuneIn",
+            "sendValue": "SWR3"
+          },
+          {
+            "label": "Salsa Musik",
+            "image": "salsa.png",
+            "id": "alexa2.0.Echo-Devices.G090XG1002620BMJ.Music-Provider.Spotify-Playlist",
+            "sendValue": "Super Salsa"
+          }
+        ],
+        "mediainfo": [
+          {
+            "function": "album",
+            "id": "alias.0.Test.Alexa.ALBUM"
+          },
+          {
+            "function": "artist",
+            "id": "alias.0.Test.Alexa.ARTIST"
+          },
+          {
+            "function": "title",
+            "id": "alias.0.Test.Alexa.TITLE"
+          },
+          {
+            "function": "imageURL",
+            "id": "alias.0.Test.Alexa.COVER_URL"
+          },
+          {
+            "function": "provider",
+            "id": "alias.0.Test.Alexa.SOURCE",
+            "imageTyp": "png"
+          },
+          {
+            "function": "length",
+            "id": "alias.0.Test.Alexa.DURATION",
+            "unit": "s"
+          },
+          {
+            "function": "progress",
+            "id": "alias.0.Test.Alexa.ELAPSED",
+            "unit": "s"
+          }
+        ],
+        "hardware": [
+          {
+            "label": "Echo",
+            "unreach": "alias.0.Test.Alexa.UNREACH",
+            "rssi": "alias.0.Test.Alexa.RSSI",
+            "info": "Echo Dot 3.Gen"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,156 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Tischbelechtung",
+        "type": "light",
+        "value": "alias.0.Partyraum.Licht.SET",
+        "hardware": [
+          {
+            "label": "HM Aktor",
+            "info": "HM-LC-Sw2-FM",
+            "unreach": "alias.0.Partyraum.Licht.UNREACH"
+          },
+          {
+            "label": "HM Schalter Ausgang",
+            "info": "HM-RC-2-PBU-FM-2",
+            "unreach": "alias.0.Partyraum.Licht.UNREACH2"
+          },
+          {
+            "label": "HM-PB-2-WM55-2 HWR",
+            "info": "2x AAA",
+            "unreach": "alias.0.Partyraum.Licht.LOWBAT3",
+            "lowbat": "alias.0.Partyraum.Licht.UNREACH3"
+          }
+        ]
+      },
+      {
+        "name": "Deckenleuchte Tür",
+        "type": "light",
+        "value": "alias.0.Partyraum.Licht_Tür.ON",
+        "dimmer": "alias.0.Partyraum.Licht_Tür.DIMMER",
+        "temperature": "alias.0.Partyraum.Licht_Tür.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Zigbee",
+            "rssi": "alias.0.Partyraum.Licht_Tür.RSSI",
+            "unreach": "alias.0.Partyraum.Licht_Tür.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Deckenleuchte Fenster",
+        "type": "light",
+        "value": "alias.0.Partyraum.Licht_Fenster.ON",
+        "dimmer": "alias.0.Partyraum.Licht_Fenster.DIMMER",
+        "temperature": "alias.0.Partyraum.Licht_Fenster.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Zigbee",
+            "rssi": "alias.0.Partyraum.Licht_Fenster.RSSI",
+            "unreach": "alias.0.Partyraum.Licht_Fenster.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Leiter",
+        "type": "light",
+        "value": "alias.0.Partyraum.Dekoleuchten.Leiter.SET",
+        "iconset": "leiter",
+        "hardware": [
+          {
+            "label": "Innr SP 120",
+            "info": "Zigbee Steckdose",
+            "unreach": "alias.0.Partyraum.Dekoleuchten.Leiter.UNREACH",
+            "rssi": "alias.0.Partyraum.Dekoleuchten.Leiter.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Strobo",
+        "type": "light",
+        "iconset": "disco",
+        "value": "alias.0.Partyraum.Dekoleuchten.Strobo.SET",
+        "hardware": [
+          {
+            "label": "Paulmann 50043",
+            "info": "Zigbee",
+            "unreach": "alias.0.Partyraum.Dekoleuchten.Strobo.UNREACH",
+            "rssi": "alias.0.Partyraum.Dekoleuchten.Strobo.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "RGB Deckenleuchte Tür",
+        "type": "light",
+        "value": "alias.0.Partyraum.Dekoleuchten.Licht_Tür.ON",
+        "dimmer": "alias.0.Partyraum.Dekoleuchten.Licht_Tür.DIMMER",
+        "temperature": "alias.0.Partyraum.Dekoleuchten.Licht_Tür.TEMPERATURE",
+        "rgb": "alias.0.Partyraum.Dekoleuchten.Licht_Tür.RGB",
+        "hardware": [
+          {
+            "label": "Zigbee",
+            "rssi": "alias.0.Partyraum.Dekoleuchten.Licht_Tür.RSSI",
+            "unreach": "alias.0.Partyraum.Dekoleuchten.Licht_Tür.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "RGB Deckenleuchte Fenster",
+        "type": "light",
+        "value": "alias.0.Partyraum.Dekoleuchten.Licht_Fenster.ON",
+        "dimmer": "alias.0.Partyraum.Dekoleuchten.Licht_Fenster.DIMMER",
+        "temperature": "alias.0.Partyraum.Dekoleuchten.Licht_Fenster.TEMPERATURE",
+        "rgb": "alias.0.Partyraum.Dekoleuchten.Licht_Fenster.RGB",
+        "hardware": [
+          {
+            "label": "Zigbee",
+            "rssi": "alias.0.Partyraum.Dekoleuchten.Licht_Fenster.RSSI",
+            "unreach": "alias.0.Partyraum.Dekoleuchten.Licht_Fenster.UNREACH"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Partyraum.Heizung.POWER",
+        "temperature": "alias.0.Partyraum.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Partyraum.Heizung.SET",
+        "humidity": "alias.0.Partyraum.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Thermostat {{alias.0.Partyraum.Heizung.DEVICETYPE}}",
+            "unreach": "alias.0.Partyraum.Heizung.UNREACH",
+            "lowbat": "alias.0.Partyraum.Heizung.LOWBAT",
+            "info": "2x AA Batterie"
+          }
+        ]
+      },
+      {
+        "name": "Fenster",
+        "type": "window",
+        "value": "alias.0.Partyraum.Rollladen.SET",
+        "state": "alias.0.Partyraum.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Partyraum.Rollladen.UNREACH",
+            "rssi": "alias.0.Partyraum.Rollladen.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Partyraum.Fenster.UNREACH",
+            "rssi": "alias.0.Partyraum.Fenster.RSSI",
+            "lowbat": "alias.0.Partyraum.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

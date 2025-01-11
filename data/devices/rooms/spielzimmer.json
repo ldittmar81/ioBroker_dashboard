@@ -1,0 +1,129 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.Esszimmer.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-BSM",
+            "unreach": "alias.0.Spielzimmer.Licht.UNREACH",
+            "rssi": "alias.0.Spielzimmer.Licht.RSSI",
+            "errorID": "alias.0.Spielzimmer.Licht.ERROR"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Spielzimmer.Licht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Spielzimmer.Licht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Spielzimmer.Licht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Spielzimmer.Licht.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.Spielzimmer.Licht.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Spielzimmer.Licht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      },
+      {
+        "name": "Nachtlicht",
+        "type": "light",
+        "iconset": "stripe",
+        "value": "alias.0.Spielzimmer.Dekoleuchten.Nachtlicht.SET",
+        "hardware": [
+          {
+            "label": "Xiaomi ZNCZ04LM",
+            "rssi": "alias.0.Spielzimmer.Dekoleuchten.Nachtlicht.RSSI",
+            "unreach": "alias.0.Spielzimmer.Dekoleuchten.Nachtlicht.UNREACH"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Spielzimmer.Dekoleuchten.Nachtlicht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Spielzimmer.Licht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Spielzimmer.Dekoleuchten.Nachtlicht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Spielzimmer.Dekoleuchten.Nachtlicht.VOLTAGE"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Spielzimmer.Licht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Spielzimmer.Heizung.POWER",
+        "temperature": "alias.0.Spielzimmer.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Spielzimmer.Heizung.SET",
+        "humidity": "alias.0.Spielzimmer.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Thermostat {{alias.0.Spielzimmer.Heizung.DEVICETYPE}}",
+            "info": "2x AA Batterie",
+            "unreach": "alias.0.Spielzimmer.Heizung.UNREACH",
+            "lowbat": "alias.0.Spielzimmer.Heizung.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

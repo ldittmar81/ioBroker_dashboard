@@ -1,0 +1,38 @@
+[
+  {
+    "user": "papa",
+    "name": "Big Daddy",
+    "icon": "papa.jpg",
+    "pin": "0000"
+  },
+  {
+    "user": "mama",
+    "name": "Big Mama",
+    "icon": "mama.jpg",
+    "pin": "0000"
+  },
+  {
+    "user": "kind1",
+    "name": "Little Princess",
+    "icon": "kind1.jpg",
+    "pin": "0000"
+  },
+  {
+    "user": "kind2",
+    "name": "Metal Kid",
+    "icon": "kind2.jpg",
+    "pin": "0000"
+  },
+  {
+    "user": "kind3",
+    "name": "Junior Gamer",
+    "icon": "kind3.jpg",
+    "pin": "0000"
+  },
+  {
+    "user": "wohnzimmertab",
+    "name": "Wohnzimmer Tab",
+    "icon": "tab.png",
+    "pin": "0000"
+  }
+]

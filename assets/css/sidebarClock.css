@@ -1,0 +1,201 @@
+.datetime-large {
+  font-size: 5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.datetime-medium {
+  font-size: 2.0em;
+  color: var(--disabled-background-middle);
+  margin-bottom: 5px;
+}
+
+/* Analoge Uhr */
+.analog-clock {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 20px;
+  border: 8px solid white;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Gemeinsame Eigenschaften für alle Zeiger */
+.hand {
+  position: absolute;
+  background: white;
+  left: 50%;
+  transform-origin: 0 50%;
+  transform: rotate(0deg);
+}
+
+/* Stundenzeiger */
+.hour-hand {
+  width: 35%;
+  height: 8px;
+  top: calc(50% - 4px);
+}
+
+/* Minutenzeiger */
+.minute-hand {
+  width: 45%;
+  height: 6px;
+  top: calc(50% - 3px);
+}
+
+/* Sekundenzeiger */
+.second-hand {
+  width: 50%;
+  height: 2px;
+  background: red;
+  top: calc(50% - 1px);
+}
+
+/* Datum unter der analogen Uhr */
+#analog-day {
+  font-size: 1.5em;
+  color: var(--disabled-background-middle);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Uhr Zifferblatt */
+.clock-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* Stundenmarkierungen */
+.hour-mark {
+  position: absolute;
+  width: 4px;
+  height: 15px;
+  background-color: var(--tile-background);
+  top: 100%;
+  left: 50%;
+  transform-origin: 14% calc(-120px);
+}
+
+.mark1 {
+  transform: rotate(30deg) translate(-50%, -100%);
+}
+
+.mark2 {
+  transform: rotate(60deg) translate(-50%, -100%);
+}
+
+.mark3 {
+  transform: rotate(90deg) translate(-50%, -100%);
+}
+
+.mark4 {
+  transform: rotate(120deg) translate(-50%, -100%);
+}
+
+.mark5 {
+  transform: rotate(150deg) translate(-50%, -100%);
+}
+
+.mark6 {
+  transform: rotate(180deg) translate(-50%, -100%);
+}
+
+.mark7 {
+  transform: rotate(210deg) translate(-50%, -100%);
+}
+
+.mark8 {
+  transform: rotate(240deg) translate(-50%, -100%);
+}
+
+.mark9 {
+  transform: rotate(270deg) translate(-50%, -100%);
+}
+
+.mark10 {
+  transform: rotate(300deg) translate(-50%, -100%);
+}
+
+.mark11 {
+  transform: rotate(330deg) translate(-50%, -100%);
+}
+
+.mark12 {
+  transform: rotate(0deg) translate(-50%, -100%);
+}
+
+/* Hauptmarkierungen größer machen */
+.main-mark {
+  height: 20px;
+}
+
+/* Zahlen auf dem Zifferblatt */
+.clock-face .number {
+  position: absolute;
+  color: var(--light-font);
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+}
+
+.number12 {
+  left: 50%;
+  top: 9px;
+  transform: translate(-50%, 0%);
+}
+
+.number3 {
+  right: 11px;
+  top: 112px;
+  transform: translate(0%, -50%);
+}
+
+.number6 {
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%, 0%);
+}
+
+.number9 {
+  left: 13px;
+  top: 112px;
+  transform: translate(0%, -50%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .analog-clock {
+    width: 150px;
+    height: 150px;
+  }
+
+  #analog-day {
+    font-size: 1.2em;
+  }
+
+  .clock-face .number {
+    display: none;
+  }
+
+  .hour-mark {
+    height: 8px;
+    transform-origin: 14% calc(-68px);
+  }
+
+  .main-mark {
+    height: 12px;
+  }
+
+  .datetime-large {
+    font-size: 3em;
+  }
+
+  .datetime-medium {
+    font-size: 1em;
+  }
+}

@@ -1,0 +1,61 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.Bad_OG.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-FSM",
+            "unreach": "alias.0.Bad_OG.Licht.UNREACH",
+            "rssi": "alias.0.Bad_OG.Licht.RSSI",
+            "errorID": "alias.0.Bad_OG.Licht.ERROR"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Bad_OG.Licht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Bad_OG.Licht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Bad_OG.Licht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Bad_OG.Licht.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.Bad_OG.Licht.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Bad_OG.Licht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      }
+    ]
+  }
+]

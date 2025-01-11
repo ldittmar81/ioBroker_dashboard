@@ -1,0 +1,101 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.HWR.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-FSM",
+            "unreach": "alias.0.HWR.Licht.UNREACH",
+            "rssi": "alias.0.HWR.Licht.RSSI",
+            "errorID": "alias.0.HWR.Licht.ERROR"
+          },
+          {
+            "label": "HMIP-WRC2 Partyraum",
+            "info": "2x AAA",
+            "unreach": "alias.0.HWR.Licht.UNREACH3",
+            "rssi": "alias.0.HWR.Licht.RSSI3",
+            "lowbat": "alias.0.HWR.Licht.LOWBAT3"
+          },
+          {
+            "label": "HMIP-WRC2 Wohnzimmer",
+            "info": "2x AAA",
+            "unreach": "alias.0.HWR.Licht.UNREACH2",
+            "rssi": "alias.0.HWR.Licht.RSSI2",
+            "lowbat": "alias.0.HWR.Licht.LOWBAT2"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.HWR.Licht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.HWR.Licht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.HWR.Licht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.HWR.Licht.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.HWR.Licht.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.HWR.Licht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Fenster",
+        "type": "window",
+        "value": "alias.0.HWR.Rollladen.SET",
+        "state": "alias.0.HWR.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-BROLL",
+            "unreach": "alias.0.HWR.Rollladen.UNREACH",
+            "rssi": "alias.0.HWR.Rollladen.RSSI"
+          },
+          {
+            "label": "Aqara MCCGQ11LM",
+            "info": "1x CR1632",
+            "unreach": "alias.0.HWR.Fenster.UNREACH",
+            "rssi": "alias.0.HWR.Fenster.RSSI",
+            "lowbat": "alias.0.HWR.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+/* Wetter Container */
+.weather-container {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  color: var(--light-font);
+}
+
+/* Wetter Icon */
+.weather-icon {
+  width: 150px;
+  height: 150px;
+  margin-right: 15px;
+}
+
+/* Wetter Info */
+.weather-info {
+  flex: 1;
+}
+
+/* Temperatur */
+.weather-temp {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+/* Wetterbeschreibung */
+.weather-desc {
+  font-size: 1.2em;
+  color: var(--disabled-background);
+  margin-top: 5px;
+}
+
+/* Höchst- und Tiefsttemperaturen */
+.weather-high-low {
+  font-size: 1em;
+  color: var(--disabled-background);
+  margin-top: 5px;
+}
+
+/* Windgeschwindigkeit */
+.weather-wind {
+  font-size: 1em;
+  color: var(--disabled-background-dark);
+  margin-top: 5px;
+}
+
+/* Luftfeuchtigkeit */
+.weather-humidity {
+  font-size: 1em;
+  color: var(--disabled-background-dark);
+  margin-top: 5px;
+}
+
+/* Fehlermeldung */
+.weather-error {
+  font-size: 1.2em;
+  color: red;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .weather-temp {
+    font-size: 1.1em;
+  }
+
+  .weather-desc,
+  .weather-high-low,
+  .weather-wind,
+  .weather-humidity,
+  .weather-error {
+    font-size: 0.8em;
+  }
+
+  .weather-icon {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "category": "Informationen",
+    "devices": [
+      {
+        "name": "Mein Kalender",
+        "type": "ioBroker_ical",
+        "calendars": [
+          {
+            "cal": "ical.0.data.table",
+            "rgb": "#FFBF00",
+            "image": "birthday.png"
+          },
+          {
+            "cal": "alias.0.Informationen.papa.CALENDAR",
+            "rgb": "#49b675"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,67 @@
+/* Button-Container */
+.button-device-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+/* Action Button */
+.action-button {
+  background-color: var(--secondary-color);
+  color: var(--light-font);
+  border: none;
+  border-radius: 50%;
+  width: 85px;
+  height: 85px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button:focus {
+  outline: none;
+}
+
+.action-button.clicked {
+  transform: scale(0.9);
+}
+
+.action-button .fas {
+  pointer-events: none;
+}
+
+/* Klick-Animation */
+.action-button::after {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  top: -10%;
+  left: -10%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.action-button.clicked::after {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.action-button-image {
+  max-width: 100%;
+  max-height: 100px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.action-button-image.clicked {
+  transform: scale(0.95);
+}

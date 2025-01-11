@@ -1,0 +1,45 @@
+/* demo.css
+   Dieses Stylesheet stylt den Demo-Container, der im DEMO-Modus über dem Hauptinhalt angezeigt wird.
+   Der Container hebt sich optisch ab, damit klar ist, dass man sich in einem Demo-Modus befindet.
+*/
+
+.demo-container {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 2px dashed #ffa500; /* Orange gestrichelter Rahmen für Demo-Hinweis */
+  border-radius: 10px;
+  background-color: rgba(255, 165, 0, 0.1);
+  text-align: center;
+}
+
+.demo-container h3 {
+  margin-bottom: 10px;
+  font-weight: bolder;
+  color: #ffa500; /* Orangefarbene Überschrift */
+}
+
+.demo-container label {
+  margin-right: 5px;
+}
+
+.demo-container select,
+.demo-container input {
+  padding: 5px;
+  margin-right: 10px;
+  border: 1px solid var(--disabled-background);
+  border-radius: 5px;
+}
+
+.demo-container button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745; /* Grün für Senden-Button */
+  color: var(--light-font);
+  cursor: pointer;
+}
+
+.demo-container button:hover {
+  background-color: #218838; /* Etwas dunkleres Grün beim Hover */
+}

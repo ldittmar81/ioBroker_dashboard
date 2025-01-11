@@ -1,0 +1,65 @@
+/* console.css
+   Dieses Stylesheet bestimmt das Aussehen der Debug-Konsole.
+   Die Konsole wird über der Hauptseite eingeblendet und zeigt Meldungen in grüner Schrift an.
+   Sie besitzt eine Toolbar für Pause/Play und ist scrollbar.
+*/
+
+.debug-console {
+  margin-left: 400px; /* Platz für Sidebar lassen, falls diese ausgeklappt ist */
+  display: flex;
+  flex-direction: column;
+  background: black; /* Schwarzer Hintergrund, um den "Terminal-Look" zu erzeugen */
+  color: green; /* Grüne Schriftfarbe für Standardtexte */
+  font-family: monospace; /* Monospace-Schrift für Terminal-Effekt */
+  font-size: 14px;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  height: 20%;
+}
+
+.debug-console-content {
+  flex: 1;
+  overflow-y: auto; /* Scrollbar für längere Ausgaben */
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.debug-console-prompt {
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.debug-console.active {
+  height: 25vh; /* Wenn aktiv, 25% der viewport height einnehmen */
+  margin-bottom: 55px; /* Platz lassen für Footer */
+}
+
+.debug-console.hidden {
+  display: none; /* Wenn versteckt, wird sie gar nicht angezeigt */
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Der blinkende Cursor-Effekt für Prompt (aktuell nicht genutzt, aber als Beispiel vorhanden) */
+.debug-console-prompt::after {
+  content: "█";
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+/* Responsive Design: Auf kleineren Bildschirmen weniger margin-left */
+@media (max-width: 768px) {
+  .debug-console {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,271 @@
+/* Media-Tile Anpassungen */
+.media-tile {
+  width: 400px;
+}
+
+.media-tile .tile-content .media-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Bild rechts, Steuerungen links */
+}
+
+.media-tile .media-content .main-icon {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  background-size: cover;
+  background-position: center;
+}
+
+.media-tile .media-controls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.media-controls-container .media-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 4px;
+}
+
+.media-control-button {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  background-color: var(--main-color);
+  color: var(--light-font);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.media-control-button:hover:not(:disabled) {
+  background-color: var(--main-color-hover);
+}
+
+.media-control-button.disabled,
+.media-control-button:disabled {
+  background-color: var(--disabled-background);
+  cursor: not-allowed;
+}
+
+.media-control-button.active {
+  background-color: var(--main-color); /* Blau, wenn aktiv */
+  color: var(--light-font);
+}
+
+.media-control-button[data-is-toggle="true"].active {
+  background-color: var(--main-color-hover);
+}
+
+.media-control-button i {
+  pointer-events: none;
+}
+
+.volume-controls {
+  display: flex;
+  align-items: center;
+  margin: 2px 0; /* Vertikaler Abstand zwischen Buttons und Lautstärkeregelung */
+}
+
+.volume-controls .media-control-button:disabled {
+  background-color: var(--disabled-background);
+  cursor: not-allowed;
+}
+
+.volume-controls .media-control-button i {
+  pointer-events: none;
+}
+
+.volume-controls .volume-display {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0 5px;
+  width: 32px;
+  text-align: center;
+}
+
+/* Fortschrittsbalken */
+.media-progress-container {
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.media-progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.media-progress-fill {
+  width: 0;
+  height: 100%;
+  background-color: var(--main-color);
+  transition: width 0.3s ease;
+}
+
+.media-progress-time {
+  position: absolute;
+  top: -9px;
+  left: 0;
+  font-size: 0.5em;
+  color: var(--dark-font);
+}
+
+.media-length-time {
+  position: absolute;
+  top: -9px;
+  right: 0;
+  font-size: 0.5em;
+  color: var(--dark-font);
+}
+
+/* Titelanzeige */
+.media-info-container {
+  margin-top: 5px;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  color: var(--dark-font);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.extra-controls .channel-button {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.extra-controls .channel-button {
+  margin-right: 0;
+}
+
+.channel-button {
+  background-color: var(--main-color);
+  color: var(--light-font);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel-button:hover {
+  background-color: var(--main-color-hover);
+}
+
+.channel-button:focus {
+  outline: none;
+}
+
+.channel-button svg:not(:host).svg-inline--fa,
+.channel-button svg:not(:root).svg-inline--fa {
+  margin-right: 8px;
+}
+
+/* Overlay für Kanäle */
+.channels-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.channels-overlay-content {
+  background: var(--tile-background);
+  padding: 20px;
+  width: 90%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+.channels-overlay-content::-webkit-scrollbar {
+  display: none;
+}
+
+.channels-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.channel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.channel-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.channel-item-label {
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: var(--dark-font);
+}
+
+/* Schließen-Button */
+.channels-overlay .close-button {
+  background-color: var(--main-color);
+  color: var(--light-font);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.channels-overlay .close-button:hover {
+  background-color: var(--main-color-hover);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .media-tile {
+    width: 100%;
+  }
+
+  .volume-controls .volume-display {
+    font-size: 0.7em;
+    width: 21px;
+  }
+
+  .media-control-button {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+}

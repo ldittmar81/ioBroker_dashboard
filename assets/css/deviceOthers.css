@@ -1,0 +1,25 @@
+.icon-container .info-number {
+    position: relative;
+    left: 20px;
+    top: 6px;
+    font-size: x-small;
+}
+
+/* Allgemeine Icon-Styles */
+.tile-content .icon-container .left-icons .lowbat-icon,
+.tile-content .icon-container .right-icons .device-icon {
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Abstände zwischen den Icons in left-icons */
+.tile-content .icon-container .left-icons .lowbat-icon:not(:last-child) {
+    margin-right: 5px;
+}
+
+/* Abstände zwischen den Icons in right-icons */
+.tile-content .icon-container .right-icons .device-icon:not(:last-child) {
+    margin-right: 5px;
+}

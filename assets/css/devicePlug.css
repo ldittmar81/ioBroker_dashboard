@@ -1,0 +1,89 @@
+/* Plug-Container */
+.plug-device-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.plug-image {
+  max-width: 100%;
+  max-height: 100px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.plug-image.clicked {
+  transform: scale(0.95);
+}
+
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+}
+
+.toggle-label input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: var(--disabled-background);
+  border-radius: 34px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
+}
+
+.slider.readonly {
+  cursor: not-allowed;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 40px;
+  width: 40px;
+  background-color: var(--tile-background);
+  border-radius: 50%;
+  left: 4px;
+  bottom: 5px;
+  transition: 0.4s;
+}
+
+/* Zustand 'An' */
+.toggle-label input:checked + .slider {
+  background-color: var(--secondary-color); /* Standardfarbe Grün */
+}
+
+.toggle-label input:focus + .slider {
+  box-shadow: 0 0 1px var(--secondary-color);
+}
+
+.toggle-label input:checked + .slider::before {
+  transform: translateX(50px);
+}
+
+/* Optional: Beschriftungen hinzufügen */
+.slider:after {
+  content: 'Aus';
+  color: var(--light-font);
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 75%;
+  font-size: 18px;
+  font-family: Verdana, sans-serif;
+}
+
+.toggle-label input:checked + .slider:after {
+  content: 'An';
+  left: 25%;
+}

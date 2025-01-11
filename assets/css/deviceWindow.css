@@ -1,0 +1,27 @@
+/* Rollladen (Shutter) */
+.item-tile .main-icon .shutter {
+  position: absolute;
+  top: 4px;
+  left: 23px;
+  width: 40%;
+  height: 0;
+  background-image: url('../img/devices/window/shutter_texture.jpg');
+  background-size: cover;
+  background-repeat: repeat-y;
+  transition: height 10s ease-in-out;
+  z-index: 1;
+  max-height: 70px;
+}
+
+/* Fenster-Icon */
+.item-tile .main-icon .window-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 3;
+}

@@ -6,7 +6,6 @@ const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const inquirer = require('inquirer').default;
-
 const gutil = require('gulp-util');
 const ftp = require('@gulpetl/vinyl-ftp');
 const fs = require('fs');
@@ -14,6 +13,20 @@ const path = require('path');
 const through2 = require('through2');
 const replace = require('gulp-replace');
 const rename = require('gulp-rename');
+
+// Hilfsfunktion zum Laden der richtigen Konfiguration
+function loadConfig(env = 'dev') {
+  const configFile = env === 'prod' ? 'config_prod.json' : 'config.json';
+  try {
+    return JSON.parse(fs.readFileSync(configFile, 'utf8'));
+  } catch (err) {
+    console.error(`Fehler beim Laden von ${configFile}:`, err);
+    process.exit(1);
+  }
+}
+
+// Globale Konfigurationswerte
+let config;
 
 async function cleanDist() {
   const {deleteAsync} = await import('del');
@@ -119,17 +132,26 @@ function copyAssets() {
 }
 
 function copyUserStyles() {
-  return gulp.src(['assets/css/users/*'], {base: 'assets', encoding: false})
+  return gulp.src([`${config.dataFolder}/theme/*`], {base: `${config.dataFolder}/theme`, encoding: false})
+    .pipe(gulp.dest('dist/assets/css/users'));
+}
+function copyOtherImages() {
+  return gulp.src([`${config.dataFolder}/img/**/*`], {base: `${config.dataFolder}`, encoding: false})
     .pipe(gulp.dest('dist/assets'));
 }
 
 function copyData() {
-  return gulp.src(['data/**/*', '!data/schema/**'], {base: '.'})
-    .pipe(gulp.dest('dist'));
+  return gulp.src([`${config.dataFolder}/**/*`,
+    `!${config.dataFolder}/schema/**`,
+    `!${config.dataFolder}/img/**`,
+    `!${config.dataFolder}/theme/**`], {base: `${config.dataFolder}`})
+    .pipe(gulp.dest('dist/data'));
 }
 
-function copyConfig() {
-  return gulp.src('config.json', {base: '.'})
+function copyConfig(env) {
+  const configFile = env === 'prod' ? 'config_prod.json' : 'config.json';
+  return gulp.src(configFile, { base: '.' })
+    .pipe(rename('config.json'))
     .pipe(gulp.dest('dist'));
 }
 
@@ -232,8 +254,9 @@ function executeDeploy(credentials) {
   });
 }
 
-function processData() {
-  return gulp.src('data/main/*.json')
+function createJSONFiles(env) {
+  config = loadConfig(env);
+  return gulp.src(`${config.dataFolder}/main/*.json`)
     .pipe(through2.obj(function (file, _, cb) {
       // Extrahieren des Typs aus dem Dateinamen
       const type = path.basename(file.path, '.json');
@@ -248,7 +271,7 @@ function processData() {
       }
 
       // Sicherstellen, dass der Ausgabeordner existiert
-      const outputDir = path.join('data', 'devices', type);
+      const outputDir = path.join(config.dataFolder, 'devices', type);
       if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, {recursive: true});
       }
@@ -300,7 +323,8 @@ function processData() {
     }));
 }
 
-function createMainObject(done) {
+function createMainObject(env, done) {
+  config = loadConfig(env);
   // Benutzer nach dem Namen und dem Icon fragen
   inquirer.prompt([
     {
@@ -347,7 +371,7 @@ function createMainObject(done) {
     };
 
     // Sicherstellen, dass das Verzeichnis data/main existiert
-    const mainDir = path.join('data', 'main');
+    const mainDir = path.join(config.dataFolder, 'main');
     if (!fs.existsSync(mainDir)) {
       fs.mkdirSync(mainDir, {recursive: true});
     }
@@ -387,19 +411,30 @@ function createMainObject(done) {
   });
 }
 
-exports.createJSONFiles = processData;
-
-exports.createMainObject = createMainObject;
-
-exports.build = gulp.series(
+exports.buildDev = gulp.series(
   cleanDist,
-  gulp.parallel(mainScripts, scripts, lastScripts, firstStyles, secondStyles, otherStyles, copyAssets, copyUserStyles, copyData, copyConfig),
+  () => {
+    config = loadConfig('dev');
+    return Promise.resolve();
+  },
+  gulp.parallel(mainScripts, scripts, lastScripts, firstStyles, secondStyles, otherStyles, copyAssets, copyUserStyles, copyOtherImages, copyData, () => copyConfig('dev')),
   version
 );
 
-exports.deploy = gulp.series(
-  exports.build,
-  deployTask
+exports.buildProd = gulp.series(
+  cleanDist,
+  () => {
+    config = loadConfig('prod');
+    return Promise.resolve();
+  },
+  gulp.parallel(mainScripts, scripts, lastScripts, firstStyles, secondStyles, otherStyles, copyAssets, copyUserStyles, copyOtherImages, copyData, () => copyConfig('prod')),
+  version
 );
 
-exports.default = exports.build;
+exports.createJSONFilesDev = () => createJSONFiles('dev');
+exports.createJSONFilesProd = () => createJSONFiles('prod');
+exports.createMainObjectDev = done => createMainObject('dev', done);
+exports.createMainObjectProd = done => createMainObject('prod', done);
+exports.deploy = gulp.series(exports.buildProd, deployTask);
+exports.default = exports.buildDev;
+

@@ -1,0 +1,36 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.Gäste_WC.Licht.SET",
+        "hardware": [
+          {
+            "unreach": "alias.0.Gäste_WC.Licht.UNREACH",
+            "info": "HM-LC-Sw1PBU-FM",
+            "label": "Homematic",
+            "rssi": "alias.0.Gäste_WC.Licht.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Türbeleuchtung",
+        "type": "light",
+        "value": "alias.0.Gäste_WC.Dekoleuchten.Besetzt.ON",
+        "dimmer": "alias.0.Gäste_WC.Dekoleuchten.Besetzt.DIMMER",
+        "rgb": "alias.0.Gäste_WC.Dekoleuchten.Besetzt.RGB",
+        "temperature": "alias.0.Gäste_WC.Dekoleuchten.Besetzt.TEMPERATURE",
+        "hardware": [
+          {
+            "unreach": "alias.0.Gäste_WC.Dekoleuchten.Besetzt.UNREACH",
+            "label": "Innr RB 185 C",
+            "info": "Zigbee E27",
+            "rssi": "alias.0.Gäste_WC.Dekoleuchten.Besetzt.RSSI"
+          }
+        ]
+      }
+    ]
+  }
+]

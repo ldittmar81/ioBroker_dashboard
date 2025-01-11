@@ -1,0 +1,12 @@
+[
+  {
+    "category": "Kategorie",
+    "devices": [
+      {
+        "name": "Name",
+        "type": "button",
+        "value": "xxx"
+      }
+    ]
+  }
+]

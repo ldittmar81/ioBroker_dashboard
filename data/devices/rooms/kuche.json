@@ -1,0 +1,219 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Hauptlicht",
+        "type": "light",
+        "value": "alias.0.Küche.Licht.SET",
+        "hardware": [
+          {
+            "label": "Lichtaktor",
+            "unreach": "alias.0.Küche.Licht.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Arbeitsplatz",
+        "type": "light",
+        "iconset": "stripe",
+        "value": "alias.0.Küche.Dekoleuchten.Arbeitsplatz.ON",
+        "rgb": "alias.0.Küche.Dekoleuchten.Arbeitsplatz.RGB",
+        "dimmer": "alias.0.Küche.Dekoleuchten.Arbeitsplatz.DIMMER",
+        "temperature": "alias.0.Küche.Dekoleuchten.Arbeitsplatz.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Cookit RGB",
+            "rssi": "alias.0.Küche.Dekoleuchten.Arbeitsplatz_einzel.Cookit.RSSI",
+            "unreach": "alias.0.Küche.Dekoleuchten.Arbeitsplatz_einzel.Cookit.UNREACH"
+          },
+          {
+            "label": "Spühle RGB",
+            "rssi": "alias.0.Küche.Dekoleuchten.Arbeitsplatz_einzel.Spühle.RSSI",
+            "unreach": "alias.0.Küche.Dekoleuchten.Arbeitsplatz_einzel.Spühle.UNREACH"
+          },
+          {
+            "label": "Brotkasten RGB",
+            "rssi": "alias.0.Küche.Dekoleuchten.Arbeitsplatz_einzel.Brot.RSSI",
+            "unreach": "alias.0.Küche.Dekoleuchten.Arbeitsplatz_einzel.Brot.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Kühlschranleuchte",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Küche.Dekoleuchten.Kühlschranklicht.ON",
+        "dimmer": "alias.0.Küche.Dekoleuchten.Kühlschranklicht.DIMMER",
+        "temperature": "alias.0.Küche.Dekoleuchten.Kühlschranklicht.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Leichtkugel Kühlschrank",
+            "rssi": "alias.0.Küche.Dekoleuchten.Kühlschranklicht.RSSI",
+            "unreach": "alias.0.Küche.Dekoleuchten.Kühlschranklicht.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Dunstabzugshaube Arbeitsbeleuchtung",
+        "type": "light",
+        "value": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Hauptlicht.ON",
+        "dimmer": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Hauptlicht.DIMMER",
+        "temperature": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Hauptlicht.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Dunstabzugshaube",
+            "unreach": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Hauptlicht.UNREACH",
+            "info": "Bosch DWF97RW61"
+          }
+        ]
+      },
+      {
+        "name": "Dunstabzugshaube Ambientebeleuchtung",
+        "type": "light",
+        "value": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Farblicht.ON",
+        "dimmer": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Farblicht.DIMMER",
+        "rgb": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Farblicht.RGB",
+        "hardware": [
+          {
+            "label": "Dunstabzugshaube",
+            "unreach": "alias.0.Küche.Dekoleuchten.Dunstabzugshaube_Farblicht.UNREACH",
+            "info": "Bosch DWF97RW61"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Küche.Heizung.POWER",
+        "temperature": "alias.0.Küche.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Küche.Heizung.SET",
+        "humidity": "alias.0.Küche.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Thermostat {{tado.0.704881.Rooms.9.devices.VA2044732928.deviceType}}",
+            "info": "2x AA Batterie",
+            "unreach": "alias.0.Küche.Heizung.UNREACH",
+            "lowbat": "alias.0.Küche.Heizung.LOWBAT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Haushaltsgeräte",
+    "devices": [
+      {
+        "name": "Alexa",
+        "type": "media",
+        "value": "alias.0.Küche.Alexa.STATE",
+        "command": "alias.0.Küche.Alexa.COMMAND",
+        "image": "echo.png",
+        "controls": [
+          {
+            "function": "volume",
+            "id": "alias.0.Küche.Alexa.VOLUME",
+            "step": 10,
+            "unit": "%"
+          },
+          {
+            "function": "play",
+            "id": "alias.0.Küche.Alexa.PLAY",
+            "allowed": "alias.0.Küche.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "pause",
+            "id": "alias.0.Küche.Alexa.PAUSE",
+            "allowed": "alias.0.Küche.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "rewind",
+            "id": "alias.0.Küche.Alexa.REWIND"
+          },
+          {
+            "function": "forward",
+            "id": "alias.0.Küche.Alexa.FORWARD"
+          },
+          {
+            "function": "previous",
+            "id": "alias.0.Küche.Alexa.PREV",
+            "allowed": "alias.0.Küche.Alexa.ALLOW_PREV"
+          },
+          {
+            "function": "next",
+            "id": "alias.0.Küche.Alexa.NEXT",
+            "allowed": "alias.0.Küche.Alexa.ALLOW_NEXT"
+          },
+          {
+            "function": "repeat",
+            "id": "alias.0.Küche.Alexa.REPEAT",
+            "allowed": "alias.0.Küche.Alexa.ALLOW_REPEAT",
+            "type": "boolean"
+          },
+          {
+            "function": "shuffle",
+            "id": "alias.0.Küche.Alexa.SHUFFLE",
+            "allowed": "alias.0.Küche.Alexa.ALLOW_SHUFFLE",
+            "type": "boolean"
+          },
+          {
+            "function": "stop",
+            "id": "alias.0.Küche.Alexa.STOP"
+          }
+        ],
+        "channellists": [
+          {
+            "list": "channelList.json",
+            "id_prefix": "alias.0.Küche.Alexa.PLAY_"
+          }
+        ],
+        "mediainfo": [
+          {
+            "function": "album",
+            "id": "alias.0.Küche.Alexa.ALBUM"
+          },
+          {
+            "function": "artist",
+            "id": "alias.0.Küche.Alexa.ARTIST"
+          },
+          {
+            "function": "title",
+            "id": "alias.0.Küche.Alexa.TITLE"
+          },
+          {
+            "function": "imageURL",
+            "id": "alias.0.Küche.Alexa.COVER_URL"
+          },
+          {
+            "function": "provider",
+            "id": "alias.0.Küche.Alexa.SOURCE",
+            "imageTyp": "png"
+          },
+          {
+            "function": "length",
+            "id": "alias.0.Küche.Alexa.DURATION",
+            "unit": "s"
+          },
+          {
+            "function": "progress",
+            "id": "alias.0.Küche.Alexa.ELAPSED",
+            "unit": "s"
+          }
+        ],
+        "hardware": [
+          {
+            "label": "Echo",
+            "unreach": "alias.0.Küche.Alexa.UNREACH",
+            "rssi": "alias.0.Küche.Alexa.RSSI",
+            "info": "{{alias.0.Küche.Alexa.DEVICETYPE}}"
+          }
+        ]
+      }
+    ]
+  }
+]

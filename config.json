@@ -3,6 +3,7 @@
   "socketSession": "",
   "mode": "demo",
   "console": false,
+  "dataFolder": "data",
   "pages": [
     "rooms.json",
     "functions.json",

@@ -1,0 +1,17 @@
+{
+  "name": "Übersicht",
+  "type": "overview",
+  "icon": "fa-star",
+  "content": [
+    {
+      "category": "Baba-Bala",
+      "devices": [
+        {
+          "name": "Wohnzimmer Chill-Beleuchtung",
+          "type": "button",
+          "value": "0_userdata.0.Wohnzimmer.Wohnzimmer_Medienlicht"
+        }
+      ]
+    }
+  ]
+}

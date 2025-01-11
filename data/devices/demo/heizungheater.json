@@ -1,0 +1,49 @@
+[
+  {
+    "category": "Heizung",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Test.Heizung.POWER",
+        "temperature": "alias.0.Test.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Test.Heizung.SET",
+        "humidity": "alias.0.Test.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Thermostat",
+            "unreach": "alias.0.Test.Heizung.UNREACH",
+            "rssi": "alias.0.Test.Heizung.RSSI",
+            "lowbat": "alias.0.Test.Heizung.LOWBAT"
+          }
+        ],
+        "status": [
+          {
+            "value": "alias.0.Test.Heizung.STATE",
+            "icon": "fa-sun"
+          }
+        ],
+        "info": [
+          {
+            "label": "IP",
+            "value": "alias.0.Test.IP"
+          },
+          {
+            "label": "Verbrauch",
+            "value": "alias.0.Test.VERBRAUCH",
+            "decimal": 1,
+            "unit": "W"
+          },
+          {
+            "label": "Wert",
+            "value": "alias.0.Test.WERT",
+            "warning": "val > 10",
+            "error": "val > 90",
+            "decimal": 0,
+            "unit": "%"
+          }
+        ]
+      }
+    ]
+  }
+]

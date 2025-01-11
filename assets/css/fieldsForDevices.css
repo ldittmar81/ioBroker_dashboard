@@ -1,0 +1,217 @@
+/* fieldsForDevices.css
+   Dieses Stylesheet definiert das Layout und Design für die verschiedenen Gerätesteuerfelder (Controls).
+   Dazu gehören Buttons, Toggles, Textfelder, Zahlenfelder, Farbwähler, Listen, usw.
+*/
+
+.controls-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.controls-container > * {
+  margin-top: 10px; /* Abstand zwischen den einzelnen Controls */
+}
+
+/* Control Button */
+.control-button {
+  flex: 0 1 auto;
+  background-color: var(--main-color);
+  color: var(--light-font);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 5px;
+}
+
+.control-button.active {
+  background-color: var(--main-color-hover);
+}
+
+.control-button:hover {
+  background-color: var(--main-color-hover);
+}
+
+.control-button:focus {
+  outline: none;
+}
+
+/* Boolean (Toggle) Control */
+.control-boolean {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 22px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Hintergrund des Toggle-Switch */
+.toggle-switch .extra-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--disabled-background);
+  transition: 0.4s;
+  border-radius: 11px;
+}
+
+.toggle-switch .extra-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: var(--light-font);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .extra-slider {
+  background-color: var(--main-color);
+}
+
+.toggle-switch input:focus + .extra-slider {
+  box-shadow: 0 0 1px var(--main-color);
+}
+
+.toggle-switch input:checked + .extra-slider:before {
+  transform: translateX(36px);
+}
+
+.toggle-switch .extra-slider.disabled {
+  cursor: not-allowed;
+}
+
+/* On/Off Labels im Toggle */
+.on-off-labels {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  top: 8px;
+  left: 0;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: var(--light-font);
+  pointer-events: none;
+}
+
+.on-off-labels::before, .on-off-labels::after {
+  content: attr(data-off);
+  width: 50%;
+  text-align: center;
+}
+
+input:checked + .extra-slider .on-off-labels::before {
+  content: attr(data-on);
+}
+
+/* Control Label (Titel über den Controls) */
+.control-label {
+  display: block;
+  font-weight: 700;
+  width: 100%;
+  margin-top: 10px;
+  color: var(--dark-font);
+}
+
+/* Eingabefelder */
+.control-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid var(--disabled-background);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.control-unit {
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+/* Anzeige für aktuellen Wert bei Slidern */
+.control-value-display {
+  display: block;
+  text-align: center;
+  font-size: 1em;
+  color: var(--dark-font);
+  width: 100%;
+}
+
+/* Selectbox (Listen) */
+.control-select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid var(--disabled-background);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Container für Farblisten */
+.color-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+/* Einzelne Farbeingaben in der Farbliste */
+.color-input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.color-list-input {
+  width: 40px;
+  height: 40px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Button um Farben aus der Liste zu entfernen */
+.color-list-remove {
+  background-color: var(--disabled-background);
+  color: var(--dark-font);
+  border: none;
+  border-radius: 4px;
+  margin-left: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* Button um neue Farben hinzuzufügen */
+.color-list-add {
+  background-color: var(--main-color);
+  color: var(--light-font);
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-top: 5px;
+  cursor: pointer;
+}

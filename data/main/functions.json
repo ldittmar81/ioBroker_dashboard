@@ -1,0 +1,141 @@
+{
+  "name": "Funktionen",
+  "type": "functions",
+  "icon": "fa-cogs",
+  "authorization": [
+    "papa"
+  ],
+  "content": [
+    {
+      "category": "",
+      "tiles": [
+        {
+          "name": "Licht",
+          "image": "Licht.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Licht.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Licht.Status"
+            }
+          ]
+        },
+        {
+          "name": "Dekorations Licht",
+          "image": "DekorationsLicht.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Status"
+            }
+          ]
+        },
+        {
+          "name": "Fenster",
+          "image": "Fenster.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Rollladen.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Rollladen.Status"
+            }
+          ]
+        },
+        {
+          "name": "Heizung",
+          "image": "Heizung.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Heizung.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Heizung.Status"
+            }
+          ]
+        },
+        {
+          "name": "Haushalt",
+          "image": "Haushalt.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Haushalt.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Haushalt.Status"
+            }
+          ]
+        },
+        {
+          "name": "Gartengeräte",
+          "image": "Gartengeraete.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Gartengeraete.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Gartengeraete.Status"
+            }
+          ]
+        },
+        {
+          "name": "Unterhaltung",
+          "image": "Unterhaltung.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Status"
+            }
+          ]
+        },
+        {
+          "name": "Sicherheit",
+          "image": "Sicherheit.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Sicherheit.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Sicherheit.Status"
+            }
+          ]
+        },
+        {
+          "name": "Wetter",
+          "image": "Wetter.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Wetter.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Wetter.Status"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+:root {
+  /* Hauptfarben */
+  --main-color: #FF4500; /* OrangeRed als Hauptfarbe */
+  --main-color-hover: #FF6347; /* Tomato als Hover-Farbe */
+  --secondary-color: #B22222; /* FireBrick als Sekundärfarbe */
+
+  /* Hintergrund */
+  --main-background: linear-gradient(to bottom, rgba(255, 69, 0, 0.9), rgba(178, 34, 34, 0.9));
+
+  /* Kachel-Hintergrund */
+  --tile-background: #FFFFFF; /* Weiß für Kacheln für guten Kontrast */
+
+  /* Deaktivierte Hintergründe */
+  --disabled-background-dark: #CD5C5C; /* IndianRed */
+  --disabled-background: #F08080; /* LightCoral */
+  --disabled-background-middle: #FA8072; /* Salmon */
+  --disabled-background-light: #FFA07A; /* LightSalmon */
+
+  /* Schriftfarben */
+  --dark-font: #000000; /* Schwarze Schrift für hellen Hintergrund */
+  --middle-font: #333333;
+  --light-font: #666666;
+
+}

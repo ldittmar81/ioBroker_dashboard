@@ -1,0 +1,36 @@
+{
+  "clock": "analog",
+  "openWeatherMap": {
+    "enabled": true,
+    "imageSet": 1,
+    "imageType": "svg",
+    "location": "Berlin,DE",
+    "apiKey": "1740f4de85e923fc857e5e8d1932b4e9"
+  },
+  "ioBroker_ical": {
+    "enabled": true,
+    "calendars": [
+      {
+        "cal": "ical.0.data.table",
+        "rgb": "#FFBF00",
+        "image": "birthday.png"
+      },
+      {
+        "cal": "ical.1.data.table",
+        "rgb": "#49b675"
+      },
+      {
+        "cal": "ical.3.data.table",
+        "rgb": "#ba55d3"
+      },
+      {
+        "cal": "ical.4.data.table",
+        "rgb": "#000000"
+      },
+      {
+        "cal": "ical.2.data.table",
+        "rgb": "#87CEEB"
+      }
+    ]
+  }
+}

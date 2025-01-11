@@ -1,0 +1,61 @@
+[
+  {
+    "category": "Schalter",
+    "devices": [
+      {
+        "name": "Mexico",
+        "type": "plug",
+        "value": "alias.0.Test.Geräte.Mexico.SET",
+        "hardware": [
+          {
+            "label": "Smartthings API",
+            "unreach": "alias.0.Test.Geräte.Mexico.UNREACH"
+          }
+        ],
+        "info": [
+          {
+            "label": "IP",
+            "value": "alias.0.Test.Geräte.Mexico.IP"
+          }
+        ]
+      },
+      {
+        "name": "Mexico",
+        "type": "plug",
+        "value": "alias.0.Test.Geräte.Mexico.SET",
+        "imageOn": "schalter_on.png",
+        "imageOff": "schalter_off.png",
+        "hardware": [
+          {
+            "label": "Smartthings API",
+            "unreach": "alias.0.Test.Geräte.Mexico.UNREACH"
+          }
+        ],
+        "info": [
+          {
+            "label": "IP",
+            "value": "alias.0.Test.Geräte.Mexico.IP"
+          }
+        ]
+      },
+      {
+        "name": "Mexico",
+        "type": "plug",
+        "value": "alias.0.Test.Geräte.Mexico.SET",
+        "rgb": "#00ff00",
+        "hardware": [
+          {
+            "label": "Smartthings API",
+            "unreach": "alias.0.Test.Geräte.Mexico.UNREACH"
+          }
+        ],
+        "info": [
+          {
+            "label": "IP",
+            "value": "alias.0.Test.Geräte.Mexico.IP"
+          }
+        ]
+      }
+    ]
+  }
+]

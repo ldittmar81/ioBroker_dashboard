@@ -3,6 +3,7 @@
   "socketSession": "",
   "mode": "live",
   "console": false,
+  "dataFolder": "private",
   "pages": [
     "rooms.json",
     "functions.json",

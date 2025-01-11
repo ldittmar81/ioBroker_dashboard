@@ -1,0 +1,114 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Hauptlicht",
+        "type": "light",
+        "value": "alias.0.Zimmer_4.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HM-LC-Sw1-FM",
+            "unreach": "alias.0.Zimmer_4.Licht.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Licht oben",
+        "type": "light",
+        "value": "alias.0.Zimmer_4.Licht_Nische.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-BSM",
+            "unreach": "alias.0.Zimmer_4.Licht_Nische.UNREACH",
+            "rssi": "alias.0.Zimmer_4.Licht_Nische.RSSI",
+            "errorID": "alias.0.Zimmer_4.Licht_Nische.ERROR"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Zimmer_4.Licht_Nische.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Zimmer_4.Licht_Nische.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Zimmer_4.Licht_Nische.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Zimmer_4.Licht_Nische.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.Zimmer_4.Licht_Nische.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Zimmer_4.Licht_Nische.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Balkonfenster",
+        "type": "window",
+        "value": "alias.0.Zimmer_4.Rollladen.SET",
+        "hardware": [
+          {
+            "label": "Hommmatic",
+            "info": "HmIP-BROLL",
+            "unreach": "alias.0.Zimmer_4.Rollladen.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Dachfenster unten",
+        "type": "window",
+        "value": "alias.0.Zimmer_4.Rollladen_DF_unten.SET",
+        "hardware": [
+          {
+            "label": "Velux",
+            "errorID": "alias.0.Zimmer_4.Rollladen_DF_unten.ERROR",
+            "lowbat": "alias.0.Zimmer_4.Rollladen_DF_unten.LOWBAT"
+          }
+        ]
+      },
+      {
+        "name": "Dachfenster oben",
+        "type": "window",
+        "value": "alias.0.Zimmer_4.Rollladen_DF_oben.SET",
+        "hardware": [
+          {
+            "label": "Velux",
+            "errorID": "alias.0.Zimmer_4.Rollladen_DF_oben.ERROR",
+            "lowbat": "alias.0.Zimmer_4.Rollladen_DF_oben.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.Schlafzimmer.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HM-LC-Sw1PBU-FM",
+            "unreach": "alias.0.Schlafzimmer.Licht.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Nachtlicht Mama",
+        "type": "light",
+        "value": "alias.0.Schlafzimmer.Dekoleuchten.Nachtlicht_links.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HM-LC-Sw1-FM",
+            "unreach": "alias.0.Schlafzimmer.Dekoleuchten.Nachtlicht_links.UNREACH"
+          },
+          {
+            "label": "Aqara WXKG11LM",
+            "info": "1x CR2032",
+            "unreach": "alias.0.Schlafzimmer.Betttaste_links.Taste.UNREACH",
+            "lowbat": "alias.0.Schlafzimmer.Betttaste_links.Taste.LOWBAT",
+            "rssi": "alias.0.Schlafzimmer.Betttaste_links.Taste.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Nachtlicht Papa",
+        "type": "light",
+        "value": "alias.0.Schlafzimmer.Dekoleuchten.Nachtlicht_rechts.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HM-LC-Sw1-FM",
+            "unreach": "alias.0.Schlafzimmer.Dekoleuchten.Nachtlicht_rechts.UNREACH"
+          },
+          {
+            "label": "Aqara WXKG11LM",
+            "info": "1x CR2032",
+            "unreach": "alias.0.Schlafzimmer.Betttaste_rechts.Taste.UNREACH",
+            "lowbat": "alias.0.Schlafzimmer.Betttaste_rechts.Taste.LOWBAT",
+            "rssi": "alias.0.Schlafzimmer.Betttaste_rechts.Taste.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Nachtlicht Komode",
+        "type": "light",
+        "value": "alias.0.Schlafzimmer.Dekoleuchten.Komode.ON",
+        "dimmer": "alias.0.Schlafzimmer.Dekoleuchten.Komode.DIMMER",
+        "temperature": "alias.0.Schlafzimmer.Dekoleuchten.Komode.TEMPERATURE",
+        "rgb": "alias.0.Schlafzimmer.Dekoleuchten.Komode.RGB",
+        "hardware": [
+          {
+            "label": "Philips 9290012573A",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Schlafzimmer.Dekoleuchten.Komode.UNREACH",
+            "rssi": "alias.0.Schlafzimmer.Dekoleuchten.Komode.RSSI"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Schlafzimmer.Heizung.POWER",
+        "temperature": "alias.0.Schlafzimmer.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Schlafzimmer.Heizung.SET",
+        "humidity": "alias.0.Schlafzimmer.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado {{alias.0.Schlafzimmer.Heizung.DEVICETYPE}}",
+            "info": "Straße - 2x AA Batterie",
+            "unreach": "alias.0.Schlafzimmer.Heizung.UNREACH",
+            "lowbat": "alias.0.Schlafzimmer.Heizung.LOWBAT"
+          },
+          {
+            "label": "Tado {{alias.0.Schlafzimmer.Heizung.DEVICETYPE2}}",
+            "info": "Vorhof - 2x AA Batterie",
+            "unreach": "alias.0.Schlafzimmer.Heizung.UNREACH2",
+            "lowbat": "alias.0.Schlafzimmer.Heizung.LOWBAT2"
+          }
+        ]
+      }
+    ]
+  }
+]

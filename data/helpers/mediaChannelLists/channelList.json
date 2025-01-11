@@ -1,0 +1,24 @@
+[
+  {
+    "label": "SWR3",
+    "image": "swr3.png",
+    "id_suffix": "TUNEIN"
+  },
+  {
+    "label": "RPR1",
+    "image": "rpr1.png",
+    "id_suffix": "TUNEIN"
+  },
+  {
+    "label": "Salsa",
+    "image": "salsa.png",
+    "id_suffix": "SPOTIFY-PLAYLIST",
+    "sendValue": "Super Salsa"
+  },
+  {
+    "label": "Bachata",
+    "image": "bachata.jpg",
+    "id_suffix": "SPOTIFY-PLAYLIST",
+    "sendValue": "Best of Bachata"
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "category": "Tür",
+    "devices": [
+      {
+        "name": "Haustür",
+        "type": "door",
+        "value": "alias.0.Test.Tür.ACTUAL",
+        "lock": "alias.0.Test.Tür.LOCKED",
+        "hardware": [
+          {
+            "label": "Ekey",
+            "unreach": "alias.0.Test.Tür.UNREACH",
+            "errorID": "alias.0.Test.Tür.ERROR",
+            "rssi": "alias.0.Test.Tür.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Test.Tür.UNREACH2",
+            "lowbat": "alias.0.Test.Tür.LOWBAT",
+            "rssi": "alias.0.Test.Tür.RSSI2",
+            "info": "2x AA Batterie"
+          }
+        ],
+        "status": [
+          {
+            "value": "alias.0.Eingangsbereich.Tür.LAST_OPENER",
+            "icon": "fa-user"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.DG_Partyraum.Licht.SET",
+        "hardware": [
+          {
+            "label": "HM Aktor",
+            "info": "HM-LC-Sw2-FM",
+            "unreach": "alias.0.DG_Partyraum.Licht.UNREACH"
+          },
+          {
+            "label": "Xiaomi WXKG01LM",
+            "info": "1x CR2032",
+            "rssi": "alias.0.DG_Partyraum.Lücke_Taste.Taste.RSSI",
+            "lowbat": "alias.0.DG_Partyraum.Lücke_Taste.Taste.LOWBAT",
+            "unreach": "alias.0.DG_Partyraum.Lücke_Taste.Taste.UNREACH"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Temperatur",
+        "type": "temperature",
+        "temperature": "alias.0.DG_Partyraum.Temperatur.ACTUAL",
+        "humidity": "alias.0.DG_Partyraum.Temperatur.SECOND",
+        "hardware": [
+          {
+            "label": "Aqara WSDCGQ11LM",
+            "lowbat": "alias.0.DG_Partyraum.Temperatur.LOWBAT",
+            "info": "1x CR2032",
+            "rssi": "alias.0.DG_Partyraum.Temperatur.RSSI",
+            "unreach": "alias.0.DG_Partyraum.Temperatur.UNREACH"
+          }
+        ]
+      }
+    ]
+  }
+]

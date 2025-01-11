@@ -1,0 +1,24 @@
+:root {
+  /* Hauptfarben */
+  --main-color: #b700e3; /* Dunkles Grau für Hauptfarbe */
+  --main-color-hover: #2a2a2a; /* Etwas helleres Grau beim Hover */
+  --secondary-color: #333333; /* Sekundäre Farbe */
+
+  /* Hintergrund */
+  --main-background: linear-gradient(to bottom, rgb(173, 10, 213), rgb(88, 43, 97));
+
+  /* Kachel-Hintergrund */
+  --tile-background: #ef1daa; /* Dunkles Grau für Kacheln */
+
+  /* Deaktivierte Hintergründe */
+  --disabled-background-dark: #3a3a3a;
+  --disabled-background: #444444;
+  --disabled-background-middle: #555555;
+  --disabled-background-light: #666666;
+
+  /* Schriftfarben */
+  --main-font-color: #ffffff;
+  --dark-font: #ffffff; /* Weiße Schrift für dunklen Hintergrund */
+  --middle-font: #cccccc;
+  --light-font: #aaaaaa;
+}

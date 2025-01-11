@@ -1,0 +1,207 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "value": "alias.0.Bad_EG.Licht.SET",
+        "hardware": [
+          {
+            "label": "HM Aktor",
+            "info": "HM-LC-Sw1-FM",
+            "unreach": "alias.0.Bad_EG.Licht.UNREACH"
+          },
+          {
+            "label": "HM-PB-2-WM55-2 Schalter",
+            "info": "2x AAA",
+            "unreach": "alias.0.Bad_EG.Licht.UNREACH2",
+            "rssi": "alias.0.Bad_EG.Licht.RSSI2",
+            "lowbat": "alias.0.Bad_EG.Licht.LOWBAT2"
+          }
+        ]
+      },
+      {
+        "name": "Nachtlicht",
+        "type": "light",
+        "value": "alias.0.Bad_EG.Dekoleuchten.Stimmungslicht.ON",
+        "dimmer": "alias.0.Bad_EG.Dekoleuchten.Stimmungslicht.DIMMER",
+        "temperature": "alias.0.Bad_EG.Dekoleuchten.Stimmungslicht.TEMPERATURE",
+        "rgb": "alias.0.Bad_EG.Dekoleuchten.Stimmungslicht.RGB",
+        "hardware": [
+          {
+            "label": "Philips 9290012573A",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Bad_EG.Dekoleuchten.Stimmungslicht.UNREACH",
+            "rssi": "alias.0.Bad_EG.Dekoleuchten.Stimmungslicht.RSSI"
+          },
+          {
+            "label": "Aqara RTCGQ11LM",
+            "info": "1x CR2450",
+            "lowbat": "alias.0.Bad_EG.Bewegungsmelder.LOWBAT",
+            "unreach": "alias.0.Bad_EG.Bewegungsmelder.UNREACH",
+            "rssi": "alias.0.Bad_EG.Bewegungsmelder.RSSI"
+          }
+        ],
+        "status": [
+          {
+            "value": "alias.0.Bad_EG.Bewegungsmelder.SECOND",
+            "unit": "lux",
+            "icon": "fa-sun"
+          },
+          {
+            "value": "alias.0.Bad_EG.Bewegungsmelder.SECOND",
+            "icon": "fa-person-walking"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Bad_EG.Heizung.POWER",
+        "temperature": "alias.0.Bad_EG.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Bad_EG.Heizung.SET",
+        "humidity": "alias.0.Bad_EG.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado {{alias.0.Bad_EG.Heizung.DEVICETYPE}}",
+            "info": "2x AA Batterie",
+            "unreach": "alias.0.Bad_EG.Heizung.UNREACH",
+            "lowbat": "alias.0.Bad_EG.Heizung.LOWBAT"
+          }
+        ]
+      },
+      {
+        "name": "Fenster",
+        "type": "window",
+        "value": "",
+        "state": "alias.0.Bad_EG.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Aqara MCCGQ11LM",
+            "info": "1x CR1632",
+            "unreach": "alias.0.Bad_EG.Fenster.UNREACH",
+            "rssi": "alias.0.Bad_EG.Fenster.RSSI",
+            "lowbat": "alias.0.Bad_EG.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Geräte",
+    "devices": [
+      {
+        "name": "Alexa",
+        "type": "media",
+        "value": "alias.0.Bad_EG.Alexa.STATE",
+        "command": "alias.0.Bad_EG.Alexa.COMMAND",
+        "image": "echo.png",
+        "controls": [
+          {
+            "function": "volume",
+            "id": "alias.0.Bad_EG.Alexa.VOLUME",
+            "step": 10,
+            "unit": "%"
+          },
+          {
+            "function": "play",
+            "id": "alias.0.Bad_EG.Alexa.PLAY",
+            "allowed": "alias.0.Bad_EG.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "pause",
+            "id": "alias.0.Bad_EG.Alexa.PAUSE",
+            "allowed": "alias.0.Bad_EG.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "rewind",
+            "id": "alias.0.Bad_EG.Alexa.REWIND"
+          },
+          {
+            "function": "forward",
+            "id": "alias.0.Bad_EG.Alexa.FORWARD"
+          },
+          {
+            "function": "previous",
+            "id": "alias.0.Bad_EG.Alexa.PREV",
+            "allowed": "alias.0.Bad_EG.Alexa.ALLOW_PREV"
+          },
+          {
+            "function": "next",
+            "id": "alias.0.Wohnzimmer.Alexa.NEXT",
+            "allowed": "alias.0.Bad_EG.Alexa.ALLOW_NEXT"
+          },
+          {
+            "function": "repeat",
+            "id": "alias.0.Bad_EG.Alexa.REPEAT",
+            "allowed": "alias.0.Bad_EG.Alexa.ALLOW_REPEAT",
+            "type": "boolean"
+          },
+          {
+            "function": "shuffle",
+            "id": "alias.0.Bad_EG.Alexa.SHUFFLE",
+            "allowed": "alias.0.Bad_EG.Alexa.ALLOW_SHUFFLE",
+            "type": "boolean"
+          },
+          {
+            "function": "stop",
+            "id": "alias.0.Bad_EG.Alexa.STOP"
+          }
+        ],
+        "channellists": [
+          {
+            "list": "channelList.json",
+            "id_prefix": "alias.0.Bad_EG.Alexa.PLAY_"
+          }
+        ],
+        "mediainfo": [
+          {
+            "function": "album",
+            "id": "alias.0.Bad_EG.Alexa.ALBUM"
+          },
+          {
+            "function": "artist",
+            "id": "alias.0.Bad_EG.Alexa.ARTIST"
+          },
+          {
+            "function": "title",
+            "id": "alias.0.Bad_EG.Alexa.TITLE"
+          },
+          {
+            "function": "imageURL",
+            "id": "alias.0.Bad_EG.Alexa.COVER_URL"
+          },
+          {
+            "function": "provider",
+            "id": "alias.0.Bad_EG.Alexa.SOURCE",
+            "imageTyp": "png"
+          },
+          {
+            "function": "length",
+            "id": "alias.0.Bad_EG.Alexa.DURATION",
+            "unit": "s"
+          },
+          {
+            "function": "progress",
+            "id": "alias.0.Bad_EG.Alexa.ELAPSED",
+            "unit": "s"
+          }
+        ],
+        "hardware": [
+          {
+            "label": "Echo",
+            "unreach": "alias.0.Bad_EG.Alexa.UNREACH",
+            "rssi": "alias.0.Bad_EG.Alexa.RSSI",
+            "info": "{{alias.0.Bad_EG.Alexa.DEVICETYPE}}"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,264 @@
+[
+  {
+    "category": "Licht",
+    "devices": [
+      {
+        "name": "Hauptlicht",
+        "type": "light",
+        "value": "alias.0.Büro.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HM-LC-Sw1PBU-FM",
+            "unreach": "alias.0.Büro.Licht.UNREACH",
+            "rssi": "alias.0.Büro.Licht.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "PC Dekolicht",
+        "type": "light",
+        "value": "alias.0.Büro.Dekoleuchten.Wasserhahn.ON",
+        "dimmer": "alias.0.Büro.Dekoleuchten.Wasserhahn.DIMMER",
+        "rgb": "alias.0.Büro.Dekoleuchten.Wasserhahn.RGB",
+        "temperature": "alias.0.Büro.Dekoleuchten.Wasserhahn.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "INNR RB 185 C",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Büro.Dekoleuchten.Wasserhahn.UNREACH",
+            "rssi": "alias.0.Büro.Dekoleuchten.Wasserhahn.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Sessellicht",
+        "type": "light",
+        "value": "alias.0.Büro.Dekoleuchten.Sessellicht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-FSM",
+            "unreach": "alias.0.Büro.Dekoleuchten.Sessellicht.UNREACH",
+            "rssi": "alias.0.Büro.Dekoleuchten.Sessellicht.RSSI",
+            "errorID": "alias.0.Büro.Dekoleuchten.Sessellicht.ERROR"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Büro.Dekoleuchten.Sessellicht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Büro.Dekoleuchten.Sessellicht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Büro.Dekoleuchten.Sessellicht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Büro.Dekoleuchten.Sessellicht.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.Büro.Dekoleuchten.Sessellicht.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Büro.Dekoleuchten.Sessellicht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      },
+      {
+        "name": "PC Leuchtbar",
+        "type": "light",
+        "value": "alias.0.Büro.Dekoleuchten.Leuchtbar.ON",
+        "dimmer": "alias.0.Büro.Dekoleuchten.Leuchtbar.DIMMER",
+        "rgb": "alias.0.Büro.Dekoleuchten.Leuchtbar.RGB",
+        "temperature": "alias.0.Büro.Dekoleuchten.Leuchtbar.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Livarno TS0505A",
+            "unreach": "alias.0.Büro.Dekoleuchten.Leuchtbar.UNREACH",
+            "rssi": "alias.0.Büro.Dekoleuchten.Leuchtbar.RSSI"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Büro.Heizung.POWER",
+        "temperature": "alias.0.Büro.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Büro.Heizung.SET",
+        "humidity": "alias.0.Büro.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Thermostat {{alias.0.Büro.Heizung.DEVICETYPE}}",
+            "unreach": "alias.0.Büro.Heizung.UNREACH",
+            "lowbat": "alias.0.Büro.Heizung.LOWBAT",
+            "info": "2x AA Batterie"
+          }
+        ]
+      },
+      {
+        "name": "Fenster",
+        "type": "window",
+        "value": "alias.0.Büro.Rollladen.SET",
+        "state": "alias.0.Büro.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Büro.Rollladen.UNREACH",
+            "rssi": "alias.0.Büro.Rollladen.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Büro.Fenster.UNREACH",
+            "rssi": "alias.0.Büro.Fenster.RSSI",
+            "lowbat": "alias.0.Büro.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Geräte",
+    "devices": [
+      {
+        "name": "Alexa",
+        "type": "media",
+        "value": "alias.0.Büro.Alexa.STATE",
+        "command": "alias.0.Büro.Alexa.COMMAND",
+        "image": "echo.png",
+        "controls": [
+          {
+            "function": "volume",
+            "id": "alias.0.Büro.Alexa.VOLUME",
+            "step": 10,
+            "unit": "%"
+          },
+          {
+            "function": "play",
+            "id": "alias.0.Büro.Alexa.PLAY",
+            "allowed": "alias.0.Büro.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "pause",
+            "id": "alias.0.Büro.Alexa.PAUSE",
+            "allowed": "alias.0.Büro.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "rewind",
+            "id": "alias.0.Büro.Alexa.REWIND"
+          },
+          {
+            "function": "forward",
+            "id": "alias.0.Büro.Alexa.FORWARD"
+          },
+          {
+            "function": "previous",
+            "id": "alias.0.Büro.Alexa.PREV",
+            "allowed": "alias.0.Büro.Alexa.ALLOW_PREV"
+          },
+          {
+            "function": "next",
+            "id": "alias.0.Büro.Alexa.NEXT",
+            "allowed": "alias.0.Büro.Alexa.ALLOW_NEXT"
+          },
+          {
+            "function": "repeat",
+            "id": "alias.0.Büro.Alexa.REPEAT",
+            "allowed": "alias.0.Büro.Alexa.ALLOW_REPEAT",
+            "type": "boolean"
+          },
+          {
+            "function": "shuffle",
+            "id": "alias.0.Büro.Alexa.SHUFFLE",
+            "allowed": "alias.0.Büro.Alexa.ALLOW_SHUFFLE",
+            "type": "boolean"
+          },
+          {
+            "function": "stop",
+            "id": "alias.0.Büro.Alexa.STOP"
+          }
+        ],
+        "channels": [
+          {
+            "label": "Böhse Onkelz",
+            "image": "onkelz.png",
+            "id": "alias.0.Büro.Alexa.PLAY_SPOTIFY-PLAYLIST",
+            "sendValue": "Böhse Onkelz"
+          }
+        ],
+        "channellists": [
+          {
+            "list": "channelList.json",
+            "id_prefix": "alias.0.Büro.Alexa.PLAY_"
+          }
+        ],
+        "mediainfo": [
+          {
+            "function": "album",
+            "id": "alias.0.Büro.Alexa.ALBUM"
+          },
+          {
+            "function": "artist",
+            "id": "alias.0.Büro.Alexa.ARTIST"
+          },
+          {
+            "function": "title",
+            "id": "alias.0.Büro.Alexa.TITLE"
+          },
+          {
+            "function": "imageURL",
+            "id": "alias.0.Büro.Alexa.COVER_URL"
+          },
+          {
+            "function": "provider",
+            "id": "alias.0.Büro.Alexa.SOURCE",
+            "imageTyp": "png"
+          },
+          {
+            "function": "length",
+            "id": "alias.0.Büro.Alexa.DURATION",
+            "unit": "s"
+          },
+          {
+            "function": "progress",
+            "id": "alias.0.Büro.Alexa.ELAPSED",
+            "unit": "s"
+          }
+        ],
+        "hardware": [
+          {
+            "label": "Echo",
+            "unreach": "alias.0.Büro.Alexa.UNREACH",
+            "rssi": "alias.0.Büro.Alexa.RSSI",
+            "info": "{{alias.0.Büro.Alexa.DEVICETYPE}}"
+          }
+        ]
+      }
+    ]
+  }
+]

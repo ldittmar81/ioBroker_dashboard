@@ -1,0 +1,96 @@
+/* Linke Seitenleiste */
+.sidebar {
+  width: 400px;
+  background-color: var(--main-color);
+  color: var(--light-font);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  border-top-right-radius: 10px;
+}
+
+.sidebar-content {
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.sidebar-toggle {
+  color: var(--light-font);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 10px 10px 10px 20px;
+  position: absolute;
+  top: 10px;
+  right: -19px;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-toggle::after {
+  content: "\f053";
+  font-family: "Font Awesome 5 Free", serif;
+  font-weight: 900;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  right: -20px;
+}
+
+.sidebar.collapsed .sidebar-toggle::after {
+  transform: rotate(180deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    transform: translateX(-100%);
+    z-index: 1900;
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(0);
+  }
+
+  .sidebar-toggle::after {
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.collapsed .sidebar-toggle::after {
+    transform: rotate(0deg);
+  }
+
+  .sidebar .sidebar-toggle::after {
+    transform: rotate(180deg);
+  }
+
+  .sidebar.collapsed .sidebar-toggle {
+    right: -10px;
+  }
+}

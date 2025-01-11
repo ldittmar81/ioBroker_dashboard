@@ -1,0 +1,111 @@
+{
+  "name": "Testansicht",
+  "type": "demo",
+  "icon": "fa-flask-vial",
+  "pin": "0000",
+  "content": [
+    {
+      "category": "",
+      "tiles": [
+        {
+          "name": "Licht (light)",
+          "image": "Licht.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Licht.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Licht.Status"
+            }
+          ]
+        },
+        {
+          "name": "Tür (door)",
+          "image": "Tuer.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Status"
+            }
+          ]
+        },
+        {
+          "name": "Fenster (window)",
+          "image": "Fenster.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Rollladen.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Rollladen.Status"
+            }
+          ]
+        },
+        {
+          "name": "Heizung (heater)",
+          "image": "Heizung.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Heizung.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Heizung.Status"
+            }
+          ]
+        },
+        {
+          "name": "Steckdose (plug)",
+          "image": "Steckdose.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Haushalt.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Haushalt.Status"
+            }
+          ]
+        },
+        {
+          "name": "Ausgabegeräte (media)",
+          "image": "Unterhaltung.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Status"
+            }
+          ]
+        },
+        {
+          "name": "Knöpfe (buttons)",
+          "image": "Buttons.webp",
+          "status": [
+            {
+              "label": "Verbrauch",
+              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Stromverbrauch"
+            },
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Status"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

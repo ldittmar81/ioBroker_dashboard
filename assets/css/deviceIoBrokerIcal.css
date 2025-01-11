@@ -1,0 +1,29 @@
+.ioBroker_ical-tile {
+  width: 400px;
+}
+
+.ioBroker_ical-tile .ical-container {
+  margin: 10px;
+  color: var(--dark-font);
+}
+
+.ioBroker_ical-tile .calendar-date-header,
+.ioBroker_ical-tile .no-events,
+.ioBroker_ical-tile .calendar-event .event-info {
+  color: var(--dark-font);
+}
+
+.ioBroker_ical-tile .calendar-event {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.ioBroker_ical-tile .event-icon {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ioBroker_ical-tile {
+    width: 100%;
+  }
+}

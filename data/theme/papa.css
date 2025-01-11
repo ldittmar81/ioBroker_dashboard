@@ -1,0 +1,25 @@
+:root {
+  /* Hauptfarben */
+  --main-color: #1E90FF; /* Dodger Blue als Hauptfarbe */
+  --main-color-hover: #1C86EE; /* Etwas dunkleres Blau beim Hover */
+  --secondary-color: #32CD32; /* Lime Green als Sekundärfarbe */
+
+  /* Hintergrund */
+  --main-background: linear-gradient(to bottom, rgba(30, 144, 255, 0.9), rgba(260, 369, 186, 0.9));
+
+  /* Kachel-Hintergrund */
+  --tile-background: #FFFFFF; /* Weiß für Kacheln, um Kontrast zu gewährleisten */
+
+  /* Deaktivierte Hintergründe */
+  --disabled-background-dark: #B0C4DE; /* Light Steel Blue */
+  --disabled-background: #ADD8E6; /* Light Blue */
+  --disabled-background-middle: #90EE90; /* Light Green */
+  --disabled-background-light: #98FB98; /* Pale Green */
+
+  /* Schriftfarben */
+  --main-font-color: #0e0e6e;
+  --dark-font: #000000; /* Schwarze Schrift für hellen Hintergrund */
+  --middle-font: #333333;
+  --light-font: #FFFFFF;
+
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht",
+        "type": "light",
+        "dimmer": "alias.0.Zimmer_1.Licht.SET",
+        "value": "0_userdata.0.Zimmer_1.licht_an",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HM-LC-Sw1PBU-FM",
+            "unreach": "alias.0.Zimmer_1.Licht.UNREACH",
+            "rssi": "hm-rpc.1.0008DBE9A3F425.0.RSSI_DEVICE",
+            "errorID": "alias.0.Zimmer_1.Licht.ERROR"
+          }
+        ]
+      },
+      {
+        "name": "Dekolicht",
+        "type": "light",
+        "value": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.ON",
+        "dimmer": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.DIMMER",
+        "temperature": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.TEMPERATURE",
+        "rgb": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.RGB",
+        "hardware": [
+          {
+            "label": "Philips 9290012573A",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.UNREACH",
+            "rssi": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.RSSI"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Zimmer_1.Heizung.POWER",
+        "temperature": "alias.0.Zimmer_1.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Zimmer_1.Heizung.SET",
+        "humidity": "alias.0.Zimmer_1.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Thermostat {{alias.0.Zimmer_1.Heizung.DEVICETYPE}}",
+            "unreach": "alias.0.Zimmer_1.Heizung.UNREACH",
+            "lowbat": "alias.0.Zimmer_1.Heizung.LOWBAT",
+            "info": "2x AA Batterie"
+          }
+        ]
+      },
+      {
+        "name": "Fenster",
+        "type": "window",
+        "value": "alias.0.Zimmer_1.Rollladen.SET",
+        "state": "alias.0.Zimmer_1.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Zimmer_1.Rollladen.UNREACH",
+            "rssi": "alias.0.Zimmer_1.Rollladen.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Zimmer_1.Fenster.UNREACH",
+            "rssi": "alias.0.Zimmer_1.Fenster.RSSI",
+            "lowbat": "alias.0.Zimmer_1.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

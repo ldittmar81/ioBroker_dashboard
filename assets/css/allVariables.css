@@ -1,0 +1,119 @@
+/* allVariables.css
+   Diese Datei enthält die grundlegenden CSS-Custom Properties (Variablen) für das Dashboard.
+   Sie definiert Hauptfarben, Hintergrundverläufe, Schriftfarben sowie spezielle Werte für
+   bestimmte Gerätetypen (z.B. Lampen oder Heizungen).
+
+   Durch die Verwendung von CSS-Custom Properties können Designs und Farbthemen einfach
+   angepasst werden, ohne den gesamten CSS-Code ändern zu müssen.
+*/
+
+/* Hauptfarben für das Dashboard */
+@property --main-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7CCD7C; /* Grundfarbe für primäre Elemente */
+}
+
+@property --main-color-hover {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #2d673a; /* Hover-Farbe für Interaktionselemente */
+}
+
+@property --secondary-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1A7413; /* Sekundärfarbe für weitere Akzente */
+}
+
+@property --main-background {
+  syntax: "<image>";
+  inherits: true;
+  initial-value: linear-gradient(to bottom, rgba(241, 204, 148, 0.86), rgba(294, 240, 174, 0));
+  /* Hintergrundverlauf für die Hauptansicht */
+}
+
+/* Hintergrundfarbe für Kacheln (Tiles) */
+@property --tile-background {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #FFFFFF;
+}
+
+/* Verschiedene Stufen von deaktivierten Hintergründen */
+@property --disabled-background-dark {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #AAAAAA;
+}
+
+@property --disabled-background {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #CCCCCC;
+}
+
+@property --disabled-background-middle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #DDDDDD;
+}
+
+@property --disabled-background-light {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #EEEEEE;
+}
+
+/* Schriftfarben */
+@property --main-font-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #7CCD7C; /* Primäre Schriftfarbe für Titel und wichtige Elemente */
+}
+
+@property --dark-font {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #333333; /* Dunkle Schriftfarbe für Standardtext */
+}
+
+@property --middle-font {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #666666; /* Mittlere Grau-Stufe für weniger hervorgehobenen Text */
+}
+
+@property --light-font {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #FFFFFF; /* Helle Schriftfarbe, z.B. auf dunklem Hintergrund */
+}
+
+/* Gerätespezifische Variablen (z.B. für Lichter) */
+@property --brightness {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1; /* Helligkeitsfaktor für Leuchtelemente */
+}
+
+@property --light-color-alpha {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 223, 0, 0.4);
+  /* Weicher Gelbton für beleuchtete Elemente mit Transparenz */
+}
+
+@property --light-color-glow {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 223, 0, 0.6);
+  /* Glüh-Effekt-Farbe für aktivierte Lichter */
+}
+
+/* Gerätespezifische Variablen (z.B. für Heizungen) */
+@property --glow-opacity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1; /* Opazität für Glüheffekte bei Heizungen */
+}

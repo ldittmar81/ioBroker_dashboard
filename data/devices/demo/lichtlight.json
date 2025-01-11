@@ -1,0 +1,88 @@
+[
+  {
+    "category": "Normales Licht",
+    "devices": [
+      {
+        "name": "Hauptlicht",
+        "type": "light",
+        "value": "alias.0.Test.Licht.SET",
+        "hardware": [
+          {
+            "label": "Lichtaktor",
+            "unreach": "alias.0.Test.Licht.UNREACH",
+            "rssi": "alias.0.Test.Licht.RSSI",
+            "info": ""
+          }
+        ]
+      },
+      {
+        "name": "Dimmer",
+        "type": "light",
+        "value": "alias.0.Test.Dimmer.SET",
+        "dimmer": "alias.0.Test.Dekoleuchten.Testlicht.DIMMER",
+        "hardware": [
+          {
+            "label": "Lichtaktor",
+            "unreach": "alias.0.Test.Dimmer.UNREACH",
+            "rssi": "alias.0.Test.Dimmer.RSSI",
+            "info": ""
+          }
+        ]
+      },
+      {
+        "name": "Temperature Test",
+        "type": "light",
+        "value": "alias.0.Test.Dekoleuchten.Testlicht.ON",
+        "dimmer": "alias.0.Test.Dekoleuchten.Testlicht.DIMMER",
+        "temperature": "alias.0.Test.Dekoleuchten.Wasserhahn.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Zigbee Lampe",
+            "unreach": "alias.0.Test.Dekoleuchten.Testlicht.UNREACH",
+            "rssi": "alias.0.Test.Dekoleuchten.Testlicht.RSSI"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "RGB Licht",
+    "devices": [
+      {
+        "name": "RGB Test",
+        "type": "light",
+        "value": "alias.0.Test.Dekoleuchten.Wasserhahn.ON",
+        "dimmer": "alias.0.Test.Dekoleuchten.Wasserhahn.DIMMER",
+        "rgb": "alias.0.Test.Dekoleuchten.Wasserhahn.RGB",
+        "temperature": "alias.0.Test.Dekoleuchten.Wasserhahn.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Zigbee Lampe",
+            "unreach": "alias.0.Test.Dekoleuchten.Wasserhahn.UNREACH",
+            "rssi": "alias.0.Test.Dekoleuchten.Wasserhahn.RSSI"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "HUE Licht",
+    "devices": [
+      {
+        "name": "HUE Test",
+        "type": "light",
+        "value": "alias.0.Test.Dekoleuchten.Nebenleuchte.ON",
+        "dimmer": "alias.0.Test.Dekoleuchten.Nebenleuchte.DIMMER",
+        "hue": "alias.0.Test.Dekoleuchten.Nebenleuchte.HUE",
+        "temperature": "alias.0.Test.Dekoleuchten.Nebenleuchte.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Zigbee Lampe",
+            "unreach": "alias.0.Test.Dekoleuchten.Nebenleuchte.UNREACH",
+            "rssi": "alias.0.Test.Dekoleuchten.Nebenleuchte.RSSI"
+          }
+        ]
+      }
+    ]
+  }
+]

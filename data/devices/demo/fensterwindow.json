@@ -1,0 +1,26 @@
+[
+  {
+    "category": "Fenster",
+    "devices": [
+      {
+        "name": "Büro Fenster",
+        "type": "window",
+        "value": "alias.0.Test.Rollladen.SET",
+        "state": "alias.0.Test.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Test.Rollladen.UNREACH",
+            "rssi": "alias.0.Test.Rollladen.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Test.Fenster.UNREACH",
+            "rssi": "alias.0.Test.Fenster.RSSI",
+            "lowbat": "alias.0.Test.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

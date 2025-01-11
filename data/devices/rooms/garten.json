@@ -1,0 +1,329 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Terrassenkugeln",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.ON",
+        "dimmer": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.RGB",
+        "hardware": [
+          {
+            "label": "INNR RB 286 C",
+            "info": "Zigbee E27 Links",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.RSSI"
+          },
+          {
+            "label": "INNR RB 286 C",
+            "info": "Zigbee E27 Rechts",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.UNREACH2",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Terrassenkugeln.RSSI2"
+          }
+        ]
+      },
+      {
+        "name": "Grillbeleuchtung",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.ON",
+        "dimmer": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.RGB",
+        "hardware": [
+          {
+            "label": "INNR RB 286 C",
+            "info": "Zigbee E27 Links",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.RSSI"
+          },
+          {
+            "label": "INNR RB 185 C",
+            "info": "Zigbee E27 Rechts",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.UNREACH2",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Grillbeleuchtung.RSSI2"
+          }
+        ]
+      },
+      {
+        "name": "Loungefackel",
+        "type": "plug",
+        "value": "alias.0.Garten.Beleuchtung_rechts.Fackel.SET",
+        "hardware": [
+          {
+            "label": "Sonoff BASICZBR3",
+            "unreach": "alias.0.Garten.Beleuchtung_rechts.Fackel.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_rechts.Fackel.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Loungebeleuchtung",
+        "type": "light",
+        "iconset": "strahler",
+        "value": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.ON",
+        "dimmer": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.RGB",
+        "hardware": [
+          {
+            "label": "INNR RS 230 C",
+            "info": "ZB GU10 Goldglöckchen",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.RSSI"
+          },
+          {
+            "label": "Hornbach 10454466",
+            "info": "ZB GU10 Apfelbaum",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.UNREACH2",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Loungebeleuchtung.RSSI2"
+          }
+        ]
+      },
+      {
+        "name": "Hochbeet",
+        "type": "light",
+        "iconset": "strahler",
+        "value": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.RGB",
+        "hardware": [
+          {
+            "label": "Philips 8718696485880",
+            "info": "ZB GU10 Hochbeet",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Linker Beet",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.ON",
+        "dimmer": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.RGB",
+        "hardware": [
+          {
+            "label": "Philips 8718696485880",
+            "info": "ZB GU10 Holunderbaum",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.RSSI"
+          },
+          {
+            "label": "INNR RB 185 C",
+            "info": "ZB E27 Banane",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.UNREACH2",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.RSSI2"
+          },
+          {
+            "label": "Philips 9290012573A",
+            "info": "ZB E27 Himbeeren",
+            "unreach": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.UNREACH3",
+            "rssi": "alias.0.Garten.Beleuchtungsgruppen.Beet_links.RSSI3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Beleuchtung Links",
+    "collapsed": true,
+    "devices": [
+      {
+        "name": "Terrassenkugel",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtung_links.Terrassenkugel.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Terrassenkugel.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Terrassenkugel.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Terrassenkugel.RGB",
+        "hardware": [
+          {
+            "label": "INNR RB 286 C",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Terrassenkugel.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Terrassenkugel.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Grillplatz links",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grillplatz.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grillplatz.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grillplatz.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grillplatz.RGB",
+        "hardware": [
+          {
+            "label": "INNR RB 286 C",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grillplatz.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grillplatz.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Grillplatz rechts",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grilltisch.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grilltisch.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grilltisch.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grilltisch.RGB",
+        "hardware": [
+          {
+            "label": "INNR RB 185 C",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grilltisch.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Kugel_am_Grilltisch.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Hochbeet",
+        "type": "light",
+        "iconset": "strahler",
+        "value": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.RGB",
+        "hardware": [
+          {
+            "label": "Philips 8718696485880",
+            "info": "ZB GU10 Hochbeet",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Hochbeetbeleuchtung.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Holunderbaum",
+        "type": "light",
+        "iconset": "strahler",
+        "value": "alias.0.Garten.Beleuchtung_links.Holunderbaum.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Holunderbaum.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Holunderbaum.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Holunderbaum.RGB",
+        "hardware": [
+          {
+            "label": "Philips 8718696485880",
+            "info": "ZB GU10 Holunderbaum",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Holunderbaum.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Holunderbaum.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Banane",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtung_links.Kugel_Banane.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Kugel_Banane.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Kugel_Banane.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Kugel_Banane.RGB",
+        "hardware": [
+          {
+            "label": "INNR RB 185 C",
+            "info": "ZB E27 Banane",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Kugel_Banane.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Kugel_Banane.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Himbeeren",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtung_links.Kugel_am_Feigenbaum.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_links.Kugel_am_Feigenbaum.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_links.Kugel_am_Feigenbaum.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_links.Kugel_am_Feigenbaum.RGB",
+        "hardware": [
+          {
+            "label": "Philips 9290012573A",
+            "info": "ZB E27 Himbeeren",
+            "unreach": "alias.0.Garten.Beleuchtung_links.Kugel_am_Feigenbaum.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_links.Kugel_am_Feigenbaum.RSSI"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Beleuchtung Rechts",
+    "collapsed": true,
+    "devices": [
+      {
+        "name": "Terrassenkugel",
+        "type": "light",
+        "iconset": "kugel",
+        "value": "alias.0.Garten.Beleuchtung_rechts.Terrassenkugel.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_rechts.Terrassenkugel.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_rechts.Terrassenkugel.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_rechts.Terrassenkugel.RGB",
+        "hardware": [
+          {
+            "label": "INN RB 286 C",
+            "info": "Zigbee E27",
+            "unreach": "alias.0.Garten.Beleuchtung_rechts.Terrassenkugel.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_rechts.Terrassenkugel.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Loungefackel",
+        "type": "plug",
+        "value": "alias.0.Garten.Beleuchtung_rechts.Fackel.SET",
+        "hardware": [
+          {
+            "label": "Sonoff BASICZBR3",
+            "info": "E27 Fackellampe",
+            "unreach": "alias.0.Garten.Beleuchtung_rechts.Fackel.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_rechts.Fackel.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Apfelbaum",
+        "type": "light",
+        "iconset": "strahler",
+        "value": "alias.0.Garten.Beleuchtung_rechts.Apfelbaum.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_rechts.Apfelbaum.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_rechts.Apfelbaum.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_rechts.Apfelbaum.RGB",
+        "hardware": [
+          {
+            "label": "Hornbach 10454466",
+            "info": "ZB GU10 Apfelbaum",
+            "unreach": "alias.0.Garten.Beleuchtung_rechts.Apfelbaum.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_rechts.Apfelbaum.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Goldglöckchen",
+        "type": "light",
+        "iconset": "strahler",
+        "value": "alias.0.Garten.Beleuchtung_rechts.Spot_am_Teich.ON",
+        "dimmer": "alias.0.Garten.Beleuchtung_rechts.Spot_am_Teich.DIMMER",
+        "temperature": "alias.0.Garten.Beleuchtung_rechts.Spot_am_Teich.TEMPERATURE",
+        "rgb": "alias.0.Garten.Beleuchtung_rechts.Spot_am_Teich.RGB",
+        "hardware": [
+          {
+            "label": "INNR RS 230 C",
+            "info": "ZB GU10 Goldglöckchen",
+            "unreach": "alias.0.Garten.Beleuchtung_rechts.Spot_am_Teich.UNREACH",
+            "rssi": "alias.0.Garten.Beleuchtung_rechts.Spot_am_Teich.RSSI"
+          }
+        ]
+      }
+    ]
+  }
+]

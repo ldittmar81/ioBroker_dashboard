@@ -1,0 +1,42 @@
+[
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Zimmer_2.Heizung.POWER",
+        "temperature": "alias.0.Zimmer_2.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Zimmer_2.Heizung.SET",
+        "humidity": "alias.0.Zimmer_2.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Thermostat {{alias.0.Zimmer_2.Heizung.DEVICETYPE}}",
+            "unreach": "alias.0.Zimmer_2.Heizung.UNREACH",
+            "lowbat": "alias.0.Zimmer_2.Heizung.LOWBAT",
+            "info": "2x AA Batterie"
+          }
+        ]
+      },
+      {
+        "name": "Fenster",
+        "type": "window",
+        "value": "alias.0.Zimmer_2.Rollladen.SET",
+        "state": "alias.0.Zimmer_2.Fenster.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Zimmer_2.Rollladen.UNREACH",
+            "rssi": "alias.0.Zimmer_2.Rollladen.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Zimmer_2.Fenster.UNREACH",
+            "rssi": "alias.0.Zimmer_2.Fenster.RSSI",
+            "lowbat": "alias.0.Zimmer_2.Fenster.LOWBAT"
+          }
+        ]
+      }
+    ]
+  }
+]

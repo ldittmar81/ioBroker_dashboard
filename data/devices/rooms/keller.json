@@ -1,0 +1,59 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Licht vorne",
+        "type": "light",
+        "value": "alias.0.Keller.Licht.SET",
+        "hardware": [
+          {
+            "unreach": "alias.0.Keller.Licht.UNREACH",
+            "info": "HM-LC-Sw2-FM",
+            "label": "Homematic",
+            "rssi": "alias.0.Keller.Licht.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Licht hinten",
+        "type": "light",
+        "value": "alias.0.Keller.Licht_hinten.SET",
+        "hardware": [
+          {
+            "label": "SONOFF ZBMINI",
+            "info": "Links beim Enthärter",
+            "rssi": "alias.0.Keller.Licht_hinten_einzel.Licht_Enthärter.RSSI",
+            "unreach": "alias.0.Keller.Licht_hinten_einzel.Licht_Enthärter.UNREACH"
+          },
+          {
+            "label": "SONOFF ZBMINI",
+            "info": "Rechts bei der Heizung",
+            "rssi": "alias.0.Keller.Licht_hinten_einzel.Licht_Heizung.RSSI",
+            "unreach": "alias.0.Keller.Licht_hinten_einzel.Licht_Heizung.UNREACH"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Temperatur",
+        "type": "temperature",
+        "temperature": "alias.0.Keller.Temperatur.ACTUAL",
+        "humidity": "alias.0.Keller.Temperatur.SECOND",
+        "hardware": [
+          {
+            "label": "Aqara WSDCGQ11LM",
+            "lowbat": "alias.0.Keller.Temperatur.LOWBAT",
+            "info": "1x CR2032",
+            "rssi": "alias.0.Keller.Temperatur.RSSI",
+            "unreach": "alias.0.Keller.Temperatur.UNREACH"
+          }
+        ]
+      }
+    ]
+  }
+]

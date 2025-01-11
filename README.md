@@ -1,11 +1,16 @@
 ![ioBroker Dashboard](doc/img/ioBrokerDashboard.png)
 # ioBroker Dashboard
 Das ioBroker Dashboard ist eine schlanke und benutzerfreundliche Weboberfläche, die sich über den [ioBroker.ws-Adapter](https://github.com/ioBroker/ioBroker.ws) mit ioBroker verbindet. Es setzt bewusst auf reines JavaScript und CSS, um den Code einfach und verständlich zu halten, sodass auch Entwickler*innen ohne tiefgehende Framework-Kenntnisse mitwirken können.
+
 ## Voraussetzungen
 - **ioBroker**: Eine funktionierende Installation von ioBroker.
 - **ioBroker.ws-Adapter** Installation und Konfiguration gemäß der [Anleitung](https://github.com/ioBroker/ioBroker.ws).
 - **Node.js und npm**: Für die Installation und Nutzung der Entwicklungsumgebung.
 - **Webserver**: Ein lokaler Webserver zur Ausführung des Dashboards.
+
+## Dokumentation
+Muss noch geschrieben werden...
+
 ## Nutzung
 ### 1. ioBroker.ws Adapter installieren
 Installiere den Adapter wie in dessen [GitHub-Repo](https://github.com/ioBroker/ioBroker.ws) beschrieben.
@@ -22,6 +27,8 @@ Installiere den Adapter wie in dessen [GitHub-Repo](https://github.com/ioBroker/
 1. Führe das `gulpfile.js` aus, um das Projekt zu kompilieren.
 2. Starte einen Webserver in deinem Projektverzeichnis.
 3. Öffne `http://localhost:xxxx/dist/index.html` in deinem Browser, wobei `xxxx` der Port deines Webservers ist.
+
+## Handhabung bei Produktivnutzung
 
 ## Changelog
 ### 0.0.1 (2025-01-xx)

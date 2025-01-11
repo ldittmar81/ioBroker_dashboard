@@ -1,0 +1,43 @@
+[
+  {
+    "category": "Knöpfe",
+    "devices": [
+      {
+        "name": "Ambilight",
+        "type": "button",
+        "value": "alias.0.Test.Ambilight_TV.PRESS",
+        "hardware": [
+          {
+            "label": "TV API",
+            "unreach": "alias.0.Test.Ambilight_TV.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Ambilight",
+        "type": "button",
+        "value": "alias.0.Test.Ambilight_TV.PRESS",
+        "image": "ambilight.png",
+        "hardware": [
+          {
+            "label": "TV API",
+            "unreach": "alias.0.Test.Ambilight_TV.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Ambilight",
+        "type": "button",
+        "value": "alias.0.Test.Ambilight_TV.PRESS",
+        "rgb": "#ff00ff",
+        "icon": "fa-star",
+        "hardware": [
+          {
+            "label": "TV API",
+            "unreach": "alias.0.Test.Ambilight_TV.UNREACH"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>ioBroker Dashboard</title>
+  <link href="assets/img/favicon/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+  <link href="assets/img/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+  <link href="assets/img/favicon/favicon.ico" rel="shortcut icon"/>
+  <link href="assets/img/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+  <link href="assets/css/first.bundle.min.css?v={{version}}" rel="stylesheet"/>
+  <link href="assets/css/main.bundle.min.css?v={{version}}" rel="stylesheet"/>
+  <link href="assets/css/other.bundle.min.css?v={{version}}" rel="stylesheet"/>
+  <script>
+    const dashboardVersion = "{{version}}";
+  </script>
+</head>
+<body>
+
+<div class="hidden" id="loading-overlay">
+  <div class="spinner"></div>
+  <h1 class="loading-message">Bitte warten...</h1>
+  <div id="loader-countdown"></div>
+</div>
+
+<aside class="sidebar">
+  <div class="sidebar-content">
+    <div class="clock-container">
+      <div class="datetime-large" id="time"></div>
+      <div class="datetime-medium" id="day"></div>
+    </div>
+  </div>
+  <button class="sidebar-toggle" onclick="mainSidebarJS.toggleSidebar()"></button>
+</aside>
+
+<div class="user-profile">
+  <img alt="Benutzerbild" id="user-image" src="/assets/img/users/anonym.png"/>
+  <div class="user-menu hidden" id="user-menu"></div>
+</div>
+
+<main class="main-content">
+</main>
+
+<div class="debug-console hidden" id="debug-console">
+  <div class="debug-console-content" id="debug-console-content"></div>
+  <div class="debug-console-prompt" id="debug-console-prompt"></div>
+</div>
+
+<footer class="footer">
+</footer>
+
+<script src="assets/js/main.bundle.min.js?v={{version}}"></script>
+<script src="assets/js/devices.bundle.min.js?v={{version}}"></script>
+<script src="assets/js/site.bundle.min.js?v={{version}}"></script>
+
+</body>
+</html>

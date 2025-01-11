@@ -1,0 +1,8 @@
+/* Schloss-Icon über der Tür */
+.door-tile .main-icon .lock-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 24px;
+  color: var(--main-font-color);
+}

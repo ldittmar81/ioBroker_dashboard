@@ -1,0 +1,71 @@
+/* login.css
+   Enthält das Styling für den Benutzerprofilbereich und das Benutzermenü */
+
+/* Positioniert das Benutzerprofil (Benutzerbild) oben rechts über dem Hauptinhalt */
+.user-profile {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000; /* Sicherstellen, dass es über anderen Elementen liegt */
+  cursor: pointer;
+}
+
+/* Das Benutzerbild wird rund dargestellt */
+.user-profile img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Rundes Profilbild */
+  object-fit: cover;
+  border: 2px solid var(--main-color); /* Optionaler Rahmen um das Bild */
+}
+
+/* Das Benutzermenü wird direkt unter dem Benutzerbild angezeigt, wenn es nicht versteckt ist */
+.user-menu {
+  position: absolute;
+  top: 60px; /* leicht unterhalb des Benutzerbildes */
+  right: 0;
+  background-color: var(--tile-background);
+  border: 1px solid var(--main-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  max-height: 300px;
+  overflow-y: auto; /* falls zu viele Benutzer */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.user-menu.hidden {
+  display: none; /* Versteckt das Menü */
+}
+
+/* Einzelner Eintrag im Benutzermenü */
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.user-menu-item:hover {
+  background-color: var(--disabled-background-light);
+}
+
+/* Kleines Profilbild im Menü */
+.user-menu-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+/* Name des Benutzers */
+.user-menu-item span {
+  flex-grow: 1;
+  font-size: 14px;
+  color: var(--dark-font);
+}

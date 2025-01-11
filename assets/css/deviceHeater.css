@@ -1,0 +1,67 @@
+.heater-on {
+  position: relative; /* Für die Positionierung der Pseudo-Elemente */
+}
+
+/* Oberer Glüheffekt */
+.heater-on::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: 50%;
+  width: 70%;
+  height: 5px; /* Höhe der Glühlinie */
+  background: rgba(192, 0, 0, var(--glow-opacity, 1));
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px 2px rgba(255, 105, 105, 0.93);
+}
+
+/* Hitzeaufstieg */
+.heater-on::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to top, rgba(255, 165, 0, 0.6), rgba(255, 165, 0, 0));
+  transform: translateX(-50%);
+  animation: heatRise 2s infinite;
+}
+
+.main-icon .heat-strip.left {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to top, rgba(255, 165, 0, 0.6), rgba(255, 165, 0, 0));
+  transform: translateX(-50%);
+  animation: heatRise 2s infinite 0.2s;
+}
+
+.main-icon .heat-strip.right {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 70%;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to top, rgba(255, 165, 0, 0.6), rgba(255, 165, 0, 0));
+  transform: translateX(-50%);
+  animation: heatRise 2s infinite 0.4s;
+}
+
+
+/* Animation für aufsteigende Hitze */
+@keyframes heatRise {
+  0% {
+    opacity: 0.6;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}

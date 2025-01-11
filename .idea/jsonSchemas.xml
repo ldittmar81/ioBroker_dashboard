@@ -12,7 +12,10 @@
               <option name="patterns">
                 <list>
                   <Item>
-                    <option name="path" value="data/config.json" />
+                    <option name="path" value="config.json" />
+                  </Item>
+                  <Item>
+                    <option name="path" value="config_prod.json" />
                   </Item>
                 </list>
               </option>
@@ -30,6 +33,11 @@
                   <Item>
                     <option name="directory" value="true" />
                     <option name="path" value="data/devices" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="private/devices" />
                     <option name="mappingKind" value="Directory" />
                   </Item>
                 </list>
@@ -50,6 +58,11 @@
                     <option name="path" value="data/main" />
                     <option name="mappingKind" value="Directory" />
                   </Item>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="private/main" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>
@@ -68,6 +81,11 @@
                     <option name="path" value="data/helpers/mediaChannelLists" />
                     <option name="mappingKind" value="Directory" />
                   </Item>
+                  <Item>
+                    <option name="directory" value="true" />
+                    <option name="path" value="private/helpers/mediaChannelLists" />
+                    <option name="mappingKind" value="Directory" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>
@@ -83,6 +101,9 @@
                 <list>
                   <Item>
                     <option name="path" value="data/overview*.json" />
+                  </Item>
+                  <Item>
+                    <option name="path" value="private/overview*.json" />
                   </Item>
                 </list>
               </option>
@@ -100,6 +121,9 @@
                   <Item>
                     <option name="path" value="data/sidebar.json" />
                   </Item>
+                  <Item>
+                    <option name="path" value="private/sidebar.json" />
+                  </Item>
                 </list>
               </option>
             </SchemaInfo>
@@ -115,6 +139,9 @@
                 <list>
                   <Item>
                     <option name="path" value="data/users.json" />
+                  </Item>
+                  <Item>
+                    <option name="path" value="private/users.json" />
                   </Item>
                 </list>
               </option>

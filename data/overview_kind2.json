@@ -1,0 +1,172 @@
+{
+  "name": "Übersicht",
+  "type": "overview",
+  "icon": "fa-star",
+  "content": [
+    {
+      "category": "Beleuchtung",
+      "devices": [
+        {
+          "name": "Schlafzimmer Licht",
+          "type": "light",
+          "dimmer": "alias.0.Zimmer_1.Licht.SET",
+          "value": "0_userdata.0.Zimmer_1.licht_an",
+          "hardware": [
+            {
+              "label": "Homematic",
+              "info": "HM-LC-Sw1PBU-FM",
+              "unreach": "alias.0.Zimmer_1.Licht.UNREACH",
+              "rssi": "hm-rpc.1.0008DBE9A3F425.0.RSSI_DEVICE",
+              "errorID": "alias.0.Zimmer_1.Licht.ERROR"
+            }
+          ]
+        },
+        {
+          "name": "Nachtlicht",
+          "type": "light",
+          "value": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.ON",
+          "dimmer": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.DIMMER",
+          "temperature": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.TEMPERATURE",
+          "rgb": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.RGB",
+          "hardware": [
+            {
+              "label": "Philips 9290012573A",
+              "info": "Zigbee E27",
+              "unreach": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.UNREACH",
+              "rssi": "alias.0.Zimmer_1.Dekoleuchten.Nachtlicht.RSSI"
+            }
+          ]
+        },
+        {
+          "name": "Licht (Zimmer NEU)",
+          "type": "light",
+          "value": "alias.0.Zimmer_3.Licht.SET",
+          "hardware": [
+            {
+              "label": "NUR PROVISORISCH",
+              "info": "Zigbee E27",
+              "unreach": "alias.0.Zimmer_3.Licht.UNREACH",
+              "rssi": "alias.0.Zimmer_3.Licht.RSSI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Rollläden",
+      "devices": [
+      ]
+    },
+    {
+      "category": "Geräte",
+      "devices": [
+        {
+          "name": "Alexa Schlafzimmer",
+          "type": "media",
+          "value": "alias.0.Zimmer_3.Alexa.STATE",
+          "command": "alias.0.Zimmer_3.Alexa.COMMAND",
+          "image": "echo.png",
+          "controls": [
+            {
+              "function": "volume",
+              "id": "alias.0.Zimmer_3.Alexa.VOLUME",
+              "step": 10,
+              "unit": "%"
+            },
+            {
+              "function": "play",
+              "id": "alias.0.Zimmer_3.Alexa.PLAY",
+              "allowed": "alias.0.Zimmer_3.Alexa.ALLOW_PLAY"
+            },
+            {
+              "function": "pause",
+              "id": "alias.0.Zimmer_3.Alexa.PAUSE",
+              "allowed": "alias.0.Zimmer_3.Alexa.ALLOW_PLAY"
+            },
+            {
+              "function": "rewind",
+              "id": "alias.0.Zimmer_3.Alexa.REWIND"
+            },
+            {
+              "function": "forward",
+              "id": "alias.0.Zimmer_3.Alexa.FORWARD"
+            },
+            {
+              "function": "previous",
+              "id": "alias.0.Zimmer_3.Alexa.PREV",
+              "allowed": "alias.0.Zimmer_3.Alexa.ALLOW_PREV"
+            },
+            {
+              "function": "next",
+              "id": "alias.0.Zimmer_3.Alexa.NEXT",
+              "allowed": "alias.0.Zimmer_3.Alexa.ALLOW_NEXT"
+            },
+            {
+              "function": "repeat",
+              "id": "alias.0.Zimmer_3.Alexa.REPEAT",
+              "allowed": "alias.0.Zimmer_3.Alexa.ALLOW_REPEAT",
+              "type": "boolean"
+            },
+            {
+              "function": "shuffle",
+              "id": "alias.0.Zimmer_3.Alexa.SHUFFLE",
+              "allowed": "alias.0.Zimmer_3.Alexa.ALLOW_SHUFFLE",
+              "type": "boolean"
+            },
+            {
+              "function": "stop",
+              "id": "alias.0.Zimmer_3.Alexa.STOP"
+            }
+          ],
+          "channellists": [
+            {
+              "list": "kind2List.json",
+              "id_prefix": "alias.0.Zimmer_3.Alexa.PLAY_"
+            }
+          ],
+          "mediainfo": [
+            {
+              "function": "album",
+              "id": "alias.0.Zimmer_3.Alexa.ALBUM"
+            },
+            {
+              "function": "artist",
+              "id": "alias.0.Zimmer_3.Alexa.ARTIST"
+            },
+            {
+              "function": "title",
+              "id": "alias.0.Zimmer_3.Alexa.TITLE"
+            },
+            {
+              "function": "imageURL",
+              "id": "alias.0.Zimmer_3.Alexa.COVER_URL"
+            },
+            {
+              "function": "provider",
+              "id": "alias.0.Zimmer_3.Alexa.SOURCE",
+              "imageTyp": "png"
+            },
+            {
+              "function": "length",
+              "id": "alias.0.Zimmer_3.Alexa.DURATION",
+              "unit": "s"
+            },
+            {
+              "function": "progress",
+              "id": "alias.0.Zimmer_3.Alexa.ELAPSED",
+              "unit": "s"
+            }
+          ],
+          "hardware": [
+            {
+              "label": "Echo",
+              "unreach": "alias.0.Zimmer_3.Alexa.UNREACH",
+              "rssi": "alias.0.Zimmer_3.Alexa.RSSI",
+              "info": "{{alias.0.Zimmer_3.Alexa.DEVICETYPE}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

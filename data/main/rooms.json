@@ -1,0 +1,578 @@
+{
+  "name": "Räume",
+  "type": "rooms",
+  "icon": "fa-door-open",
+  "authorization": [
+    "papa",
+    "mama",
+    "wohnzimmertab"
+  ],
+  "content": [
+    {
+      "category": "Erdgeschoss",
+      "tiles": [
+        {
+          "name": "Wohn- und Esszimmer",
+          "image": "WohnEsszimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Wohnzimmer.Durchlüftung.TIMER",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Wohnzimmer.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Wohnzimmer.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Küche",
+          "image": "Kueche.webp",
+          "status": [
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Küche.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Küche.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Büro",
+          "image": "Buero.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Büro.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Büro.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Büro.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Schlafzimmer",
+          "image": "Schlafzimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Schlafzimmer.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Schlafzimmer.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Schlafzimmer.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Bad EG",
+          "image": "BadEG.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Bad_EG.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Bad_EG.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Bad_EG.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Flur EG",
+          "image": "FlurEG.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Flur_EG.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Flur_EG.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Flur_EG.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Obergeschoss",
+      "tiles": [
+        {
+          "name": "Hobbyzimmer",
+          "image": "Hobbyzimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Zimmer_1.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Zimmer_1.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Zimmer_1.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Gästezimmer",
+          "image": "Gaestezimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Zimmer_2.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Zimmer_2.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Zimmer_2.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Spielzimmer",
+          "image": "Spielzimmer.webp",
+          "status": [
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Spielzimmer.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Spielzimmer.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Kind 3 Zimmer",
+          "image": "Kind3Zimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Zimmer_4.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Zimmer_4.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Zimmer_4.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Kind 2 Zimmer",
+          "image": "Kind2Zimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Zimmer_3.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Zimmer_3.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Zimmer_3.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Kind 1 Zimmer",
+          "image": "Kind1Zimmer.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Zimmer_3.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Zimmer_3.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Zimmer_3.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Balkon",
+          "image": "Balkon.webp",
+          "status": [
+          ]
+        },
+        {
+          "name": "Bad OG",
+          "image": "BadOG.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Bad_OG.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Bad_OG.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Bad_OG.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Flur OG",
+          "image": "FlurOG.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Flur_OG.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Weitere Räume",
+      "tiles": [
+        {
+          "name": "Partyraum",
+          "image": "Partyraum.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.Partyraum.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5"
+            },
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Partyraum.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Partyraum.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "HWR",
+          "image": "HWR.webp",
+          "status": [
+            {
+              "label": "Lüftung",
+              "value": "alias.0.HWR.Durchlüftung.ACTUAL",
+              "icon": "fa-wind",
+              "unit": "min",
+              "error": "val == 0 || !val",
+              "warning": "val < 5",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Gäste WC",
+          "image": "GaesteWC.webp",
+          "status": [
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Gäste_WC.Heizung.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Gäste_WC.Heizung.HUMIDITY",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Keller",
+          "image": "Keller.webp",
+          "status": [
+            {
+              "label": "Temperatur",
+              "value": "alias.0.Keller.Temperatur.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.Keller.Temperatur.SECOND",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Partyraum Dachgeschoss",
+          "image": "PartyraumDG.webp",
+          "status": [
+            {
+              "label": "Temperatur",
+              "value": "alias.0.DG_Partyraum.Temperatur.ACTUAL",
+              "icon": "fa-temperature-half",
+              "unit": "°C",
+              "decimal": 2
+            },
+            {
+              "label": "Feuchtigkeit",
+              "value": "alias.0.DG_Partyraum.Temperatur.SECOND",
+              "icon": "fa-droplet",
+              "unit": "%",
+              "decimal": 2,
+              "warning": "val > 55 && val < 60",
+              "error": "val >= 60",
+              "alarm": true
+            }
+          ]
+        },
+        {
+          "name": "Haupthaus Dachgeschoss",
+          "image": "HaupthausDG.webp",
+          "status": [
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Außenbereich",
+      "tiles": [
+        {
+          "name": "Garten",
+          "image": "Garten.webp",
+          "status": [
+          ]
+        },
+        {
+          "name": "Terrasse",
+          "image": "Terrasse.webp",
+          "status": [
+          ]
+        },
+        {
+          "name": "Hof",
+          "image": "Hof.webp",
+          "status": [
+          ]
+        }
+      ]
+    }
+  ]
+}

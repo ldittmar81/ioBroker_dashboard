@@ -1,0 +1,49 @@
+[
+  {
+    "label": "ENERGY K-Pop",
+    "image": "kpop.png",
+    "id_suffix": "TUNEIN",
+    "sendValue": "ENERGY K-Pop"
+  },
+  {
+    "label": "Death Metal",
+    "image": "deathmetal.webp",
+    "id_suffix": "TUNEIN",
+    "sendValue": "RADIO BOB! Death Metal"
+  },
+  {
+    "label": "BTS",
+    "image": "BTS.jpg",
+    "id_suffix": "SPOTIFY"
+  },
+  {
+    "label": "ITZY",
+    "image": "ITZY.jpg",
+    "id_suffix": "SPOTIFY"
+  },
+  {
+    "label": "Canibal Corpse",
+    "image": "canibalcorpse.jpg",
+    "id_suffix": "SPOTIFY"
+  },
+  {
+    "label": "Blackpink",
+    "image": "blackpink.jpg",
+    "id_suffix": "SPOTIFY"
+  },
+  {
+    "label": "Deviloof",
+    "image": "deviloof.jpg",
+    "id_suffix": "SPOTIFY"
+  },
+  {
+    "label": "Sepultura",
+    "image": "sepultura.jpg",
+    "id_suffix": "SPOTIFY"
+  },
+  {
+    "label": "Madmans Esprit",
+    "image": "madmans.jpg",
+    "id_suffix": "SPOTIFY"
+  }
+]

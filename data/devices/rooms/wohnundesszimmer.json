@@ -1,0 +1,503 @@
+[
+  {
+    "category": "Beleuchtung",
+    "devices": [
+      {
+        "name": "Esstisch",
+        "type": "light",
+        "value": "alias.0.Esszimmer.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-BSM",
+            "unreach": "alias.0.Esszimmer.Licht.UNREACH",
+            "rssi": "alias.0.Esszimmer.Licht.RSSI",
+            "errorID": "alias.0.Esszimmer.Licht.ERROR"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Esszimmer.Licht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Esszimmer.Licht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Esszimmer.Licht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Esszimmer.Licht.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.Esszimmer.Licht.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Esszimmer.Licht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      },
+      {
+        "name": "Eingang",
+        "type": "light",
+        "value": "alias.0.Eingangsbereich.Licht.SET",
+        "hardware": [
+          {
+            "label": "Homematic",
+            "info": "HmIP-BSM",
+            "unreach": "alias.0.Eingangsbereich.Licht.UNREACH",
+            "rssi": "alias.0.Eingangsbereich.Licht.RSSI",
+            "errorID": "alias.0.Eingangsbereich.Licht.ERROR"
+          }
+        ],
+        "info": [
+          {
+            "label": "Verbrauch",
+            "decimal": 1,
+            "unit": "Wh",
+            "value": "alias.0.Eingangsbereich.Licht.CONSUMPTION"
+          },
+          {
+            "label": "Leistung",
+            "decimal": 1,
+            "unit": "W",
+            "value": "alias.0.Eingangsbereich.Licht.ELECTRIC_POWER"
+          },
+          {
+            "label": "Stromstärke",
+            "decimal": 1,
+            "unit": "mA",
+            "value": "alias.0.Eingangsbereich.Licht.CURRENT"
+          },
+          {
+            "label": "Spannung",
+            "decimal": 1,
+            "unit": "V",
+            "value": "alias.0.Eingangsbereich.Licht.VOLTAGE"
+          },
+          {
+            "label": "Frequenz",
+            "decimal": 0,
+            "unit": "Hz",
+            "value": "alias.0.Eingangsbereich.Licht.FREQUENCY"
+          }
+        ],
+        "status": [
+          {
+            "icon": "fa-bolt",
+            "value": "alias.0.Eingangsbereich.Licht.ELECTRIC_POWER",
+            "unit": "W",
+            "decimal": 1
+          }
+        ]
+      },
+      {
+        "name": "Ventilator Licht",
+        "type": "button",
+        "value": "alias.0.Wohnzimmer.Licht.SET",
+        "hardware": [
+          {
+            "label": "Broadlink Sender",
+            "unreach": "alias.0.Wohnzimmer.Licht.UNREACH",
+            "info": "Bei Fehler neustarten"
+          }
+        ]
+      },
+      {
+        "name": "Wandleuchte HWR",
+        "type": "light",
+        "iconset": "resonate",
+        "value": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR.ON",
+        "rgb": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR.RGB",
+        "dimmer": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR.DIMMER",
+        "temperature": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Philips 1746430P7",
+            "info": "HWR Links",
+            "unreach": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR_einzel.Links.UNREACH",
+            "rssi": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR_einzel.Links.RSSI"
+          },
+          {
+            "label": "Philips 1746430P7",
+            "info": "HWR Rechts",
+            "unreach": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR_einzel.Rechts.UNREACH",
+            "rssi": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_HWR_einzel.Rechts.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Wandleuchte TV",
+        "type": "light",
+        "iconset": "resonate",
+        "value": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_TV.ON",
+        "dimmer": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_TV.DIMMER",
+        "temperature": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_TV.TEMPERATURE",
+        "hue": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_TV.HUE",
+        "hardware": [
+          {
+            "label": "Philips 1746430P7",
+            "info": "TV Links",
+            "unreach": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_TV_einzel.Links.UNREACH"
+          },
+          {
+            "label": "Philips 1746430P7",
+            "info": "TV Rechts",
+            "unreach": "alias.0.Wohnzimmer.Dekoleuchten.Wandleuchte_TV_einzel.Rechts.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Wandleuchte EZ",
+        "type": "light",
+        "iconset": "resonate",
+        "value": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten.ON",
+        "rgb": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten.RGB",
+        "temperature": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten.TEMPERATURE",
+        "dimmer": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten.DIMMER",
+        "hardware": [
+          {
+            "label": "Philips 1746430P7",
+            "info": "EZ Garderobe",
+            "unreach": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten_einzel.Wandleuchte_Garderobe.UNREACH",
+            "rssi": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten_einzel.Wandleuchte_Garderobe.RSSI"
+          },
+          {
+            "label": "Philips 1746430P7",
+            "info": "EZ Wanddisplay",
+            "unreach": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten_einzel.Wandleuchte_Tablet.UNREACH",
+            "rssi": "alias.0.Esszimmer.Dekoleuchten.Wandleuchten_einzel.Wandleuchte_Tablet.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Ambilight",
+        "type": "button",
+        "value": "alias.0.Wohnzimmer.Dekoleuchten.Ambilight_TV.PRESS",
+        "hardware": [
+          {
+            "label": "TV API",
+            "unreach": "alias.0.Wohnzimmer.Dekoleuchten.Ambilight_TV.UNREACH"
+          }
+        ]
+      },
+      {
+        "name": "Weihnachtsbaum",
+        "type": "light",
+        "iconset": "weihnachten",
+        "hidden": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.UNREACH",
+        "value": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.ON",
+        "rgb": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.RGB",
+        "dimmer": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.DIMMER",
+        "temperature": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.TEMPERATURE",
+        "hardware": [
+          {
+            "label": "Lidl HG06467",
+            "info": "Nur am Weihnachten",
+            "unreach": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.UNREACH",
+            "rssi": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.RSSI"
+          }
+        ],
+        "controls": [
+          {
+            "type": "list",
+            "id": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.EFFECT_TYPE",
+            "values": [
+              "Stetig:steady",
+              "Schnee:snow",
+              "Regenbogen:rainbow",
+              "Schlange:snake",
+              "Funkeln:twinkle",
+              "Feuerwerk:firework",
+              "horizontale Flagge:horizontal_flag",
+              "Wellen:waves",
+              "Raufrunter:updown",
+              "Vintage:vintage",
+              "Verblassen:fading",
+              "Kollision:collide",
+              "Blitz:strobe",
+              "Glitzern:sparkles",
+              "Karnaval:carnaval",
+              "Glühen:glow"
+            ],
+            "function": "Effect"
+          },
+          {
+            "type": "number",
+            "min": 1,
+            "max": 64,
+            "id": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.EFFECT_SPEED",
+            "function": "Effectgeschwindigkeit"
+          },
+          {
+            "type": "colorList",
+            "separator": ",",
+            "json": false,
+            "max": 6,
+            "id": "alias.0.Wohnzimmer.Dekoleuchten.Weihnachtsbaum.EFFECT_COLORS",
+            "function": "Effectfarben"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Raumklima",
+    "devices": [
+      {
+        "name": "Heizung",
+        "type": "heater",
+        "value": "alias.0.Wohnzimmer.Heizung.POWER",
+        "temperature": "alias.0.Wohnzimmer.Heizung.ACTUAL",
+        "temperature_set": "alias.0.Wohnzimmer.Heizung.SET",
+        "humidity": "alias.0.Wohnzimmer.Heizung.HUMIDITY",
+        "hardware": [
+          {
+            "label": "Tado Wandthermostat {{alias.0.Wohnzimmer.Heizung.DEVICETYPE}}",
+            "info": "3x AAA Batterie",
+            "unreach": "alias.0.Wohnzimmer.Heizung.UNREACH",
+            "lowbat": "alias.0.Wohnzimmer.Heizung.LOWBAT"
+          }
+        ]
+      },
+      {
+        "name": "Ventilator",
+        "type": "button",
+        "value": "alias.0.Wohnzimmer.Geräte.Deckenventilator.SET",
+        "hardware": [
+          {
+            "label": "Broadlink Sender",
+            "unreach": "alias.0.Wohnzimmer.Geräte.Deckenventilator.UNREACH",
+            "info": "Bei Fehler neustarten"
+          }
+        ]
+      },
+      {
+        "name": "Fenster Couch",
+        "type": "window",
+        "value": "alias.0.Wohnzimmer.Rollladen.SET",
+        "state": "alias.0.Wohnzimmer.Terrassentür.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Wohnzimmer.Rollladen.UNREACH",
+            "errorID": "alias.0.Wohnzimmer.Rollladen.ERROR"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Wohnzimmer.Terrassentür.UNREACH2",
+            "lowbat": "alias.0.Wohnzimmer.Terrassentür.LOWBAT2"
+          },
+          {
+            "label": "Griff Sensor",
+            "unreach": "alias.0.Wohnzimmer.Terrassentür.UNREACH",
+            "lowbat": "alias.0.Wohnzimmer.Terrassentür.LOWBAT",
+            "errorID": "alias.0.Wohnzimmer.Terrassentür.ERROR"
+          }
+        ]
+      },
+      {
+        "name": "Fenster Esszimmer",
+        "type": "window",
+        "value": "alias.0.Esszimmer.Rollladen.SET",
+        "state": "alias.0.Esszimmer.Terrassentür.ACTUAL",
+        "hardware": [
+          {
+            "label": "Rollladen Aktor",
+            "unreach": "alias.0.Esszimmer.Rollladen.UNREACH",
+            "errorID": "alias.0.Esszimmer.Rollladen.ERROR",
+            "rssi": "alias.0.Esszimmer.Rollladen.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Esszimmer.Terrassentür.UNREACH2",
+            "lowbat": "alias.0.Esszimmer.Terrassentür.LOWBAT2",
+            "rssi": "alias.0.Esszimmer.Terrassentür.RSSI2"
+          },
+          {
+            "label": "Griff Sensor",
+            "unreach": "alias.0.Esszimmer.Terrassentür.UNREACH",
+            "lowbat": "alias.0.Esszimmer.Terrassentür.LOWBAT",
+            "errorID": "alias.0.Esszimmer.Terrassentür.ERROR",
+            "rssi": "alias.0.Esszimmer.Terrassentür.RSSI"
+          }
+        ]
+      },
+      {
+        "name": "Haustür",
+        "type": "door",
+        "value": "alias.0.Eingangsbereich.Tür.ACTUAL",
+        "hardware": [
+          {
+            "label": "Ekey dLine",
+            "unreach": "alias.0.Eingangsbereich.Tür.UNREACH",
+            "rssi": "alias.0.Eingangsbereich.Tür.RSSI"
+          },
+          {
+            "label": "Fenster Sensor",
+            "unreach": "alias.0.Eingangsbereich.Tür.UNREACH2",
+            "lowbat": "alias.0.Eingangsbereich.Tür.LOWBAT",
+            "rssi": "alias.0.Eingangsbereich.Tür.RSSI2"
+          }
+        ],
+        "info": [
+          {
+            "value": "alias.0.Eingangsbereich.Tür.LAST_OPENER",
+            "label": "Letzter User"
+          },
+          {
+            "value": "alias.0.Eingangsbereich.Tür.IP",
+            "label": "IP"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Geräte",
+    "devices": [
+      {
+        "name": "Mexico",
+        "type": "plug",
+        "value": "alias.0.Wohnzimmer.Geräte.Mexico.SET",
+        "hardware": [
+          {
+            "label": "Smartthings API",
+            "unreach": "alias.0.Wohnzimmer.Geräte.Mexico.UNREACH"
+          }
+        ],
+        "info": [
+          {
+            "label": "IP",
+            "value": "alias.0.Wohnzimmer.Geräte.Mexico.IP"
+          }
+        ]
+      },
+      {
+        "name": "Alexa",
+        "type": "media",
+        "value": "alias.0.Wohnzimmer.Alexa.STATE",
+        "command": "alias.0.Wohnzimmer.Alexa.COMMAND",
+        "image": "echo.png",
+        "controls": [
+          {
+            "function": "volume",
+            "id": "alias.0.Wohnzimmer.Alexa.VOLUME",
+            "step": 10,
+            "unit": "%"
+          },
+          {
+            "function": "play",
+            "id": "alias.0.Wohnzimmer.Alexa.PLAY",
+            "allowed": "alias.0.Wohnzimmer.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "pause",
+            "id": "alias.0.Wohnzimmer.Alexa.PAUSE",
+            "allowed": "alias.0.Wohnzimmer.Alexa.ALLOW_PLAY"
+          },
+          {
+            "function": "rewind",
+            "id": "alias.0.Wohnzimmer.Alexa.REWIND"
+          },
+          {
+            "function": "forward",
+            "id": "alias.0.Wohnzimmer.Alexa.FORWARD"
+          },
+          {
+            "function": "previous",
+            "id": "alias.0.Wohnzimmer.Alexa.PREV",
+            "allowed": "alias.0.Wohnzimmer.Alexa.ALLOW_PREV"
+          },
+          {
+            "function": "next",
+            "id": "alias.0.Wohnzimmer.Alexa.NEXT",
+            "allowed": "alias.0.Wohnzimmer.Alexa.ALLOW_NEXT"
+          },
+          {
+            "function": "repeat",
+            "id": "alias.0.Wohnzimmer.Alexa.REPEAT",
+            "allowed": "alias.0.Wohnzimmer.Alexa.ALLOW_REPEAT",
+            "type": "boolean"
+          },
+          {
+            "function": "shuffle",
+            "id": "alias.0.Wohnzimmer.Alexa.SHUFFLE",
+            "allowed": "alias.0.Wohnzimmer.Alexa.ALLOW_SHUFFLE",
+            "type": "boolean"
+          },
+          {
+            "function": "stop",
+            "id": "alias.0.Wohnzimmer.Alexa.STOP"
+          }
+        ],
+        "channellists": [
+          {
+            "list": "channelList.json",
+            "id_prefix": "alias.0.Wohnzimmer.Alexa.PLAY_"
+          }
+        ],
+        "mediainfo": [
+          {
+            "function": "album",
+            "id": "alias.0.Wohnzimmer.Alexa.ALBUM"
+          },
+          {
+            "function": "artist",
+            "id": "alias.0.Wohnzimmer.Alexa.ARTIST"
+          },
+          {
+            "function": "title",
+            "id": "alias.0.Wohnzimmer.Alexa.TITLE"
+          },
+          {
+            "function": "imageURL",
+            "id": "alias.0.Wohnzimmer.Alexa.COVER_URL"
+          },
+          {
+            "function": "provider",
+            "id": "alias.0.Wohnzimmer.Alexa.SOURCE",
+            "imageTyp": "png"
+          },
+          {
+            "function": "length",
+            "id": "alias.0.Wohnzimmer.Alexa.DURATION",
+            "unit": "s"
+          },
+          {
+            "function": "progress",
+            "id": "alias.0.Wohnzimmer.Alexa.ELAPSED",
+            "unit": "s"
+          }
+        ],
+        "hardware": [
+          {
+            "label": "Echo",
+            "unreach": "alias.0.Wohnzimmer.Alexa.UNREACH",
+            "rssi": "alias.0.Wohnzimmer.Alexa.RSSI",
+            "info": "{{alias.0.Wohnzimmer.Alexa.DEVICETYPE}}"
+          }
+        ]
+      }
+    ]
+  }
+]

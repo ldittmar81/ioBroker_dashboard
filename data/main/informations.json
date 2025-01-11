@@ -1,0 +1,147 @@
+{
+  "name": "Informationen",
+  "type": "informations",
+  "icon": "fa-info-circle",
+  "authorization": [
+    "papa"
+  ],
+  "content": [
+    {
+      "category": "",
+      "tiles": [
+        {
+          "name": "Verbrauch",
+          "image": "Verbrauch.webp",
+          "status": [
+            {
+              "label": "Stromverbrauch",
+              "value": "ioBrokerObjekte.Informationen.Verbrauch.Stromverbrauch"
+            },
+            {
+              "label": "Wasserverbrauch",
+              "value": "ioBrokerObjekte.Informationen.Verbrauch.Wasserverbrauch"
+            }
+          ]
+        },
+        {
+          "name": "Nicht erreichbar",
+          "image": "NichtErreichbar.webp",
+          "status": [
+            {
+              "label": "Geräte offline",
+              "value": "ioBrokerObjekte.Informationen.NichtErreichbar.GeräteOffline"
+            }
+          ]
+        },
+        {
+          "name": "Batterie schwach",
+          "image": "BatterieSchwach.webp",
+          "status": [
+            {
+              "label": "Anzahl",
+              "value": "ioBrokerObjekte.Informationen.BatterieSchwach.AnzahlSchwach"
+            }
+          ]
+        },
+        {
+          "name": "IT Infrastruktur",
+          "image": "ITInfrastruktur.webp",
+          "status": [
+            {
+              "label": "Serverstatus",
+              "value": "ioBrokerObjekte.Informationen.ITInfrastruktur.Serverstatus"
+            },
+            {
+              "label": "Netzwerk",
+              "value": "ioBrokerObjekte.Informationen.ITInfrastruktur.Netzwerk"
+            }
+          ]
+        },
+        {
+          "name": "Mama",
+          "image": "mama.jpg",
+          "status": [
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Informationen.Mama.Status"
+            },
+            {
+              "label": "Anwesenheit",
+              "value": "ioBrokerObjekte.Informationen.Mama.Anwesenheit"
+            }
+          ]
+        },
+        {
+          "name": "Big Papa",
+          "image": "papa.jpg",
+          "status": [
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Informationen.Papa.Status"
+            },
+            {
+              "label": "Anwesenheit",
+              "value": "ioBrokerObjekte.Informationen.Papa.Anwesenheit"
+            }
+          ]
+        },
+        {
+          "name": "Little Princess",
+          "image": "kind1.jpg",
+          "status": [
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Informationen.Kind1.Status"
+            },
+            {
+              "label": "Anwesenheit",
+              "value": "ioBrokerObjekte.Informationen.Kind1.Anwesenheit"
+            }
+          ]
+        },
+        {
+          "name": "Metal Kid",
+          "image": "kind2.jpg",
+          "status": [
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Informationen.Kind2.Status"
+            },
+            {
+              "label": "Anwesenheit",
+              "value": "ioBrokerObjekte.Informationen.Kind2.Anwesenheit"
+            }
+          ]
+        },
+        {
+          "name": "Junior Gamer",
+          "image": "kind3.jpg",
+          "status": [
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Informationen.Kind3.Status"
+            },
+            {
+              "label": "Anwesenheit",
+              "value": "ioBrokerObjekte.Informationen.Kind3.Anwesenheit"
+            }
+          ]
+        },
+        {
+          "name": "Dog",
+          "image": "hund.jpg",
+          "status": [
+            {
+              "label": "Status",
+              "value": "ioBrokerObjekte.Informationen.Dog.Status"
+            },
+            {
+              "label": "Anwesenheit",
+              "value": "ioBrokerObjekte.Informationen.Dog.Anwesenheit"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
