@@ -20,6 +20,39 @@ function showEditor() {
   editorContainer.classList.remove('hidden');
 }
 
+function showFolderCreationPrompt() {
+  return new Promise((resolve) => {
+    const promptContainer = document.createElement('div');
+    promptContainer.classList.add('prompt-container');
+
+    const promptBox = document.createElement('div');
+    promptBox.classList.add('prompt-box');
+
+    promptBox.innerHTML = `
+      <h3>Neuen Ordner erstellen</h3>
+      <input type="text" id="folder-name-input" placeholder="Ordnername eingeben" />
+      <div class="prompt-actions">
+        <button id="create-folder-confirm">Erstellen</button>
+        <button id="create-folder-cancel">Abbrechen</button>
+      </div>
+    `;
+
+    promptContainer.appendChild(promptBox);
+    document.body.appendChild(promptContainer);
+
+    document.getElementById('create-folder-cancel').addEventListener('click', () => {
+      document.body.removeChild(promptContainer);
+      resolve(null); // Abbruch, keine Eingabe
+    });
+
+    document.getElementById('create-folder-confirm').addEventListener('click', () => {
+      const folderName = document.getElementById('folder-name-input').value.trim();
+      document.body.removeChild(promptContainer);
+      resolve(folderName || null); // Rückgabe des Ordnernamens
+    });
+  });
+}
+
 // Dynamisches Formular aus JSON-Schema erstellen
 function createFormFromSchema(schema, jsonData = {}) {
   ipcRenderer.send('log-message', 'Formular wird erstellt...');
@@ -32,6 +65,7 @@ function createFormFromSchema(schema, jsonData = {}) {
   header.textContent = `Bearbeite: ${currentFile}`;
   editorForm.appendChild(header);
 
+  // Durch alle Schema-Eigenschaften iterieren
   Object.keys(schema.properties).forEach((key) => {
     const fieldSchema = schema.properties[key];
     const value = jsonData[key] !== undefined ? jsonData[key] : '';
@@ -44,6 +78,7 @@ function createFormFromSchema(schema, jsonData = {}) {
     label.textContent = fieldSchema.description || key;
     label.htmlFor = key;
 
+    // Rotes Sternchen für required-Felder
     if (schema.required && schema.required.includes(key)) {
       const requiredSpan = document.createElement('span');
       requiredSpan.textContent = ' *';
@@ -55,7 +90,57 @@ function createFormFromSchema(schema, jsonData = {}) {
 
     // Input-Feld
     let input;
-    if (fieldSchema.enum) {
+    if (key === 'dataFolder') {
+      // Selectbox für dataFolder
+      input = document.createElement('select');
+      input.id = key;
+      input.name = key;
+
+      // Feste Optionen hinzufügen
+      ['data', 'private'].forEach((folder) => {
+        const opt = document.createElement('option');
+        opt.value = folder;
+        opt.textContent = folder;
+        opt.selected = folder === value;
+        input.appendChild(opt);
+      });
+
+      // Dynamische Ordner hinzufügen
+      ipcRenderer.invoke('get-root-folders').then((folders) => {
+        folders.forEach((folder) => {
+          const opt = document.createElement('option');
+          opt.value = folder;
+          opt.textContent = folder;
+          opt.selected = folder === value;
+          input.appendChild(opt);
+        });
+      });
+
+      // Button "Ordner anlegen"
+      const createFolderButton = document.createElement('button');
+      createFolderButton.textContent = 'Ordner anlegen';
+      createFolderButton.type = 'button';
+      createFolderButton.classList.add('create-folder-btn');
+      createFolderButton.addEventListener('click', () => {
+        showFolderCreationPrompt().then((newFolder) => {
+          if (newFolder) {
+            ipcRenderer.invoke('create-folder', newFolder).then((success) => {
+              if (success) {
+                alert(`Ordner "${newFolder}" wurde erfolgreich erstellt.`);
+                updateDataFolderSelect(input, newFolder); // Dropdown aktualisieren und neuen Ordner auswählen
+              } else {
+                alert('Fehler beim Erstellen des Ordners.');
+              }
+            });
+          }
+        });
+      });
+
+      container.appendChild(input);
+      container.appendChild(createFolderButton);
+
+    } else if (fieldSchema.enum) {
+      // Dropdown für enum-Werte
       input = document.createElement('select');
       fieldSchema.enum.forEach((option) => {
         const opt = document.createElement('option');
@@ -65,10 +150,11 @@ function createFormFromSchema(schema, jsonData = {}) {
         input.appendChild(opt);
       });
     } else if (fieldSchema.type === 'boolean') {
+      // Dropdown für boolean
       input = document.createElement('select');
       input.innerHTML = `
-      <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
-      <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
+        <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
+        <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
     } else if (fieldSchema.type === 'array') {
       input = document.createElement('textarea');
       input.value = Array.isArray(value) ? value.join('\n') : '';
@@ -81,6 +167,7 @@ function createFormFromSchema(schema, jsonData = {}) {
     input.id = key;
     input.name = key;
 
+    // Validierung mit pattern
     if (fieldSchema.pattern) {
       input.pattern = fieldSchema.pattern;
       const patternInfo = document.createElement('small');
@@ -91,6 +178,7 @@ function createFormFromSchema(schema, jsonData = {}) {
     }
 
     container.appendChild(input);
+
     editorForm.appendChild(container);
   });
 
@@ -103,18 +191,14 @@ function createFormFromSchema(schema, jsonData = {}) {
   `;
   editorForm.appendChild(actions);
 
-  ipcRenderer.send('log-message', 'Buttons hinzufügen...');
   const saveBtn = document.getElementById('save-btn');
   const cancelBtn = document.getElementById('cancel-btn');
 
   if (saveBtn && cancelBtn) {
     saveBtn.addEventListener('click', saveFormData);
     cancelBtn.addEventListener('click', () => {
-      ipcRenderer.send('log-message', 'Bearbeitung abgebrochen.');
       showStartPage();
     });
-  } else {
-    ipcRenderer.send('log-message', 'Buttons nicht gefunden...');
   }
 }
 
@@ -139,6 +223,34 @@ function saveFormData(event) {
   ipcRenderer.send('save-config', { fileName: currentFile, content: updatedContent });
   showStartPage(); // Zurück zur Startseite nach Speichern
 }
+
+function updateDataFolderSelect(selectElement, selectedValue = null) {
+  ipcRenderer.invoke('get-root-folders').then((folders) => {
+    // Bestehende Optionen entfernen
+    while (selectElement.firstChild) {
+      selectElement.removeChild(selectElement.firstChild);
+    }
+
+    // Feste Optionen hinzufügen
+    ['data', 'private'].forEach((folder) => {
+      const opt = document.createElement('option');
+      opt.value = folder;
+      opt.textContent = folder;
+      opt.selected = folder === selectedValue;
+      selectElement.appendChild(opt);
+    });
+
+    // Dynamische Ordner hinzufügen
+    folders.forEach((folder) => {
+      const opt = document.createElement('option');
+      opt.value = folder;
+      opt.textContent = folder;
+      opt.selected = folder === selectedValue;
+      selectElement.appendChild(opt);
+    });
+  });
+}
+
 
 // Konfiguration laden
 ipcRenderer.on('load-config', ({ fileName, schema, content }) => {

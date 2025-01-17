@@ -2,9 +2,61 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+const excludedFolders = ['.idea', '.git', 'assets', 'dist', 'doc', 'editor', 'node_modules', 'schema', 'data', 'private'];
 let mainWindow;
 
+// Funktion zur Sicherstellung der gesamten Ordnerstruktur
+function ensureFolderStructureExists(baseFolder) {
+  const subFolders = [
+    'devices',
+    'helpers/mediaChannelLists',
+    'img/devices',
+    'img/main',
+    'img/users',
+    'main',
+    'theme',
+  ];
+
+  subFolders.forEach((subFolder) => {
+    const folderPath = path.join(baseFolder, subFolder);
+    if (!fs.existsSync(folderPath)) {
+      console.log(`Erstelle Unterordner: ${folderPath}`);
+      try {
+        fs.mkdirSync(folderPath, { recursive: true });
+        console.log(`Unterordner "${subFolder}" wurde erfolgreich erstellt.`);
+      } catch (error) {
+        console.error(`Fehler beim Erstellen des Unterordners "${subFolder}":`, error);
+      }
+    } else {
+      console.log(`Unterordner "${subFolder}" existiert bereits.`);
+    }
+  });
+}
+
+
+// Überprüfen und Erstellen des privaten Ordners
+function ensurePrivateFolderExists() {
+  const privateFolderPath = path.join(__dirname, '..', 'private');
+  if (!fs.existsSync(privateFolderPath)) {
+    console.log('Der Ordner "private" existiert nicht. Erstelle den Ordner...');
+    try {
+      fs.mkdirSync(privateFolderPath, { recursive: true });
+      console.log('Ordner "private" wurde erfolgreich erstellt.');
+    } catch (error) {
+      console.error('Fehler beim Erstellen des Ordners "private":', error);
+    }
+  } else {
+    console.log('Der Ordner "private" existiert bereits.');
+  }
+
+  // Unterstruktur im "private"-Ordner sicherstellen
+  ensureFolderStructureExists(privateFolderPath);
+}
+
 app.on('ready', () => {
+
+  ensurePrivateFolderExists();
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 1200,
@@ -85,3 +137,40 @@ ipcMain.on('log-message', (event, message) => {
   console.log(`[Renderer-Log]: ${message}`);
 });
 
+// IPC für das Abrufen der Root-Ordner
+ipcMain.handle('get-root-folders', async () => {
+  const rootPath = path.join(__dirname, '..');
+  return fs
+    .readdirSync(rootPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory() && !excludedFolders.includes(dirent.name))
+    .map((dirent) => dirent.name);
+});
+
+// IPC für das Erstellen eines neuen Ordners
+ipcMain.handle('create-folder', async (event, folderName) => {
+  const folderPath = path.join(__dirname, '..', folderName);
+  const gitIgnorePath = path.join(__dirname, '..', '.gitignore');
+
+  try {
+    if (!fs.existsSync(folderPath)) {
+      fs.mkdirSync(folderPath);
+      console.log(`Ordner '${folderName}' erstellt.`);
+
+      ensureFolderStructureExists(folderPath);
+    }
+
+    // Zur .gitignore hinzufügen
+    const gitIgnoreContent = fs.existsSync(gitIgnorePath)
+      ? fs.readFileSync(gitIgnorePath, 'utf8')
+      : '';
+    if (!gitIgnoreContent.includes(folderName)) {
+      fs.appendFileSync(gitIgnorePath, `\n${folderName}`);
+      console.log(`Ordner '${folderName}' zur .gitignore hinzugefügt.`);
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Fehler beim Erstellen des Ordners:', error);
+    return false;
+  }
+});
