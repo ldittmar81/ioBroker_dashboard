@@ -1,0 +1,36 @@
+{
+  "name": "iobroker-dashboard-editor",
+  "version": "0.1.0",
+  "description": "Ein lokaler Editor für JSON- und CSS-Dateien des ioBroker Dashboards.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "echo 'Es gibt keine speziellen Build-Schritte.'",
+    "lint": "eslint .",
+    "test": "echo \"Keine Tests definiert\" && exit 0"
+  },
+  "author": "Lissandro Dittmar",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "electron": "^26.2.0",
+    "inquirer": "^9.2.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.51.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldittmar81/ioBroker_dashboard"
+  },
+  "keywords": [
+    "ioBroker",
+    "dashboard",
+    "editor",
+    "json",
+    "css",
+    "local"
+  ]
+}
