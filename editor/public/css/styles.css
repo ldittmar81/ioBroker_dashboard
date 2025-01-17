@@ -26,10 +26,6 @@ body {
   padding: 0;
 }
 
-.editor {
-  padding: 20px;
-}
-
 .form-field {
   margin-bottom: 20px;
 }
@@ -58,4 +54,29 @@ body {
   font-size: 16px;
   margin-left: 10px;
   cursor: pointer;
+}
+
+/* styles.css */
+.start-page {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.start-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.start-image {
+  max-width: 300px;
+  height: auto;
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.editor-container {
+  padding: 20px;
 }

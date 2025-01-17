@@ -1,13 +1,29 @@
 const ipcRenderer = window.electronAPI;
 
 const editorForm = document.querySelector('#editor-form');
+const startPage = document.querySelector('#start-page');
+const editorContainer = document.querySelector('#editor-container');
+
 let currentSchema = null;
 let currentFile = null;
 let currentContent = null;
 
+// Zeige die Startseite
+function showStartPage() {
+  startPage.classList.remove('hidden');
+  editorContainer.classList.add('hidden');
+}
+
+// Zeige den Editor
+function showEditor() {
+  startPage.classList.add('hidden');
+  editorContainer.classList.remove('hidden');
+}
+
 // Dynamisches Formular aus JSON-Schema erstellen
 function createFormFromSchema(schema, jsonData = {}) {
   ipcRenderer.send('log-message', 'Formular wird erstellt...');
+  showEditor(); // Wechsle zur Editor-Ansicht
   currentSchema = schema;
   editorForm.innerHTML = ''; // Bestehendes Formular löschen
 
@@ -99,9 +115,10 @@ function createFormFromSchema(schema, jsonData = {}) {
 
   if (saveBtn && cancelBtn) {
     saveBtn.addEventListener('click', saveFormData);
-    cancelBtn.addEventListener('click', () =>
-      createFormFromSchema(currentSchema, currentContent)
-    );
+    cancelBtn.addEventListener('click', () => {
+      ipcRenderer.send('log-message', 'Bearbeitung abgebrochen.');
+      showStartPage();
+    });
   } else {
     ipcRenderer.send('log-message', 'Buttons nicht gefunden...');
   }
@@ -126,6 +143,7 @@ function saveFormData(event) {
   });
 
   ipcRenderer.send('save-config', { fileName: currentFile, content: updatedContent });
+  showStartPage(); // Zurück zur Startseite nach Speichern
 }
 
 // Konfiguration laden
@@ -134,3 +152,6 @@ ipcRenderer.on('load-config', ({ fileName, schema, content }) => {
   currentContent = content;
   createFormFromSchema(schema, content);
 });
+
+// Zeige Startseite beim Start
+showStartPage();
