@@ -32,10 +32,9 @@ function createFormFromSchema(schema, jsonData = {}) {
   header.textContent = `Bearbeite: ${currentFile}`;
   editorForm.appendChild(header);
 
-  // Durch alle Schema-Eigenschaften iterieren
   Object.keys(schema.properties).forEach((key) => {
     const fieldSchema = schema.properties[key];
-    const value = jsonData[key] || '';
+    const value = jsonData[key] !== undefined ? jsonData[key] : '';
 
     const container = document.createElement('div');
     container.classList.add('form-field');
@@ -45,7 +44,6 @@ function createFormFromSchema(schema, jsonData = {}) {
     label.textContent = fieldSchema.description || key;
     label.htmlFor = key;
 
-    // Rotes Sternchen für required-Felder
     if (schema.required && schema.required.includes(key)) {
       const requiredSpan = document.createElement('span');
       requiredSpan.textContent = ' *';
@@ -58,7 +56,6 @@ function createFormFromSchema(schema, jsonData = {}) {
     // Input-Feld
     let input;
     if (fieldSchema.enum) {
-      // Dropdown für enum-Werte
       input = document.createElement('select');
       fieldSchema.enum.forEach((option) => {
         const opt = document.createElement('option');
@@ -68,11 +65,10 @@ function createFormFromSchema(schema, jsonData = {}) {
         input.appendChild(opt);
       });
     } else if (fieldSchema.type === 'boolean') {
-      // Dropdown für boolean
       input = document.createElement('select');
       input.innerHTML = `
-        <option value="true" ${value === true ? 'selected' : ''}>Ja</option>
-        <option value="false" ${value === false ? 'selected' : ''}>Nein</option>`;
+      <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
+      <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
     } else if (fieldSchema.type === 'array') {
       input = document.createElement('textarea');
       input.value = Array.isArray(value) ? value.join('\n') : '';
@@ -85,7 +81,6 @@ function createFormFromSchema(schema, jsonData = {}) {
     input.id = key;
     input.name = key;
 
-    // Validierung mit pattern
     if (fieldSchema.pattern) {
       input.pattern = fieldSchema.pattern;
       const patternInfo = document.createElement('small');
@@ -96,7 +91,6 @@ function createFormFromSchema(schema, jsonData = {}) {
     }
 
     container.appendChild(input);
-
     editorForm.appendChild(container);
   });
 
