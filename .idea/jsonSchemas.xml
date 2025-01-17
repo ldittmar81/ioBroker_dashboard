@@ -8,7 +8,7 @@
             <SchemaInfo>
               <option name="generatedName" value="Config JSON" />
               <option name="name" value="config.schema" />
-              <option name="relativePathToSchema" value="data/schema/config.schema.json" />
+              <option name="relativePathToSchema" value="schema/config.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
@@ -27,7 +27,7 @@
             <SchemaInfo>
               <option name="generatedName" value="Devices JSON" />
               <option name="name" value="devices.schema" />
-              <option name="relativePathToSchema" value="data/schema/devices.schema.json" />
+              <option name="relativePathToSchema" value="schema/devices.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
@@ -50,7 +50,7 @@
             <SchemaInfo>
               <option name="generatedName" value="Main JSON" />
               <option name="name" value="main.schema" />
-              <option name="relativePathToSchema" value="data/schema/main.schema.json" />
+              <option name="relativePathToSchema" value="schema/main.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
@@ -73,7 +73,7 @@
             <SchemaInfo>
               <option name="generatedName" value="ChannelList JSON" />
               <option name="name" value="mediaChannelLists.schema" />
-              <option name="relativePathToSchema" value="data/schema/mediaChannelLists.schema.json" />
+              <option name="relativePathToSchema" value="schema/mediaChannelLists.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
@@ -96,7 +96,7 @@
             <SchemaInfo>
               <option name="generatedName" value="Overview JSON" />
               <option name="name" value="overview.schema" />
-              <option name="relativePathToSchema" value="data/schema/overview.schema.json" />
+              <option name="relativePathToSchema" value="schema/overview.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
@@ -115,7 +115,7 @@
             <SchemaInfo>
               <option name="generatedName" value="Sidebar JSON" />
               <option name="name" value="sidebar.schema" />
-              <option name="relativePathToSchema" value="data/schema/sidebar.schema.json" />
+              <option name="relativePathToSchema" value="schema/sidebar.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>
@@ -134,7 +134,7 @@
             <SchemaInfo>
               <option name="generatedName" value="Users JSON" />
               <option name="name" value="users.schema" />
-              <option name="relativePathToSchema" value="data/schema/users.schema.json" />
+              <option name="relativePathToSchema" value="schema/users.schema.json" />
               <option name="patterns">
                 <list>
                   <Item>

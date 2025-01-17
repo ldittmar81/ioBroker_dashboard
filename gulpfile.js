@@ -142,7 +142,6 @@ function copyOtherImages() {
 
 function copyData() {
   return gulp.src([`${config.dataFolder}/**/*`,
-    `!${config.dataFolder}/schema/**`,
     `!${config.dataFolder}/img/**`,
     `!${config.dataFolder}/theme/**`], {base: `${config.dataFolder}`})
     .pipe(gulp.dest('dist/data'));

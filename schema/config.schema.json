@@ -21,6 +21,10 @@
         "demo"
       ]
     },
+    "dataFolder": {
+      "type": "string",
+      "description": "Ordner mi den Konfigurationsdateien"
+    },
     "console": {
       "type": "boolean",
       "description": "Debug Modus einschalten (Konsole wird angezeigt)"
@@ -39,7 +43,8 @@
   "required": [
     "connLink",
     "mode",
-    "pages"
+    "pages",
+    "dataFolder"
   ],
   "additionalProperties": false
 }
