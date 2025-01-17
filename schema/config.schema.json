@@ -23,7 +23,7 @@
     },
     "dataFolder": {
       "type": "string",
-      "description": "Ordner mi den Konfigurationsdateien"
+      "description": "Ordner mit den Konfigurationsdateien"
     },
     "console": {
       "type": "boolean",

@@ -28,18 +28,38 @@ function createFormFromSchema(schema, jsonData = {}) {
     const label = document.createElement('label');
     label.textContent = fieldSchema.description || key;
     label.htmlFor = key;
+
+    // Rotes Sternchen für required-Felder
+    if (schema.required && schema.required.includes(key)) {
+      const requiredSpan = document.createElement('span');
+      requiredSpan.textContent = ' *';
+      requiredSpan.style.color = 'red';
+      label.appendChild(requiredSpan);
+    }
+
     container.appendChild(label);
 
     // Input-Feld
     let input;
-    if (fieldSchema.type === 'boolean') {
+    if (fieldSchema.enum) {
+      // Dropdown für enum-Werte
+      input = document.createElement('select');
+      fieldSchema.enum.forEach((option) => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        opt.selected = option === value;
+        input.appendChild(opt);
+      });
+    } else if (fieldSchema.type === 'boolean') {
+      // Dropdown für boolean
       input = document.createElement('select');
       input.innerHTML = `
         <option value="true" ${value === true ? 'selected' : ''}>Ja</option>
         <option value="false" ${value === false ? 'selected' : ''}>Nein</option>`;
     } else if (fieldSchema.type === 'array') {
       input = document.createElement('textarea');
-      input.value = value.join('\n');
+      input.value = Array.isArray(value) ? value.join('\n') : '';
     } else {
       input = document.createElement('input');
       input.type = 'text';
@@ -48,6 +68,17 @@ function createFormFromSchema(schema, jsonData = {}) {
 
     input.id = key;
     input.name = key;
+
+    // Validierung mit pattern
+    if (fieldSchema.pattern) {
+      input.pattern = fieldSchema.pattern;
+      const patternInfo = document.createElement('small');
+      patternInfo.textContent = `Muss Muster entsprechen: ${fieldSchema.pattern}`;
+      patternInfo.style.display = 'block';
+      patternInfo.style.color = 'gray';
+      container.appendChild(patternInfo);
+    }
+
     container.appendChild(input);
 
     editorForm.appendChild(container);
@@ -63,7 +94,6 @@ function createFormFromSchema(schema, jsonData = {}) {
   editorForm.appendChild(actions);
 
   ipcRenderer.send('log-message', 'Buttons hinzufügen...');
-  console.log('Buttons hinzufügen...');
   const saveBtn = document.getElementById('save-btn');
   const cancelBtn = document.getElementById('cancel-btn');
 
@@ -95,7 +125,6 @@ function saveFormData(event) {
     }
   });
 
-  ipcRenderer.send('log-message', 'Daten verarbeitet:' + JSON.stringify(updatedContent));
   ipcRenderer.send('save-config', { fileName: currentFile, content: updatedContent });
 }
 
