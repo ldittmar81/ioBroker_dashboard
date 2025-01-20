@@ -5,6 +5,7 @@ const fs = require('fs');
 let mainWindow;
 let selectedEnvironment = null;
 let users = [];
+let currentConfig = null;
 
 const excludedFolders = ['.idea', '.git', 'assets', 'dist', 'doc', 'editor', 'node_modules', 'schema', 'data', 'private'];
 
@@ -195,6 +196,9 @@ function loadConfigFile(fileName) {
   if (fs.existsSync(filePath)) {
     const fileData = fs.readFileSync(filePath, 'utf8');
     const config = JSON.parse(fileData);
+
+    currentConfig = config;
+
     loadUsers(path.join(__dirname, '..', config.dataFolder));
     createMenu();
     mainWindow.webContents.send('load-config', { fileName, schema, content: config });
@@ -312,16 +316,45 @@ ipcMain.handle('save-user', async (event, { newUser, existingUserId }) => {
 });
 
 ipcMain.handle('upload-icon', async (event, filePath) => {
-  const dataFolder = path.join(__dirname, '..', selectedEnvironment === 'Produktiv' ? 'private' : 'data');
-  const userImgFolder = path.join(dataFolder, 'img', 'users');
-  const fileName = path.basename(filePath);
+  if (!currentConfig || !currentConfig.dataFolder) {
+    throw new Error('dataFolder ist in der Konfiguration nicht definiert.');
+  }
 
+  const dataFolder = path.join(__dirname, '..', currentConfig.dataFolder);
+  const userImgFolder = path.join(dataFolder, 'img', 'users');
+
+  // Ziel-Pattern (Beispiel)
+  const schemaPattern = /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|svg|gif|webp)$/;
+
+  // Ursprünglicher Dateiname und Anpassung
+  let originalName = path.basename(filePath);
+  const extension = originalName.split('.').pop();
+  let baseName = originalName.split('.').slice(0, -1).join('_').replace(/[^a-zA-Z0-9_-]/g, '_');
+
+  // Optional: Länge des Basenamens beschränken
+  baseName = baseName.substring(0, 20);
+
+  let newFileName = `${baseName}.${extension}`;
+
+  // Validieren und ggf. korrigieren
+  if (!schemaPattern.test(newFileName)) {
+    newFileName = `${baseName}_fixed.${extension}`;
+  }
+
+  // Speicherpfad erstellen
+  const destPath = path.join(userImgFolder, newFileName);
+
+  // Sicherstellen, dass der Zielordner existiert
   if (!fs.existsSync(userImgFolder)) {
     fs.mkdirSync(userImgFolder, { recursive: true });
   }
 
-  const destPath = path.join(userImgFolder, fileName);
+  // Datei speichern
   fs.copyFileSync(filePath, destPath);
-  return fileName;
+
+  // Rückgabe des neuen Dateinamens
+  return newFileName;
 });
+
+
 
