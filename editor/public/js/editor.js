@@ -77,7 +77,10 @@ function showPageCreationPrompt() {
 
     promptBox.innerHTML = `
       <h3>Neue Seite hinzufügen</h3>
-      <input type="text" id="page-name-input" placeholder="Seitenname eingeben (z.B. 'newPage.json')" />
+      <div style="display: flex; align-items: center;">
+        <input type="text" id="page-name-input" placeholder="Seitenname eingeben (z.B. 'newPage')" style="flex-grow: 1;"/>
+        <span>.json</span>
+      </div>
       <div class="prompt-actions">
         <button id="create-page-confirm">Hinzufügen</button>
         <button id="create-page-cancel">Abbrechen</button>
@@ -93,9 +96,14 @@ function showPageCreationPrompt() {
     });
 
     document.getElementById('create-page-confirm').addEventListener('click', () => {
-      const pageName = document.getElementById('page-name-input').value.trim();
+      const pageNameInput = document.getElementById('page-name-input').value.trim();
       document.body.removeChild(promptContainer);
-      resolve(pageName || null); // Rückgabe des Seitennamens
+
+      if (pageNameInput) {
+        resolve(`${pageNameInput}.json`); // Automatisch `.json` hinzufügen
+      } else {
+        resolve(null); // Keine Eingabe
+      }
     });
   });
 }
@@ -156,7 +164,7 @@ function createFormFromSchema(schema, jsonData = {}) {
     if (schema.required && schema.required.includes(key)) {
       const requiredSpan = document.createElement('span');
       requiredSpan.textContent = ' *';
-      requiredSpan.style.color = 'red';
+      requiredSpan.classList.add('required-star');
       label.appendChild(requiredSpan);
     }
 
@@ -409,6 +417,152 @@ ipcRenderer.on('load-config', ({ fileName, schema, content }) => {
   currentContent = content;
   createFormFromSchema(schema, content);
 });
+
+ipcRenderer.on('new-user', () => {
+  showUserForm(); // Leeres Formular anzeigen
+});
+
+ipcRenderer.on('edit-user', (user) => {
+  showUserForm(user); // Formular mit Benutzerinformationen anzeigen
+});
+
+function showUserForm(user = null) {
+  showEditor(); // Zeige den Editor
+  editorForm.innerHTML = ''; // Bestehendes Formular löschen
+
+  const isNewUser = !user; // Unterscheide zwischen Neu und Bearbeiten
+
+  // Überschrift hinzufügen
+  const header = document.createElement('h3');
+  header.textContent = isNewUser ? 'Neuer Anwender' : `Bearbeite: ${user?.name || ''}`;
+  editorForm.appendChild(header);
+
+  // Felder für den Benutzer erstellen
+  const fields = [
+    { id: 'user', label: 'Benutzername', value: user?.user || '', required: true, readonly: !isNewUser },
+    { id: 'name', label: 'Name', value: user?.name || '', required: true },
+    { id: 'icon', label: 'Icon (Dateiname)', value: user?.icon || '', required: true },
+    { id: 'pin', label: 'PIN (4-stellig, optional)', value: user?.pin || '', pattern: '^\\d{4}$' },
+  ];
+
+  fields.forEach((field) => {
+    const container = document.createElement('div');
+    container.classList.add('form-field');
+
+    const label = document.createElement('label');
+    label.textContent = field.label;
+    label.htmlFor = field.id;
+
+    if (field.required) {
+      const requiredSpan = document.createElement('span');
+      requiredSpan.textContent = ' *';
+      requiredSpan.classList.add('required-star');
+      label.appendChild(requiredSpan);
+    }
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = field.id;
+    input.name = field.id;
+    input.value = field.value;
+    input.required = field.required || false;
+
+    if (field.readonly) {
+      input.readOnly = true;
+    }
+
+    if (field.id === 'pin') {
+      input.maxLength = 4;
+      input.addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+      });
+    }
+
+    if (field.pattern) {
+      input.pattern = field.pattern;
+    }
+
+    container.appendChild(label);
+    container.appendChild(input);
+    editorForm.appendChild(container);
+  });
+
+  // Datei-Upload für das Icon
+  const iconUploadContainer = document.createElement('div');
+  iconUploadContainer.classList.add('form-field');
+
+  const iconUploadLabel = document.createElement('label');
+  iconUploadLabel.textContent = 'Icon hochladen';
+  iconUploadLabel.htmlFor = 'icon-upload';
+
+  const iconUploadInput = document.createElement('input');
+  iconUploadInput.type = 'file';
+  iconUploadInput.id = 'icon-upload';
+  iconUploadInput.accept = '.jpg,.jpeg,.png,.svg,.gif,.webp';
+
+  iconUploadInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      ipcRenderer.invoke('upload-icon', file.path).then((newIconName) => {
+        document.getElementById('icon').value = newIconName;
+        alert('Icon hochgeladen und Name aktualisiert.');
+      });
+    }
+  });
+
+  iconUploadContainer.appendChild(iconUploadLabel);
+  iconUploadContainer.appendChild(iconUploadInput);
+  editorForm.appendChild(iconUploadContainer);
+
+  // Speichern- und Abbrechen-Buttons
+  const actions = document.createElement('div');
+  actions.classList.add('actions');
+
+  const saveBtn = document.createElement('button');
+  saveBtn.textContent = 'Speichern';
+  saveBtn.type = 'button';
+  saveBtn.addEventListener('click', () => saveUserData(user?.user));
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = 'Abbrechen';
+  cancelBtn.type = 'button';
+  cancelBtn.addEventListener('click', showStartPage);
+
+  actions.appendChild(saveBtn);
+  actions.appendChild(cancelBtn);
+  editorForm.appendChild(actions);
+}
+
+function saveUserData(existingUserId = null) {
+  const formData = new FormData(editorForm);
+  const newUser = {};
+
+  formData.forEach((value, key) => {
+    newUser[key] = value.trim();
+  });
+
+  ipcRenderer.send('log-message', 'Userdaten: ' + JSON.stringify(newUser, null, 2));
+
+  // Validierung
+  if (!newUser.user || !newUser.name || !newUser.icon) {
+    alert('Die Felder Benutzername, Name und Icon sind erforderlich.');
+    return;
+  }
+
+  if (newUser.pin && !/^\d{4}$/.test(newUser.pin)) {
+    alert('Die PIN muss 4-stellig sein.');
+    return;
+  }
+
+  ipcRenderer.invoke('save-user', { newUser, existingUserId }).then(() => {
+    alert('Anwender erfolgreich gespeichert.');
+    ipcRenderer.send('log-message', 'Anwenderliste wird aktualisiert.');
+    showStartPage();
+  }).catch((error) => {
+    console.error('Fehler beim Speichern des Anwenders:', error);
+    alert('Fehler beim Speichern des Anwenders.');
+  });
+}
 
 // Zeige Startseite beim Start
 showStartPage();

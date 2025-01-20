@@ -4,6 +4,7 @@ const fs = require('fs');
 
 let mainWindow;
 let selectedEnvironment = null;
+let users = [];
 
 const excludedFolders = ['.idea', '.git', 'assets', 'dist', 'doc', 'editor', 'node_modules', 'schema', 'data', 'private'];
 
@@ -12,6 +13,40 @@ function setEnvironment(env) {
   createMenu(); // Menü neu erstellen
   mainWindow.webContents.send('environment-changed', env); // Renderer informieren
 }
+
+function loadUsers(dataFolder) {
+  const usersPath = path.join(dataFolder, 'users.json');
+
+  if (!fs.existsSync(usersPath)) {
+    console.log('users.json nicht gefunden. Erstelle leere Datei.');
+    fs.writeFileSync(usersPath, '[]', 'utf8');
+  }
+
+  try {
+    const usersData = fs.readFileSync(usersPath, 'utf8');
+    users = JSON.parse(usersData);
+    console.log('Benutzer geladen:', users);
+  } catch (error) {
+    console.error('Fehler beim Laden der users.json:', error);
+    users = [];
+  }
+}
+
+function saveUsers(dataFolder) {
+  const usersPath = path.join(dataFolder, 'users.json');
+
+  try {
+    fs.writeFileSync(usersPath, JSON.stringify(users, null, 2), 'utf8');
+    console.log('Benutzer gespeichert.');
+
+    // Benutzerliste neu laden und Menü aktualisieren
+    loadUsers(dataFolder);
+    createMenu();
+  } catch (error) {
+    console.error('Fehler beim Speichern der users.json:', error);
+  }
+}
+
 
 function createMenu() {
   const environmentMenu = {
@@ -42,7 +77,21 @@ function createMenu() {
   if (selectedEnvironment) {
     additionalMenus.push({
       label: 'Anwender',
-      click: () => openSection('Anwender'),
+      submenu: [
+        ...users.map(user => ({
+          label: user.name,
+          click: () => {
+            console.log(`Benutzer "${user.name}" ausgewählt.`);
+            mainWindow.webContents.send('edit-user', user); // Nachricht an Renderer-Prozess senden
+          },
+        })),
+        {
+          label: 'Neuer Anwender anlegen',
+          click: () => {
+            mainWindow.webContents.send('new-user'); // Nachricht an Renderer-Prozess senden
+          },
+        },
+      ],
     });
 
     additionalMenus.push({
@@ -68,7 +117,7 @@ function createMenu() {
 }
 
 function openSection(section) {
-  mainWindow.webContents.send('open-section', section); // Renderer informieren
+  mainWindow.webContents.send('open-section', section);
 }
 
 // Funktion zur Sicherstellung der gesamten Ordnerstruktur
@@ -137,17 +186,18 @@ app.on('ready', () => {
   createMenu(); // Initiales Menü erstellen
 });
 
-const schemaPath = path.join(__dirname, '..', 'schema', 'config.schema.json');
-
 // Funktion zum Laden der Konfigurationsdatei und Senden an die Renderer-Seite
 function loadConfigFile(fileName) {
   const filePath = path.join(__dirname, '..', fileName);
+  const schemaPath = path.join(__dirname, '..', 'schema', 'config.schema.json');
   const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 
   if (fs.existsSync(filePath)) {
-    // Datei existiert, lade die Inhalte
     const fileData = fs.readFileSync(filePath, 'utf8');
-    mainWindow.webContents.send('load-config', { fileName, schema, content: JSON.parse(fileData) });
+    const config = JSON.parse(fileData);
+    loadUsers(path.join(__dirname, '..', config.dataFolder));
+    createMenu();
+    mainWindow.webContents.send('load-config', { fileName, schema, content: config });
   } else {
     console.log(`Datei ${fileName} nicht gefunden. Erstelle Standardkonfiguration...`);
 
@@ -164,6 +214,8 @@ function loadConfigFile(fileName) {
     try {
       fs.writeFileSync(filePath, JSON.stringify(defaultConfig, null, 2), 'utf8');
       console.log(`Standardkonfiguration in ${fileName} erstellt.`);
+      loadUsers(path.join(__dirname, '..', defaultConfig.dataFolder)); // Benutzer laden
+      createMenu(); // Menü aktualisieren
       mainWindow.webContents.send('load-config', { fileName, schema, content: defaultConfig });
     } catch (error) {
       console.error(`Fehler beim Erstellen der Standardkonfiguration für ${fileName}:`, error);
@@ -186,6 +238,8 @@ ipcMain.on('save-config', (event, { fileName, content }) => {
   try {
     fs.writeFileSync(filePath, JSON.stringify(content, null, 2), 'utf8');
     console.log(`Änderungen in ${fileName} gespeichert.`);
+    loadUsers(path.join(__dirname, '..', content.dataFolder));
+    createMenu();
   } catch (error) {
     console.error(`Fehler beim Speichern der Datei ${fileName}:`, error);
   }
@@ -239,3 +293,35 @@ ipcMain.handle('validate-page-name', async (event, pageName) => {
 
   return new RegExp(pagePattern).test(pageName);
 });
+
+ipcMain.handle('save-user', async (event, { newUser, existingUserId }) => {
+  const dataFolder = path.join(__dirname, '..', selectedEnvironment === 'Produktiv' ? 'private' : 'data');
+
+  // Prüfen, ob es sich um einen neuen oder bestehenden Anwender handelt
+  if (existingUserId) {
+    const index = users.findIndex(user => user.user === existingUserId);
+    if (index !== -1) {
+      users[index] = newUser;
+    }
+  } else {
+    users.push(newUser);
+  }
+
+  saveUsers(dataFolder);
+  return true;
+});
+
+ipcMain.handle('upload-icon', async (event, filePath) => {
+  const dataFolder = path.join(__dirname, '..', selectedEnvironment === 'Produktiv' ? 'private' : 'data');
+  const userImgFolder = path.join(dataFolder, 'img', 'users');
+  const fileName = path.basename(filePath);
+
+  if (!fs.existsSync(userImgFolder)) {
+    fs.mkdirSync(userImgFolder, { recursive: true });
+  }
+
+  const destPath = path.join(userImgFolder, fileName);
+  fs.copyFileSync(filePath, destPath);
+  return fileName;
+});
+

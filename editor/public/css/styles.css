@@ -183,3 +183,14 @@ body {
   text-align: center;
 }
 
+.required-star {
+  color: red;
+  font-weight: bold;
+}
+
+input[readonly] {
+  background-color: #f9f9f9;
+  color: #666;
+  cursor: not-allowed;
+}
+
