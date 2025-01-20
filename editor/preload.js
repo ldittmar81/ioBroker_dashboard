@@ -23,6 +23,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
       'validate-page-name',
       'save-user',
       'upload-icon',
+      'get-schema'
     ];
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);

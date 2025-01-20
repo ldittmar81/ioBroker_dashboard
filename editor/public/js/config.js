@@ -8,7 +8,7 @@ const configJS = {
     const [movedPage] = currentPages.splice(index, 1);
     currentPages.splice(index + direction, 0, movedPage);
 
-    configJS.renderPages(currentPages, pagesContainer);
+    this.renderPages(currentPages, pagesContainer);
     editorJS.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
   },
   renderPages(pages, pagesContainer) {
@@ -27,7 +27,7 @@ const configJS = {
         upButton.textContent = '↑';
         upButton.disabled = index === 0;
         upButton.addEventListener('click', () => {
-          configJS.movePage(index, -1);
+          this.movePage(index, -1);
         });
         pageRow.appendChild(upButton);
 
@@ -35,7 +35,7 @@ const configJS = {
         downButton.textContent = '↓';
         downButton.disabled = index === pages.length - 1;
         downButton.addEventListener('click', () => {
-          configJS.movePage(index, 1);
+          this.movePage(index, 1);
         });
         pageRow.appendChild(downButton);
 
@@ -86,16 +86,16 @@ const configJS = {
     });
   },
   addNewPage(pagesContainer, currentPages) {
-    configJS.showPageCreationPrompt().then((newPageName) => {
+    this.showPageCreationPrompt().then((newPageName) => {
       if (newPageName) {
         ipcRenderer.invoke('validate-page-name', newPageName).then((isValid) => {
           if (isValid) {
             if (!currentPages.includes(newPageName)) {
               currentPages.push(newPageName); // Füge die neue Seite zur Liste hinzu
-              configJS.renderPages(currentPages, pagesContainer); // Aktualisiere die Anzeige
+              this.renderPages(currentPages, pagesContainer); // Aktualisiere die Anzeige
 
               const hiddenInput = document.getElementById('pages-hidden-input');
-              configJS.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
+              this.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
             } else {
               alert('Diese Seite existiert bereits.');
             }
@@ -107,7 +107,7 @@ const configJS = {
     });
   },
   createFormFromSchema(schema, jsonData = {}) {
-    ipcRenderer.send('log-message', 'Formular wird erstellt...');
+    editorJS.logdata('Formular wird erstellt...');
     editorJS.showEditor(); // Wechsle zur Editor-Ansicht
     currentSchema = schema;
     editorForm.innerHTML = ''; // Bestehendes Formular löschen
@@ -122,26 +122,10 @@ const configJS = {
       const fieldSchema = schema.properties[key];
       const value = jsonData[key] !== undefined ? jsonData[key] : fieldSchema.default || '';
 
-      const container = document.createElement('div');
-      container.classList.add('form-field');
-
-      // Label
-      const label = document.createElement('label');
-      label.textContent = fieldSchema.description || key;
-      label.htmlFor = key;
-
-      // Rotes Sternchen für required-Felder
-      if (schema.required && schema.required.includes(key)) {
-        const requiredSpan = document.createElement('span');
-        requiredSpan.textContent = ' *';
-        requiredSpan.classList.add('required-star');
-        label.appendChild(requiredSpan);
-      }
-
-      container.appendChild(label);
-
       // Behandlung spezieller Felder
       if (key === 'pages') {
+        const container = editorJS.createFormFieldContainer(fieldSchema, key);
+
         const pagesContainer = document.createElement('div');
         pagesContainer.id = 'pages-container';
         pagesContainer.classList.add('pages-container');
@@ -153,137 +137,101 @@ const configJS = {
         hiddenInput.value = JSON.stringify(value || []); // Initialisiere das Hidden-Feld mit dem Array
 
         const currentPages = Array.isArray(value) ? [...value] : []; // Kopie des Arrays
-        configJS.renderPages(currentPages, pagesContainer);
+        this.renderPages(currentPages, pagesContainer);
 
         const addPageButton = document.createElement('button');
         addPageButton.textContent = 'Neue Seite hinzufügen';
         addPageButton.type = 'button';
         addPageButton.addEventListener('click', () => {
-          configJS.addNewPage(pagesContainer, currentPages);
+          this.addNewPage(pagesContainer, currentPages);
           editorJS.updateHiddenInput(hiddenInput, currentPages);
         });
 
         container.appendChild(pagesContainer);
         container.appendChild(addPageButton);
-        container.appendChild(hiddenInput); // Hidden-Feld hinzufügen
+        container.appendChild(hiddenInput);
+
+        editorForm.appendChild(container);
       }
+      else if (key === 'dataFolder') {
+        const container = editorJS.createFormFieldContainer(fieldSchema, key);
 
-      else {
-        // Andere Eingabetypen
-        let input;
+        const input = document.createElement('select');
+        input.id = key;
+        input.name = key;
 
-        if (key === 'dataFolder') {
-          // Selectbox für dataFolder
-          input = document.createElement('select');
+        // Feste Optionen hinzufügen
+        ['data', 'private'].forEach((folder) => {
+          const opt = document.createElement('option');
+          opt.value = folder;
+          opt.textContent = folder;
+          opt.selected = folder === value;
+          input.appendChild(opt);
+        });
 
-          // Feste Optionen hinzufügen
-          ['data', 'private'].forEach((folder) => {
+        // Dynamische Ordner hinzufügen
+        ipcRenderer.invoke('get-root-folders').then((folders) => {
+          folders.forEach((folder) => {
             const opt = document.createElement('option');
             opt.value = folder;
             opt.textContent = folder;
             opt.selected = folder === value;
             input.appendChild(opt);
           });
+        });
 
-          // Dynamische Ordner hinzufügen
-          ipcRenderer.invoke('get-root-folders').then((folders) => {
-            folders.forEach((folder) => {
-              const opt = document.createElement('option');
-              opt.value = folder;
-              opt.textContent = folder;
-              opt.selected = folder === value;
-              input.appendChild(opt);
-            });
+        // Button "Ordner anlegen"
+        const createFolderButton = document.createElement('button');
+        createFolderButton.textContent = 'Ordner anlegen';
+        createFolderButton.type = 'button';
+        createFolderButton.classList.add('create-folder-btn');
+        createFolderButton.addEventListener('click', () => {
+          this.showFolderCreationPrompt().then((newFolder) => {
+            if (newFolder) {
+              ipcRenderer.invoke('create-folder', newFolder).then((success) => {
+                if (success) {
+                  alert(`Ordner "${newFolder}" wurde erfolgreich erstellt.`);
+                  this.updateDataFolderSelect(input, newFolder); // Dropdown aktualisieren und neuen Ordner auswählen
+                } else {
+                  alert('Fehler beim Erstellen des Ordners.');
+                }
+              });
+            }
           });
-
-          // Button "Ordner anlegen"
-          const createFolderButton = document.createElement('button');
-          createFolderButton.textContent = 'Ordner anlegen';
-          createFolderButton.type = 'button';
-          createFolderButton.classList.add('create-folder-btn');
-          createFolderButton.addEventListener('click', () => {
-            configJS.showFolderCreationPrompt().then((newFolder) => {
-              if (newFolder) {
-                ipcRenderer.invoke('create-folder', newFolder).then((success) => {
-                  if (success) {
-                    alert(`Ordner "${newFolder}" wurde erfolgreich erstellt.`);
-                    configJS.updateDataFolderSelect(input, newFolder); // Dropdown aktualisieren und neuen Ordner auswählen
-                  } else {
-                    alert('Fehler beim Erstellen des Ordners.');
-                  }
-                });
-              }
-            });
-          });
-
-          container.appendChild(input);
-          container.appendChild(createFolderButton);
-        }
-        else if (fieldSchema.enum) {
-          // Dropdown für enum-Werte
-          input = document.createElement('select');
-          fieldSchema.enum.forEach((option) => {
-            const opt = document.createElement('option');
-            opt.value = option;
-            opt.textContent = option;
-            opt.selected = option === value;
-            input.appendChild(opt);
-          });
-        } else if (fieldSchema.type === 'boolean') {
-          // Dropdown für boolean
-          input = document.createElement('select');
-          input.innerHTML = `
-          <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
-          <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
-        } else if (fieldSchema.type === 'array') {
-          input = document.createElement('textarea');
-          input.value = Array.isArray(value) ? value.join('\n') : '';
-        } else {
-          input = document.createElement('input');
-          input.type = 'text';
-          input.value = value;
-        }
-
-        input.id = key;
-        input.name = key;
-
-        // Validierung mit pattern
-        if (fieldSchema.pattern) {
-          input.pattern = fieldSchema.pattern;
-          const patternInfo = document.createElement('small');
-          patternInfo.textContent = `Muss Muster entsprechen: ${fieldSchema.pattern}`;
-          patternInfo.style.display = 'block';
-          patternInfo.style.color = 'gray';
-          container.appendChild(patternInfo);
-        }
+        });
 
         container.appendChild(input);
-      }
+        container.appendChild(createFolderButton);
 
-      editorForm.appendChild(container);
+        editorForm.appendChild(container);
+      }
+      else {
+        const field = editorJS.generateFormField(key, fieldSchema, value);
+        if (field) editorForm.appendChild(field);
+      }
     });
 
     // Speichern- und Abbrechen-Buttons
     const actions = document.createElement('div');
     actions.classList.add('actions');
     actions.innerHTML = `
-    <button id="save-btn" type="button">Speichern</button>
-    <button id="cancel-btn" type="button">Abbrechen</button>
-  `;
+      <button id="save-btn" type="button">Speichern</button>
+      <button id="cancel-btn" type="button">Abbrechen</button>
+    `;
     editorForm.appendChild(actions);
 
     const saveBtn = document.getElementById('save-btn');
     const cancelBtn = document.getElementById('cancel-btn');
 
     if (saveBtn && cancelBtn) {
-      saveBtn.addEventListener('click', configJS.saveFormData);
+      saveBtn.addEventListener('click', this.saveFormData);
       cancelBtn.addEventListener('click', () => {
         editorJS.showStartPage();
       });
     }
   },
   saveFormData(event) {
-    ipcRenderer.send('log-message', 'Speichere Daten...');
+    editorJS.logdata('Speichere Daten...');
     event.preventDefault();
 
     const updatedContent = {};
@@ -312,7 +260,7 @@ const configJS = {
       }
     });
 
-    ipcRenderer.send('log-message', `Speichere aktualisierte Inhalte: ${JSON.stringify(updatedContent, null, 2)}`);
+    editorJS.logdata(`Speichere aktualisierte Inhalte: ${JSON.stringify(updatedContent, null, 2)}`);
     ipcRenderer.send('save-config', { fileName: currentFile, content: updatedContent });
 
     editorJS.showStartPage(); // Zurück zur Startseite nach Speichern

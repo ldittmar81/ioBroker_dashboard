@@ -96,6 +96,16 @@ function createMenu() {
     });
 
     additionalMenus.push({
+      label: 'Seitenfenster',
+      click: () => openSection('Seitenfenster'),
+    });
+
+    additionalMenus.push({
+      label: 'Übersichtsfenster',
+      click: () => openSection('Übersichtsfenster'),
+    });
+
+    additionalMenus.push({
       label: 'Navigationsmenü',
       click: () => openSection('Navigationsmenü'),
     });
@@ -354,6 +364,22 @@ ipcMain.handle('upload-icon', async (event, filePath) => {
 
   // Rückgabe des neuen Dateinamens
   return newFileName;
+});
+
+ipcMain.handle('get-schema', async (event, schemaName) => {
+  const schemaPath = path.join(__dirname, '..', 'schema', schemaName);
+  if (fs.existsSync(schemaPath)) {
+    try {
+      const schema = fs.readFileSync(schemaPath, 'utf8');
+      return JSON.parse(schema);
+    } catch (error) {
+      console.error(`Fehler beim Laden des Schemas "${schemaName}":`, error);
+      throw new Error(`Schema "${schemaName}" konnte nicht geladen werden.`);
+    }
+  } else {
+    console.error(`Schema "${schemaName}" wurde nicht gefunden.`);
+    throw new Error(`Schema "${schemaName}" existiert nicht.`);
+  }
 });
 
 
