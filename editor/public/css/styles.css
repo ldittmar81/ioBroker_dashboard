@@ -140,3 +140,46 @@ body {
   background-color: #f44336;
   color: white;
 }
+
+.pages-container {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.page-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.page-row span {
+  flex: 1;
+}
+
+.page-row button {
+  margin-left: 5px;
+}
+
+.prompt-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.prompt-box {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+

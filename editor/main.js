@@ -2,8 +2,74 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
-const excludedFolders = ['.idea', '.git', 'assets', 'dist', 'doc', 'editor', 'node_modules', 'schema', 'data', 'private'];
 let mainWindow;
+let selectedEnvironment = null;
+
+const excludedFolders = ['.idea', '.git', 'assets', 'dist', 'doc', 'editor', 'node_modules', 'schema', 'data', 'private'];
+
+function setEnvironment(env) {
+  selectedEnvironment = env;
+  createMenu(); // Menü neu erstellen
+  mainWindow.webContents.send('environment-changed', env); // Renderer informieren
+}
+
+function createMenu() {
+  const environmentMenu = {
+    label: 'Umgebung',
+    submenu: [
+      {
+        label: 'Entwicklung',
+        type: 'checkbox',
+        checked: selectedEnvironment === 'Entwicklung',
+        click: () => {
+          setEnvironment('Entwicklung');
+          loadConfigFile('config.json');
+        },
+      },
+      {
+        label: 'Produktiv',
+        type: 'checkbox',
+        checked: selectedEnvironment === 'Produktiv',
+        click: () => {
+          setEnvironment('Produktiv');
+          loadConfigFile('config_prod.json');
+        },
+      },
+    ],
+  };
+
+  const additionalMenus = [];
+  if (selectedEnvironment) {
+    additionalMenus.push({
+      label: 'Anwender',
+      click: () => openSection('Anwender'),
+    });
+
+    additionalMenus.push({
+      label: 'Navigationsmenü',
+      click: () => openSection('Navigationsmenü'),
+    });
+
+    if (selectedEnvironment === 'Produktiv') {
+      additionalMenus.push({
+        label: 'Deployment Konfiguration',
+        click: () => openSection('Deployment Konfiguration'),
+      });
+    }
+  }
+
+  const menuTemplate = [
+    environmentMenu,
+    ...additionalMenus,
+  ];
+
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
+}
+
+function openSection(section) {
+  mainWindow.webContents.send('open-section', section); // Renderer informieren
+}
 
 // Funktion zur Sicherstellung der gesamten Ordnerstruktur
 function ensureFolderStructureExists(baseFolder) {
@@ -33,7 +99,6 @@ function ensureFolderStructureExists(baseFolder) {
   });
 }
 
-
 // Überprüfen und Erstellen des privaten Ordners
 function ensurePrivateFolderExists() {
   const privateFolderPath = path.join(__dirname, '..', 'private');
@@ -54,7 +119,6 @@ function ensurePrivateFolderExists() {
 }
 
 app.on('ready', () => {
-
   ensurePrivateFolderExists();
 
   mainWindow = new BrowserWindow({
@@ -70,33 +134,7 @@ app.on('ready', () => {
 
   mainWindow.loadFile('./public/index.html');
 
-  const menu = Menu.buildFromTemplate([
-    {
-      label: 'Datei',
-      submenu: [
-        {
-          label: 'Konfiguration',
-          submenu: [
-            {
-              label: 'Entwicklung (config.json)',
-              click: () => {
-                loadConfigFile('config.json');
-              },
-            },
-            {
-              label: 'Produktiv (config_prod.json)',
-              click: () => {
-                loadConfigFile('config_prod.json');
-              },
-            },
-          ],
-        },
-        { role: 'quit' },
-      ],
-    },
-  ]);
-
-  Menu.setApplicationMenu(menu);
+  createMenu(); // Initiales Menü erstellen
 });
 
 const schemaPath = path.join(__dirname, '..', 'schema', 'config.schema.json');
@@ -107,12 +145,32 @@ function loadConfigFile(fileName) {
   const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 
   if (fs.existsSync(filePath)) {
+    // Datei existiert, lade die Inhalte
     const fileData = fs.readFileSync(filePath, 'utf8');
     mainWindow.webContents.send('load-config', { fileName, schema, content: JSON.parse(fileData) });
   } else {
-    console.error(`Datei ${fileName} nicht gefunden.`);
+    console.log(`Datei ${fileName} nicht gefunden. Erstelle Standardkonfiguration...`);
+
+    // Standardwerte für die Konfiguration
+    const defaultConfig = {
+      connLink: 'http://192.168.x.xx:8089',
+      console: false,
+      pages: ['rooms.json', 'functions.json', 'informations.json'],
+      mode: fileName === 'config_prod.json' ? 'live' : 'demo',
+      dataFolder: fileName === 'config_prod.json' ? 'private' : 'data',
+    };
+
+    // Speichere die Standardkonfiguration in die Datei
+    try {
+      fs.writeFileSync(filePath, JSON.stringify(defaultConfig, null, 2), 'utf8');
+      console.log(`Standardkonfiguration in ${fileName} erstellt.`);
+      mainWindow.webContents.send('load-config', { fileName, schema, content: defaultConfig });
+    } catch (error) {
+      console.error(`Fehler beim Erstellen der Standardkonfiguration für ${fileName}:`, error);
+    }
   }
 }
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -173,4 +231,11 @@ ipcMain.handle('create-folder', async (event, folderName) => {
     console.error('Fehler beim Erstellen des Ordners:', error);
     return false;
   }
+});
+
+ipcMain.handle('validate-page-name', async (event, pageName) => {
+  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+  const pagePattern = schema.properties.pages.items.pattern;
+
+  return new RegExp(pagePattern).test(pageName);
 });
