@@ -136,6 +136,53 @@ const usersJS = {
       actions.appendChild(cancelBtn);
       editorForm.appendChild(actions);
 
+      const otherActions = document.createElement('div');
+      otherActions.classList.add('other-actions');
+
+      const themedBtn = document.createElement('button');
+      themedBtn.textContent = 'Theme für Anwender erstellen';
+      themedBtn.type = 'button';
+      themedBtn.disabled = isNewUser;
+
+      const sidebarBtn = document.createElement('button');
+      sidebarBtn.textContent = 'Seitenfenster für Anwender erstellen';
+      sidebarBtn.type = 'button';
+      sidebarBtn.disabled = isNewUser;
+
+      const overviewBtn = document.createElement('button');
+      overviewBtn.textContent = 'Übersichtsseite für Anwender erstellen';
+      overviewBtn.type = 'button';
+      overviewBtn.disabled = isNewUser;
+
+      if (!isNewUser) {
+        const dataFolder = currentContent.dataFolder;
+        const userId = user.user;
+
+        // Erstelle die Dateienliste ohne DOM-Elemente
+        const filesToCheck = [
+          { path: `${dataFolder}/theme/${userId}.css`, editText: 'Theme für Anwender bearbeiten' },
+          { path: `${dataFolder}/sidebar_${userId}.json`, editText: 'Seitenfenster für Anwender bearbeiten' },
+          { path: `${dataFolder}/overview_${userId}.json`, editText: 'Übersichtsseite für Anwender bearbeiten' },
+        ];
+
+        // Überprüfe die Datei-Existenz
+        ipcRenderer.invoke('check-file-existence', { files: filesToCheck }).then((results) => {
+          // Verarbeite die Rückgabe und aktualisiere die Button-Texte
+          results.forEach((result, index) => {
+            if (result.exists) {
+              if (index === 0) themedBtn.textContent = result.editText;
+              if (index === 1) sidebarBtn.textContent = result.editText;
+              if (index === 2) overviewBtn.textContent = result.editText;
+            }
+          });
+        });
+      }
+
+      otherActions.appendChild(themedBtn);
+      otherActions.appendChild(sidebarBtn);
+      otherActions.appendChild(overviewBtn);
+      editorForm.appendChild(otherActions);
+
     }).catch((error) => {
       editorJS.logdata('Fehler beim Abrufen des Schemas:' + error);
     });

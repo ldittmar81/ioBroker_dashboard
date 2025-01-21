@@ -96,13 +96,33 @@ function createMenu() {
     });
 
     additionalMenus.push({
+      label: 'Theme',
+      submenu: [
+        {
+          label: 'Standard',
+          click: () => openSection('Theme')
+        }
+      ]
+    });
+
+    additionalMenus.push({
       label: 'Seitenfenster',
-      click: () => openSection('Seitenfenster'),
+      submenu: [
+        {
+          label: 'Standard',
+          click: () => openSection('Seitenfenster')
+        }
+      ]
     });
 
     additionalMenus.push({
       label: 'Übersichtsfenster',
-      click: () => openSection('Übersichtsfenster'),
+      submenu: [
+        {
+          label: 'Standard',
+          click: () => openSection('Übersichtsfenster')
+        }
+      ]
     });
 
     additionalMenus.push({
@@ -182,7 +202,7 @@ app.on('ready', () => {
   ensurePrivateFolderExists();
 
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 1200,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -382,5 +402,13 @@ ipcMain.handle('get-schema', async (event, schemaName) => {
   }
 });
 
-
-
+ipcMain.handle('check-file-existence', async (event, { files }) => {
+  return files.map(({ path: filePath, editText }) => {
+    const fullPath = filePath.startsWith('/') ? filePath : path.join(__dirname, '..', filePath);
+    console.log('Checking path:', fullPath);
+    return {
+      exists: fs.existsSync(fullPath),
+      editText,
+    };
+  });
+});

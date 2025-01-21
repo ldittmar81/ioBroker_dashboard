@@ -3,14 +3,14 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
   // Nachrichten vom Renderer-Prozess an den Main-Prozess senden
   send: (channel, data) => {
-    const validChannels = ['save-config', 'log-message', 'edit-user', 'new-user'];
+    const validChannels = ['save-config', 'log-message', 'edit-user', 'new-user', 'open-section'];
     if (validChannels.includes(channel)) {
       ipcRenderer.send(channel, data);
     }
   },
   // Nachrichten vom Main-Prozess im Renderer-Prozess empfangen
   on: (channel, func) => {
-    const validChannels = ['load-config', 'log-message', 'edit-user', 'new-user'];
+    const validChannels = ['load-config', 'log-message', 'edit-user', 'new-user', 'open-section'];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => func(...args));
     }
@@ -23,7 +23,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
       'validate-page-name',
       'save-user',
       'upload-icon',
-      'get-schema'
+      'get-schema',
+      'load-config',
+      'check-file-existence'
     ];
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);

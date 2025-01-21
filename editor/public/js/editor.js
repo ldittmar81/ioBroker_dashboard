@@ -111,6 +111,15 @@ ipcRenderer.on('edit-user', (user) => {
   usersJS.showUserForm(user); // Formular mit Benutzerinformationen anzeigen
 });
 
+ipcRenderer.on('open-section', (section) => {
+  if (section === 'Seitenfenster') {
+    ipcRenderer.invoke('get-schema', 'sidebar.schema.json').then((schema) => {
+      ipcRenderer.invoke('load-config', 'sidebar.json').then((content) => {
+        sidebarJS.showSidebarForm(content, schema);
+      });
+    });
+  }
+});
 
 // Zeige Startseite beim Start
 editorJS.showStartPage();
