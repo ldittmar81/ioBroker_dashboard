@@ -31,7 +31,8 @@ Installiere den Adapter wie in dessen [GitHub-Repo](https://github.com/ioBroker/
 ## Handhabung bei Produktivnutzung
 
 ## Changelog
-### 0.0.1 (2025-01-xx)
+### 0.0.1 (2025-02-xx)
+- (ldittmar) Konfiguration Editor (wird gemacht)
 - (ldittmar) Grundfunktionen hinzugefügt
 - (ldittmar) Testdaten hinzugefügt
 - (ldittmar) Dokumentation hinzugefügt

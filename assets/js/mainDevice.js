@@ -649,7 +649,7 @@ const mainDeviceJS = {
     });
 
     // Dateiname konstruieren
-    const itemFileName = `data/devices/${type}/${name.normalize("NFD")
+    const itemFileName = `${dashboardConfig.dataFolder}/devices/${type}/${name.normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-zA-Z0-9]/g, '')
       .toLowerCase()}.json?v=${dashboardVersion}`;

@@ -588,7 +588,7 @@ const deviceMediaJS = {
    */
   async fetchChannellist(channellist, device, channelsContainer, canWrite) {
     try {
-      const response = await fetch(`data/helpers/mediaChannelLists/${channellist.list}?v=${dashboardVersion}`);
+      const response = await fetch(`${dashboardConfig.dataFolder}/helpers/mediaChannelLists/${channellist.list}?v=${dashboardVersion}`);
       if (response.ok) {
         const channels = await response.json();
         channels.forEach(channel => {

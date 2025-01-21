@@ -25,7 +25,7 @@ const mainPageJS = {
       ioBrokerJS.clearPageIds();
       document.querySelector('.main-content').innerHTML = '';
 
-      const DATA_PATH = 'data/';
+      const DATA_PATH = dashboardConfig.dataFolder + '/';
       const DEFAULT_OVERVIEW_FILE = 'overview.json';
 
       let overviewPage = null;

@@ -19,13 +19,50 @@ const mainSidebarJS = {
    *   Beispiel: `{ clock: 'default', openWeatherMap: { enabled: true } }`.
    */
   loadSidebarConfig() {
-    return fetch('data/sidebar.json?v=' + dashboardVersion)
-      .then(response => response.json())
+    const DATAFOLDER = dashboardConfig.dataFolder;
+    const sidebarFile = userLoggedIn && userLoggedIn.trim() !== ''
+      ? `sidebar_${userLoggedIn}.json`
+      : 'sidebar.json';
+
+    // Versuche die benutzerdefinierte Sidebar zu laden
+    return fetch(DATAFOLDER + '/' + sidebarFile + '?v=' + dashboardVersion)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Datei ${sidebarFile} nicht gefunden`);
+        }
+        return response.json();
+      })
       .catch(error => {
-        console.error('Fehler beim Laden der Sidebar-Konfiguration:', error);
-        return {clock: 'default', openWeatherMap: {enabled: false}};
+        console.warn(`Fehler beim Laden von ${sidebarFile}:`, error);
+
+        // Wenn benutzerdefinierte Sidebar nicht geladen werden kann, versuche die allgemeine Sidebar
+        if (sidebarFile !== 'sidebar.json') {
+          return fetch(DATAFOLDER + '/sidebar.json?v=' + dashboardVersion)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Allgemeine Sidebar-Konfiguration nicht gefunden');
+              }
+              return response.json();
+            })
+            .catch(error => {
+              console.error('Fehler beim Laden der allgemeinen Sidebar-Konfiguration:', error);
+
+              // Fallback auf die Standardkonfiguration
+              return {
+                clock: 'default',
+                openWeatherMap: { enabled: false },
+              };
+            });
+        }
+
+        // Direkt auf Default zurückgreifen, wenn keine benutzerdefinierte Sidebar definiert ist
+        return {
+          clock: 'default',
+          openWeatherMap: { enabled: false },
+        };
       });
-  },
+  }
+,
 
   /**
    * Klappt die Sidebar ein oder aus, indem die Klasse `.collapsed`

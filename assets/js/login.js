@@ -25,7 +25,7 @@ const loginJS = {
    */
   async loadUsers() {
     try {
-      const res = await fetch('data/users.json?v=' + dashboardVersion);
+      const res = await fetch(dashboardConfig.dataFolder + '/users.json?v=' + dashboardVersion);
       if (!res.ok) {
         throw new Error(`Fehler beim Laden von users.json: ${res.statusText}`);
       }
@@ -205,14 +205,13 @@ const loginJS = {
    * @param {User|null} user - Das aktuell eingeloggte Benutzerobjekt oder `null` (anonym).
    */
   loadUserVariables(user) {
-    // Vorherige Benutzer-CSS entfernen
-    const existingLink = document.getElementById('user-variables');
-    if (existingLink) {
-      existingLink.parentNode.removeChild(existingLink);
-    }
+
+    const defaultLink = 'assets/css/users/default.css?v=' + dashboardVersion;
 
     // Wenn kein Benutzer aktiv oder keine spezifische Datei
     if (!user || !user.user) {
+      const link = document.getElementById('user-variables');
+      link.href = defaultLink;
       return;
     }
 
@@ -221,13 +220,11 @@ const loginJS = {
     // Prüfen, ob die Datei existiert (HEAD-Request)
     fetch(cssFile, {method: 'HEAD'})
       .then(res => {
+        const link = document.getElementById('user-variables')
         if (res.ok) {
-          // Datei existiert, CSS laden
-          const link = document.createElement('link');
-          link.id = 'user-variables';
-          link.rel = 'stylesheet';
           link.href = cssFile;
-          document.head.appendChild(link);
+        } else {
+          link.href = defaultLink;
         }
       })
       .catch(() => {
