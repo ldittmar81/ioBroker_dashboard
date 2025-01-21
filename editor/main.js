@@ -76,6 +76,7 @@ function createMenu() {
 
   const additionalMenus = [];
   if (selectedEnvironment) {
+    // Anwender Menü
     additionalMenus.push({
       label: 'Anwender',
       submenu: [
@@ -95,41 +96,131 @@ function createMenu() {
       ],
     });
 
-    additionalMenus.push({
+    // Theme Menü
+    const themeMenu = {
       label: 'Theme',
       submenu: [
         {
           label: 'Standard',
-          click: () => openSection('Theme')
-        }
-      ]
-    });
+          click: () => openSection('Theme'),
+        },
+        ...users
+          .filter(user => fs.existsSync(path.join(__dirname, '..', currentConfig.dataFolder, 'theme', `${user.user}.css`)))
+          .map(user => ({
+            label: user.name,
+            click: () => {
+              console.log(`Theme für Benutzer "${user.name}" ausgewählt.`);
+              mainWindow.webContents.send('edit-theme', user);
+            },
+          })),
+      ],
+    };
+    additionalMenus.push(themeMenu);
 
-    additionalMenus.push({
+    // Seitenfenster Menü
+    const sidebarMenu = {
       label: 'Seitenfenster',
       submenu: [
         {
           label: 'Standard',
-          click: () => openSection('Seitenfenster')
-        }
-      ]
-    });
+          click: () => openSection('Seitenfenster'),
+        },
+        ...users
+          .filter(user => fs.existsSync(path.join(__dirname, '..', currentConfig.dataFolder, `sidebar_${user.user}.json`)))
+          .map(user => ({
+            label: user.name,
+            click: () => {
+              console.log(`Seitenfenster für Benutzer "${user.name}" ausgewählt.`);
+              mainWindow.webContents.send('edit-sidebar', user);
+            },
+          })),
+      ],
+    };
+    additionalMenus.push(sidebarMenu);
 
-    additionalMenus.push({
+    // Übersichtsfenster Menü
+    const overviewMenu = {
       label: 'Übersichtsfenster',
       submenu: [
         {
           label: 'Standard',
-          click: () => openSection('Übersichtsfenster')
+          click: () => openSection('Übersichtsfenster'),
+        },
+        ...users
+          .filter(user => fs.existsSync(path.join(__dirname, '..', currentConfig.dataFolder, `overview_${user.user}.json`)))
+          .map(user => ({
+            label: user.name,
+            click: () => {
+              console.log(`Übersichtsfenster für Benutzer "${user.name}" ausgewählt.`);
+              mainWindow.webContents.send('edit-overview', user);
+            },
+          })),
+      ],
+    };
+    additionalMenus.push(overviewMenu);
+
+    const navigationMenu = {
+      label: 'Navigationsmenü',
+      submenu: [],
+    };
+
+    if (currentConfig && currentConfig.pages && Array.isArray(currentConfig.pages)) {
+      currentConfig.pages.forEach(page => {
+        const pageName = path.basename(page, '.json');
+        const pagePath = path.join(__dirname, '..', currentConfig.dataFolder, 'main', page);
+
+        // Datei prüfen und ggf. erstellen
+        if (!fs.existsSync(pagePath)) {
+          const defaultContent = {
+            name: pageName,
+            type: pageName,
+            icon: 'fa-question',
+            content: [],
+          };
+
+          try {
+            fs.writeFileSync(pagePath, JSON.stringify(defaultContent, null, 2), 'utf8');
+            console.log(`Standarddatei für ${pageName} erstellt.`);
+          } catch (error) {
+            console.error(`Fehler beim Erstellen der Standarddatei für ${pageName}:`, error);
+          }
         }
-      ]
-    });
+
+        // Dateiinhalt laden, um den Namen zu holen
+        let pageLabel = pageName;
+        try {
+          const pageData = JSON.parse(fs.readFileSync(pagePath, 'utf8'));
+          if (pageData.name) {
+            pageLabel = pageData.name;
+          }
+        } catch (error) {
+          console.error(`Fehler beim Lesen der Datei ${pagePath}:`, error);
+        }
+
+        // Menüeintrag hinzufügen
+        navigationMenu.submenu.push({
+          label: pageLabel,
+          click: () => {
+            console.log(`Navigationsseite "${pageLabel}" ausgewählt.`);
+            mainWindow.webContents.send('edit-page', { pageName, pagePath });
+          },
+        });
+      });
+    }
+
+    additionalMenus.push(navigationMenu);
 
     additionalMenus.push({
-      label: 'Navigationsmenü',
-      click: () => openSection('Navigationsmenü'),
+      label: 'Weitere',
+      submenu: [
+        {
+          label: 'Medienliste',
+          click: () => openSection('Medienliste'),
+        }
+      ],
     });
 
+    // Deployment Konfiguration nur für Produktiv
     if (selectedEnvironment === 'Produktiv') {
       additionalMenus.push({
         label: 'Deployment Konfiguration',
@@ -138,11 +229,7 @@ function createMenu() {
     }
   }
 
-  const menuTemplate = [
-    environmentMenu,
-    ...additionalMenus,
-  ];
-
+  const menuTemplate = [environmentMenu, ...additionalMenus];
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
 }
