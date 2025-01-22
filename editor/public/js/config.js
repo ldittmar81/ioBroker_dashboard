@@ -44,7 +44,7 @@ const configJS = {
         pagesContainer.appendChild(pageRow);
       });
     } else {
-      logdata('error', 'Das Pages-Feld enthält keine gültigen Einträge:', pages);
+      logdata( 'Das Pages-Feld enthält keine gültigen Einträge:'+ pages, 'error');
     }
   },
   showPageCreationPrompt() {
@@ -99,10 +99,10 @@ const configJS = {
               const hiddenInput = document.getElementById('pages-hidden-input');
               this.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
             } else {
-              alert('Diese Seite existiert bereits.');
+              modalJS.showModal('Diese Seite existiert bereits.');
             }
           } else {
-            alert('Ungültiger Seitenname. Der Name muss dem Muster entsprechen: [a-zA-Z0-9_-]+\\.json');
+            modalJS.showModal('Ungültiger Seitenname. Der Name muss dem Muster entsprechen: [a-zA-Z0-9_-]+\\.json');
           }
         });
       }
@@ -191,10 +191,10 @@ const configJS = {
             if (newFolder) {
               ipcRenderer.invoke('create-folder', newFolder).then((success) => {
                 if (success) {
-                  alert(`Ordner "${newFolder}" wurde erfolgreich erstellt.`);
+                  modalJS.showModal(`Ordner "${newFolder}" wurde erfolgreich erstellt.`);
                   this.updateDataFolderSelect(input, newFolder); // Dropdown aktualisieren und neuen Ordner auswählen
                 } else {
-                  alert('Fehler beim Erstellen des Ordners.');
+                  modalJS.showModal('Fehler beim Erstellen des Ordners.');
                 }
               });
             }
@@ -232,7 +232,7 @@ const configJS = {
     }
   },
   saveFormData(event) {
-    logdata('info', 'Speichere Daten...');
+    logdata('Speichere Daten...');
     event.preventDefault();
 
     const updatedContent = {};

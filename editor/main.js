@@ -111,12 +111,27 @@ function createMenu() {
           },
         },
         ...users
-          .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, 'theme', `${user.user}.css`)))
           .map(user => ({
             label: user.name,
             click: () => {
               console.log(`Theme für Benutzer "${user.name}" ausgewählt.`);
-              mainWindow.webContents.send('edit-theme', user);
+              // Überprüfen und ggf. default.css kopieren
+              const userThemePath = path.join(__dirname, '..', currentFolder, 'theme', `${user.user}.css`);
+              const defaultThemePath = path.join(__dirname, '..', 'assets', 'css', 'users', 'default.css');
+
+              if (!fs.existsSync(userThemePath)) {
+                console.log(`Theme für Benutzer "${user.name}" fehlt. Kopiere Standard-Theme...`);
+                try {
+                  fs.copyFileSync(defaultThemePath, userThemePath);
+                  console.log(`Standard-Theme für Benutzer "${user.name}" erfolgreich kopiert.`);
+                } catch (error) {
+                  console.error(`Fehler beim Kopieren des Standard-Themes für Benutzer "${user.name}":`, error);
+                  return;
+                }
+              }
+
+              // Editor-Befehl an Renderer-Prozess senden
+              mainWindow.webContents.send('edit-theme', { user, themePath: userThemePath });
             },
           })),
       ],
@@ -387,7 +402,6 @@ function loadConfigFile(fileName) {
   }
 }
 
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
@@ -563,6 +577,25 @@ ipcMain.handle('copy-file', async (event, { source, destination }) => {
 });
 
 ipcMain.handle('get-config', async () => {
-  console.log('Config wird zurückgegeben:', currentConfig); // Debug-Log hinzufügen
   return currentConfig;
+});
+
+ipcMain.handle('read-file', (event, filePath) => {
+  const resolvedPath = path.resolve(__dirname, '..', filePath);
+  console.log('read-file: ' + resolvedPath);
+
+  return fs.promises.readFile(resolvedPath, 'utf8').catch(error => {
+    console.error(`Error occurred while reading file "${resolvedPath}":`, error);
+    throw error;
+  });
+});
+
+ipcMain.handle('write-file', (event, { filePath, content }) => {
+  const resolvedPath = path.resolve(__dirname, '..', filePath);
+  console.log('write-file: ' + resolvedPath);
+
+  return fs.promises.writeFile(resolvedPath, content, 'utf8').catch(error => {
+    console.error(`Error occurred while writing to file "${resolvedPath}":`, error);
+    throw error;
+  });
 });

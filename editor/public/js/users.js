@@ -14,7 +14,7 @@ const usersJS = {
     // Hole das Schema
     ipcRenderer.invoke('get-schema', 'users.schema.json').then((fieldSchema) => {
       if (!fieldSchema || !fieldSchema.items || !fieldSchema.items.properties) {
-        logdata('error','Fehler beim Laden des Schemas.');
+        logdata('Fehler beim Laden des Schemas.','error');
         return;
       }
 
@@ -100,7 +100,7 @@ const usersJS = {
                 ipcRenderer.invoke('upload-icon', file.path).then((newIconName) => {
                   input.value = newIconName;
                   iconPreview.src = `../../${currentDataFolder}/img/users/${newIconName}`;
-                  alert(`Icon hochgeladen: ${newIconName}`);
+                  modalJS.showModal(`Icon hochgeladen: ${newIconName}`);
                 });
               }
             });
@@ -142,6 +142,28 @@ const usersJS = {
       themedBtn.textContent = 'Theme für Anwender erstellen';
       themedBtn.type = 'button';
       themedBtn.disabled = isNewUser;
+      themedBtn.addEventListener('click', async () => {
+        if (isNewUser) return;
+
+        if(themedBtn.textContent === 'Theme für Anwender erstellen') {
+          try {
+            const destinationPath = `${currentDataFolder}/theme/${user.user}.css`;
+            const sourcePath = 'assets/css/users/default.css'
+
+            await ipcRenderer.invoke('copy-file', {source: sourcePath, destination: destinationPath}).then(() => {
+              //showThemeForm
+            });
+
+          } catch (error) {
+            logdata(`Fehler beim Erstellen des Themes für Anwender "${user.name}".`, 'error');
+            logdata(error, 'error');
+          }
+        }
+        else {
+          const destinationPath = `${currentDataFolder}/theme/${user.user}.css`;
+          themeJS.showThemeForm(destinationPath);
+        }
+      });
 
       const sidebarBtn = document.createElement('button');
       sidebarBtn.textContent = 'Seitenfenster für Anwender erstellen';
@@ -182,7 +204,7 @@ const usersJS = {
       editorForm.appendChild(otherActions);
 
     }).catch((error) => {
-      logdata('error','Fehler beim Abrufen des Schemas:' + error);
+      logdata('Fehler beim Abrufen des Schemas:' + error, 'error');
     });
   },
 
@@ -200,21 +222,21 @@ const usersJS = {
 
     // Validierung
     if (!newUser.user || !newUser.name || !newUser.icon) {
-      alert('Die Felder Benutzername, Name und Icon sind erforderlich.');
+      modalJS.showModal('Die Felder Benutzername, Name und Icon sind erforderlich.');
       return;
     }
 
     if (newUser.pin && !/^\d{4}$/.test(newUser.pin)) {
-      alert('Die PIN muss 4-stellig sein.');
+      modalJS.showModal('Die PIN muss 4-stellig sein.');
       return;
     }
 
     ipcRenderer.invoke('save-user', { newUser, existingUserId }).then(() => {
-      alert('Anwender erfolgreich gespeichert.');
+      modalJS.showModal('Anwender erfolgreich gespeichert.');
       editorJS.showStartPage();
     }).catch((error) => {
-      logdata('error','Fehler beim Speichern des Anwenders: ' + error);
-      alert('Fehler beim Speichern des Anwenders.');
+      logdata('Fehler beim Speichern des Anwenders: ' + error, 'error');
+      modalJS.showModal('Fehler beim Speichern des Anwenders.');
     });
   }
 }

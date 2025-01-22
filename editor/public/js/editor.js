@@ -6,7 +6,7 @@ const editorContainer = document.querySelector('#editor-container');
 
 let currentDataFolder = null;
 
-function logdata(type, message) {
+function logdata(message, type = 'info') {
   type = type.toUpperCase();
   ipcRenderer.send('log-message', `*${type}* ${message}`);
 }
@@ -86,7 +86,7 @@ const editorJS = {
       input.name = key;
     }
     else {
-     this.logdata(`Feldtyp "${fieldSchema.type}" wird nicht unterstützt.`);
+      logdata(`Feldtyp "${fieldSchema.type}" wird nicht unterstützt.`);
       return null;
     }
 
@@ -98,14 +98,14 @@ const editorJS = {
 }
 
 window.onerror = function (message, source, lineno, colno, error) {
-  logdata('UNCAUGHT ERROR', `${message} at ${source}:${lineno}:${colno}`);
+  logdata(`${message} at ${source}:${lineno}:${colno}`, 'UNCAUGHT ERROR');
   if (error) {
-    logdata('UNCAUGHT ERROR', error.stack);
+    logdata(error.stack, 'UNCAUGHT ERROR');
   }
 };
 
 window.addEventListener('unhandledrejection', (event) => {
-  logdata('UNHANDLED PROMISE REJECTION', event.reason);
+  logdata(event.reason, 'UNHANDLED PROMISE REJECTION');
 });
 
 ipcRenderer.on('load-config', ({ fileName, schema, content }) => {
@@ -122,15 +122,20 @@ ipcRenderer.on('edit-user', (user) => {
   usersJS.showUserForm(user); // Formular mit Benutzerinformationen anzeigen
 });
 
+ipcRenderer.on('edit-theme', (event, { user, themePath }) => {
+  logdata(`Lade Theme-Editor für Benutzer "${user.name}" mit Pfad: ${themePath}`);
+  themeJS.showThemeForm(themePath);
+});
+
 ipcRenderer.on('open-section', (section) => {
   switch (section) {
     case 'Seitenfenster':
-      logdata('info','Seitenfenster-Sektion wird geladen.');
+      logdata('Seitenfenster-Sektion wird geladen.');
       break;
     case 'Theme':
-      logdata('info','Theme-Sektion wird geladen.');
+      logdata('Theme-Sektion wird geladen.');
       themeJS.checkAndCopyDefaultTheme();
-      logdata('info','Theme-Sektion fertig.');
+      logdata('Theme-Sektion fertig.');
       break;
     default:
       this.logdata(`Unbekannte Sektion: ${section}`);
