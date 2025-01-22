@@ -137,7 +137,6 @@ const sidebarJS = {
       updatedContent[key] = value;
     });
 
-    ipcRenderer.send('save-config', { fileName: 'sidebar.json', content: updatedContent });
     editorJS.showStartPage();
   },
 };

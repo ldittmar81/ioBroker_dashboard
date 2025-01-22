@@ -14,7 +14,7 @@ const usersJS = {
     // Hole das Schema
     ipcRenderer.invoke('get-schema', 'users.schema.json').then((fieldSchema) => {
       if (!fieldSchema || !fieldSchema.items || !fieldSchema.items.properties) {
-        editorJS.logdata('Fehler beim Laden des Schemas.');
+        logdata('error','Fehler beim Laden des Schemas.');
         return;
       }
 
@@ -67,7 +67,7 @@ const usersJS = {
           iconUploadContainer.classList.add('icon-upload-container');
 
           // Vorschau
-          const iconLink = user?.icon ? `../../${currentContent.dataFolder}/img/users/${user.icon}` : 'img/no-user.webp';
+          const iconLink = user?.icon ? `../../${currentDataFolder}/img/users/${user.icon}` : 'img/no-user.webp';
           const iconPreview = document.createElement('img');
           iconPreview.id = 'icon-preview';
           iconPreview.src = iconLink;
@@ -76,7 +76,6 @@ const usersJS = {
           iconPreview.style.height = '50px';
           iconPreview.style.objectFit = 'cover';
           iconUploadContainer.appendChild(iconPreview);
-          editorJS.logdata(iconLink);
 
           // Readonly Textfeld
           const input = document.createElement('input');
@@ -100,7 +99,7 @@ const usersJS = {
               if (file) {
                 ipcRenderer.invoke('upload-icon', file.path).then((newIconName) => {
                   input.value = newIconName;
-                  iconPreview.src = `../../${currentContent.dataFolder}/img/users/${newIconName}`;
+                  iconPreview.src = `../../${currentDataFolder}/img/users/${newIconName}`;
                   alert(`Icon hochgeladen: ${newIconName}`);
                 });
               }
@@ -155,14 +154,13 @@ const usersJS = {
       overviewBtn.disabled = isNewUser;
 
       if (!isNewUser) {
-        const dataFolder = currentContent.dataFolder;
         const userId = user.user;
 
         // Erstelle die Dateienliste ohne DOM-Elemente
         const filesToCheck = [
-          { path: `${dataFolder}/theme/${userId}.css`, editText: 'Theme für Anwender bearbeiten' },
-          { path: `${dataFolder}/sidebar_${userId}.json`, editText: 'Seitenfenster für Anwender bearbeiten' },
-          { path: `${dataFolder}/overview_${userId}.json`, editText: 'Übersichtsseite für Anwender bearbeiten' },
+          { path: `${currentDataFolder}/theme/${userId}.css`, editText: 'Theme für Anwender bearbeiten' },
+          { path: `${currentDataFolder}/sidebar_${userId}.json`, editText: 'Seitenfenster für Anwender bearbeiten' },
+          { path: `${currentDataFolder}/overview_${userId}.json`, editText: 'Übersichtsseite für Anwender bearbeiten' },
         ];
 
         // Überprüfe die Datei-Existenz
@@ -184,7 +182,7 @@ const usersJS = {
       editorForm.appendChild(otherActions);
 
     }).catch((error) => {
-      editorJS.logdata('Fehler beim Abrufen des Schemas:' + error);
+      logdata('error','Fehler beim Abrufen des Schemas:' + error);
     });
   },
 
@@ -200,8 +198,6 @@ const usersJS = {
       newUser[key] = value.trim();
     });
 
-    editorJS.logdata('Userdaten: ' + JSON.stringify(newUser, null, 2));
-
     // Validierung
     if (!newUser.user || !newUser.name || !newUser.icon) {
       alert('Die Felder Benutzername, Name und Icon sind erforderlich.');
@@ -215,10 +211,9 @@ const usersJS = {
 
     ipcRenderer.invoke('save-user', { newUser, existingUserId }).then(() => {
       alert('Anwender erfolgreich gespeichert.');
-      editorJS.logdata('Anwenderliste wird aktualisiert.');
       editorJS.showStartPage();
     }).catch((error) => {
-      editorJS.logdata('Fehler beim Speichern des Anwenders: ' + error);
+      logdata('error','Fehler beim Speichern des Anwenders: ' + error);
       alert('Fehler beim Speichern des Anwenders.');
     });
   }

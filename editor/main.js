@@ -6,6 +6,7 @@ let mainWindow;
 let selectedEnvironment = null;
 let users = [];
 let currentConfig = null;
+let currentFolder = null;
 
 const excludedFolders = ['.idea', '.git', 'assets', 'dist', 'doc', 'editor', 'node_modules', 'schema', 'data', 'private'];
 
@@ -16,6 +17,8 @@ function setEnvironment(env) {
 }
 
 function loadUsers(dataFolder) {
+  console.log('Benutzer laden...');
+
   const usersPath = path.join(dataFolder, 'users.json');
 
   if (!fs.existsSync(usersPath)) {
@@ -26,7 +29,6 @@ function loadUsers(dataFolder) {
   try {
     const usersData = fs.readFileSync(usersPath, 'utf8');
     users = JSON.parse(usersData);
-    console.log('Benutzer geladen:', users);
   } catch (error) {
     console.error('Fehler beim Laden der users.json:', error);
     users = [];
@@ -48,8 +50,8 @@ function saveUsers(dataFolder) {
   }
 }
 
-
 function createMenu() {
+  console.log('Create Menu...');
   const environmentMenu = {
     label: 'Umgebung',
     submenu: [
@@ -75,6 +77,7 @@ function createMenu() {
   };
 
   const additionalMenus = [];
+
   if (selectedEnvironment) {
     // Anwender Menü
     additionalMenus.push({
@@ -102,10 +105,13 @@ function createMenu() {
       submenu: [
         {
           label: 'Standard',
-          click: () => openSection('Theme'),
+          click: () => {
+            console.log('Theme: Standard wurde geklickt'); // Debug-Log
+            openSection('Theme');
+          },
         },
         ...users
-          .filter(user => fs.existsSync(path.join(__dirname, '..', currentConfig.dataFolder, 'theme', `${user.user}.css`)))
+          .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, 'theme', `${user.user}.css`)))
           .map(user => ({
             label: user.name,
             click: () => {
@@ -126,7 +132,7 @@ function createMenu() {
           click: () => openSection('Seitenfenster'),
         },
         ...users
-          .filter(user => fs.existsSync(path.join(__dirname, '..', currentConfig.dataFolder, `sidebar_${user.user}.json`)))
+          .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, `sidebar_${user.user}.json`)))
           .map(user => ({
             label: user.name,
             click: () => {
@@ -147,7 +153,7 @@ function createMenu() {
           click: () => openSection('Übersichtsfenster'),
         },
         ...users
-          .filter(user => fs.existsSync(path.join(__dirname, '..', currentConfig.dataFolder, `overview_${user.user}.json`)))
+          .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, `overview_${user.user}.json`)))
           .map(user => ({
             label: user.name,
             click: () => {
@@ -167,7 +173,7 @@ function createMenu() {
     if (currentConfig && currentConfig.pages && Array.isArray(currentConfig.pages)) {
       currentConfig.pages.forEach(page => {
         const pageName = path.basename(page, '.json');
-        const pagePath = path.join(__dirname, '..', currentConfig.dataFolder, 'main', page);
+        const pagePath = path.join(__dirname, '..', currentFolder, 'main', page);
 
         // Datei prüfen und ggf. erstellen
         if (!fs.existsSync(pagePath)) {
@@ -206,6 +212,33 @@ function createMenu() {
           },
         });
       });
+
+      const demoPage = 'demo.json';
+      const demoPath = path.join(__dirname, '..', currentFolder, 'main', demoPage);
+
+      if (!currentConfig.pages.includes(demoPage)) {
+        if (fs.existsSync(demoPath)) {
+          // Dateiinhalt laden, um den Namen zu holen
+          let demoLabel = 'Demo';
+          try {
+            const demoData = JSON.parse(fs.readFileSync(demoPath, 'utf8'));
+            if (demoData.name) {
+              demoLabel = demoData.name;
+            }
+          } catch (error) {
+            console.error(`Fehler beim Lesen der Datei ${demoPath}:`, error);
+          }
+
+          // Menüeintrag für demo.json hinzufügen
+          navigationMenu.submenu.push({
+            label: demoLabel,
+            click: () => {
+              console.log(`Navigationsseite "${demoLabel}" ausgewählt.`);
+              mainWindow.webContents.send('edit-page', { pageName: 'demo', pagePath: demoPath });
+            },
+          });
+        }
+      }
     }
 
     additionalMenus.push(navigationMenu);
@@ -228,13 +261,14 @@ function createMenu() {
       });
     }
   }
-
   const menuTemplate = [environmentMenu, ...additionalMenus];
   const menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
+  console.log("Menu erstellt.")
 }
 
 function openSection(section) {
+  console.log(`Section geöffnet: ${section}`);
   mainWindow.webContents.send('open-section', section);
 }
 
@@ -306,20 +340,29 @@ app.on('ready', () => {
 
 // Funktion zum Laden der Konfigurationsdatei und Senden an die Renderer-Seite
 function loadConfigFile(fileName) {
+  console.log(`Lade Konfigurationsdatei: ${fileName}`);
   const filePath = path.join(__dirname, '..', fileName);
   const schemaPath = path.join(__dirname, '..', 'schema', 'config.schema.json');
   const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+
+  console.log("File path: ", filePath);
+  console.log("Schema path: ", schemaPath);
 
   if (fs.existsSync(filePath)) {
     const fileData = fs.readFileSync(filePath, 'utf8');
     const config = JSON.parse(fileData);
 
     currentConfig = config;
+    currentFolder = config.dataFolder;
 
-    loadUsers(path.join(__dirname, '..', config.dataFolder));
+    loadUsers(path.join(__dirname, '..', currentFolder));
     createMenu();
+
+    console.log("Config: ", config);
     mainWindow.webContents.send('load-config', { fileName, schema, content: config });
-  } else {
+    console.log("Gesendet an Renderer-Seite.");
+  }
+  else {
     console.log(`Datei ${fileName} nicht gefunden. Erstelle Standardkonfiguration...`);
 
     // Standardwerte für die Konfiguration
@@ -354,12 +397,13 @@ app.on('window-all-closed', () => {
 ipcMain.on('save-config', (event, { fileName, content }) => {
   const filePath = path.join(__dirname, '..', fileName);
   console.log(`Speichere Datei: ${filePath}`); // Debug-Ausgabe für den Pfad
-  console.log('Inhalt:', content); // Debug-Ausgabe für den Inhalt
 
   try {
     fs.writeFileSync(filePath, JSON.stringify(content, null, 2), 'utf8');
     console.log(`Änderungen in ${fileName} gespeichert.`);
-    loadUsers(path.join(__dirname, '..', content.dataFolder));
+    currentFolder = content.dataFolder;
+    currentConfig = content;
+    loadUsers(path.join(__dirname, '..', currentFolder));
     createMenu();
   } catch (error) {
     console.error(`Fehler beim Speichern der Datei ${fileName}:`, error);
@@ -416,7 +460,7 @@ ipcMain.handle('validate-page-name', async (event, pageName) => {
 });
 
 ipcMain.handle('save-user', async (event, { newUser, existingUserId }) => {
-  const dataFolder = path.join(__dirname, '..', selectedEnvironment === 'Produktiv' ? 'private' : 'data');
+  const dataFolder = path.join(__dirname, '..', currentFolder);
 
   // Prüfen, ob es sich um einen neuen oder bestehenden Anwender handelt
   if (existingUserId) {
@@ -433,11 +477,11 @@ ipcMain.handle('save-user', async (event, { newUser, existingUserId }) => {
 });
 
 ipcMain.handle('upload-icon', async (event, filePath) => {
-  if (!currentConfig || !currentConfig.dataFolder) {
+  if (!currentConfig || !currentFolder) {
     throw new Error('dataFolder ist in der Konfiguration nicht definiert.');
   }
 
-  const dataFolder = path.join(__dirname, '..', currentConfig.dataFolder);
+  const dataFolder = path.join(__dirname, '..', currentFolder);
   const userImgFolder = path.join(dataFolder, 'img', 'users');
 
   // Ziel-Pattern (Beispiel)
@@ -490,6 +534,7 @@ ipcMain.handle('get-schema', async (event, schemaName) => {
 });
 
 ipcMain.handle('check-file-existence', async (event, { files }) => {
+  console.log('Check file existence:', files);
   return files.map(({ path: filePath, editText }) => {
     const fullPath = filePath.startsWith('/') ? filePath : path.join(__dirname, '..', filePath);
     console.log('Checking path:', fullPath);
@@ -498,4 +543,26 @@ ipcMain.handle('check-file-existence', async (event, { files }) => {
       editText,
     };
   });
+});
+
+ipcMain.handle('copy-file', async (event, { source, destination }) => {
+  const fullSourcePath = path.join(__dirname, '..', source);
+  const fullDestinationPath = path.join(__dirname, '..', destination);
+
+  try {
+    if (!fs.existsSync(path.dirname(fullDestinationPath))) {
+      fs.mkdirSync(path.dirname(fullDestinationPath), { recursive: true });
+    }
+    fs.copyFileSync(fullSourcePath, fullDestinationPath);
+    console.log(`Datei kopiert: ${fullSourcePath} -> ${fullDestinationPath}`);
+    return true;
+  } catch (error) {
+    console.error(`Fehler beim Kopieren der Datei: ${error.message}`);
+    throw error;
+  }
+});
+
+ipcMain.handle('get-config', async () => {
+  console.log('Config wird zurückgegeben:', currentConfig); // Debug-Log hinzufügen
+  return currentConfig;
 });

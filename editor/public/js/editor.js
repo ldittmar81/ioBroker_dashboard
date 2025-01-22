@@ -4,9 +4,12 @@ const editorForm = document.querySelector('#editor-form');
 const startPage = document.querySelector('#start-page');
 const editorContainer = document.querySelector('#editor-container');
 
-let currentSchema = null;
-let currentFile = null;
-let currentContent = null;
+let currentDataFolder = null;
+
+function logdata(type, message) {
+  type = type.toUpperCase();
+  ipcRenderer.send('log-message', `*${type}* ${message}`);
+}
 
 const editorJS = {
   showStartPage() {
@@ -19,9 +22,6 @@ const editorJS = {
   },
   updateHiddenInput(hiddenInput, pagesArray) {
     hiddenInput.value = JSON.stringify(pagesArray);
-  },
-  logdata(data) {
-    ipcRenderer.send('log-message', data);
   },
   createFormFieldContainer(schema, key) {
     const container = document.createElement('div');
@@ -97,9 +97,20 @@ const editorJS = {
   }
 }
 
+window.onerror = function (message, source, lineno, colno, error) {
+  logdata('UNCAUGHT ERROR', `${message} at ${source}:${lineno}:${colno}`);
+  if (error) {
+    logdata('UNCAUGHT ERROR', error.stack);
+  }
+};
+
+window.addEventListener('unhandledrejection', (event) => {
+  logdata('UNHANDLED PROMISE REJECTION', event.reason);
+});
+
 ipcRenderer.on('load-config', ({ fileName, schema, content }) => {
-  currentFile = fileName;
-  currentContent = content;
+  currentDataFolder = content.dataFolder;
+  configJS.currentFile = fileName;
   configJS.createFormFromSchema(schema, content);
 });
 
@@ -112,12 +123,17 @@ ipcRenderer.on('edit-user', (user) => {
 });
 
 ipcRenderer.on('open-section', (section) => {
-  if (section === 'Seitenfenster') {
-    ipcRenderer.invoke('get-schema', 'sidebar.schema.json').then((schema) => {
-      ipcRenderer.invoke('load-config', 'sidebar.json').then((content) => {
-        sidebarJS.showSidebarForm(content, schema);
-      });
-    });
+  switch (section) {
+    case 'Seitenfenster':
+      logdata('info','Seitenfenster-Sektion wird geladen.');
+      break;
+    case 'Theme':
+      logdata('info','Theme-Sektion wird geladen.');
+      themeJS.checkAndCopyDefaultTheme();
+      logdata('info','Theme-Sektion fertig.');
+      break;
+    default:
+      this.logdata(`Unbekannte Sektion: ${section}`);
   }
 });
 

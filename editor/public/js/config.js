@@ -1,5 +1,7 @@
 const configJS = {
 
+  currentSchema: null,
+  currentFile: null,
   movePage(index, direction) {
     const pagesContainer = document.getElementById('pages-container');
     const hiddenInput = document.getElementById('pages-hidden-input');
@@ -42,7 +44,7 @@ const configJS = {
         pagesContainer.appendChild(pageRow);
       });
     } else {
-      console.error('Das Pages-Feld enthält keine gültigen Einträge:', pages);
+      logdata('error', 'Das Pages-Feld enthält keine gültigen Einträge:', pages);
     }
   },
   showPageCreationPrompt() {
@@ -107,14 +109,13 @@ const configJS = {
     });
   },
   createFormFromSchema(schema, jsonData = {}) {
-    editorJS.logdata('Formular wird erstellt...');
     editorJS.showEditor(); // Wechsle zur Editor-Ansicht
-    currentSchema = schema;
+    this.currentSchema = schema;
     editorForm.innerHTML = ''; // Bestehendes Formular löschen
 
     // Überschrift hinzufügen
     const header = document.createElement('h3');
-    header.textContent = `Bearbeite: ${currentFile || 'Neue Konfiguration'}`;
+    header.textContent = `Bearbeite: ${this.currentFile || 'Neue Konfiguration'}`;
     editorForm.appendChild(header);
 
     // Durch alle Schema-Eigenschaften iterieren
@@ -231,14 +232,14 @@ const configJS = {
     }
   },
   saveFormData(event) {
-    editorJS.logdata('Speichere Daten...');
+    logdata('info', 'Speichere Daten...');
     event.preventDefault();
 
     const updatedContent = {};
     const formData = new FormData(editorForm);
 
     formData.forEach((value, key) => {
-      const fieldSchema = currentSchema.properties[key];
+      const fieldSchema = this.currentSchema.properties[key];
 
       if (key === 'pages') {
         const hiddenInput = document.getElementById('pages-hidden-input');
@@ -260,8 +261,7 @@ const configJS = {
       }
     });
 
-    editorJS.logdata(`Speichere aktualisierte Inhalte: ${JSON.stringify(updatedContent, null, 2)}`);
-    ipcRenderer.send('save-config', { fileName: currentFile, content: updatedContent });
+    ipcRenderer.send('save-config', { fileName: this.currentFile, content: updatedContent });
 
     editorJS.showStartPage(); // Zurück zur Startseite nach Speichern
   },
