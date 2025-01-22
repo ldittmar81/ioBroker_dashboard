@@ -6,3 +6,4 @@ private
 .cache
 credentials.json
 dist
+data/theme/default.css
