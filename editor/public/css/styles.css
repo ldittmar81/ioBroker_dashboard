@@ -215,14 +215,13 @@ input[readonly] {
 .theme-form-field {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
   margin-bottom: 1rem;
 }
 
 .theme-preview {
   width: 80px;
   height: 80px;
+  margin-right: 1rem;
   object-fit: cover;
   border: 1px solid #ccc;
 }
@@ -231,6 +230,7 @@ input[readonly] {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 .field-wrapper label {
@@ -238,12 +238,18 @@ input[readonly] {
   margin-bottom: 0.5rem;
 }
 
-.field-wrapper input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
+.theme-input {
+  width: calc(100% - 60px);
+  padding: 8px;
+  font-size: 16px;
+}
+
+.theme-color-picker {
+  width: 60px;
+  height: 36px;
+  border: none;
+  cursor: pointer;
+  margin-left: 1rem;
 }
 
 /* Modal-Hintergrund */
@@ -299,4 +305,30 @@ input[readonly] {
 
 .hidden {
   display: none !important;
+}
+
+.gradient-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gradient-preview {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+}
+
+.gradient-direction {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.gradient-color {
+  width: 60px;
+  height: 36px;
+  border: none;
+  cursor: pointer;
 }
