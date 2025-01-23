@@ -12,98 +12,11 @@ const sidebarJS = {
       const fieldSchema = schema.properties[key];
       const value = content[key] !== undefined ? content[key] : fieldSchema.default || '';
 
-      // Spezielle Felder
-      if (key === 'openWeatherMap') {
-        const container = editorJS.createFormFieldContainer(fieldSchema, key);
-
-        // Aktivierung
-        const enabledCheckbox = document.createElement('input');
-        enabledCheckbox.type = 'checkbox';
-        enabledCheckbox.id = `${key}-enabled`;
-        enabledCheckbox.checked = value.enabled || false;
-        container.appendChild(enabledCheckbox);
-
-        const additionalFields = document.createElement('div');
-        additionalFields.id = `${key}-fields`;
-        additionalFields.style.display = enabledCheckbox.checked ? 'block' : 'none';
-
-        enabledCheckbox.addEventListener('change', () => {
-          additionalFields.style.display = enabledCheckbox.checked ? 'block' : 'none';
-        });
-
-        // Dynamisch andere Eigenschaften hinzufügen
-        Object.keys(fieldSchema.properties).forEach((subKey) => {
-          if (subKey === 'enabled') return; // Überspringe das Hauptfeld
-
-          const subFieldSchema = fieldSchema.properties[subKey];
-          const subValue = value[subKey] || subFieldSchema.default || '';
-          const subField = editorJS.generateFormField(`${key}-${subKey}`, subFieldSchema, subValue);
-          if (subField) additionalFields.appendChild(subField);
-        });
-
-        container.appendChild(additionalFields);
-        editorForm.appendChild(container);
-      } else if (key === 'ioBroker_ical') {
-        const container = editorJS.createFormFieldContainer(fieldSchema, key);
-
-        const enabledCheckbox = document.createElement('input');
-        enabledCheckbox.type = 'checkbox';
-        enabledCheckbox.id = `${key}-enabled`;
-        enabledCheckbox.checked = value.enabled || false;
-        container.appendChild(enabledCheckbox);
-
-        const additionalFields = document.createElement('div');
-        additionalFields.id = `${key}-fields`;
-        additionalFields.style.display = enabledCheckbox.checked ? 'block' : 'none';
-
-        enabledCheckbox.addEventListener('change', () => {
-          additionalFields.style.display = enabledCheckbox.checked ? 'block' : 'none';
-        });
-
-        const calendarsLabel = document.createElement('label');
-        calendarsLabel.textContent = 'Kalender';
-        additionalFields.appendChild(calendarsLabel);
-
-        const calendarsContainer = document.createElement('div');
-        calendarsContainer.id = 'calendars-container';
-        calendarsContainer.classList.add('pages-container');
-
-        value.calendars?.forEach((calendar, index) => {
-          const calRow = document.createElement('div');
-          calRow.classList.add('page-row');
-
-          const calText = document.createElement('span');
-          calText.textContent = `Cal: ${calendar.cal}, RGB: ${calendar.rgb}`;
-          calRow.appendChild(calText);
-
-          const deleteButton = document.createElement('button');
-          deleteButton.textContent = 'Löschen';
-          deleteButton.type = 'button';
-          deleteButton.addEventListener('click', () => {
-            value.calendars.splice(index, 1);
-            sidebarJS.showSidebarForm(content, schema);
-          });
-          calRow.appendChild(deleteButton);
-
-          calendarsContainer.appendChild(calRow);
-        });
-
-        const addCalendarButton = document.createElement('button');
-        addCalendarButton.textContent = 'Neuen Kalender hinzufügen';
-        addCalendarButton.type = 'button';
-        addCalendarButton.addEventListener('click', () => {
-          const newCalendar = { cal: '', rgb: '#FFFFFF' };
-          value.calendars = value.calendars || [];
-          value.calendars.push(newCalendar);
-          sidebarJS.showSidebarForm(content, schema);
-        });
-
-        additionalFields.appendChild(calendarsContainer);
-        additionalFields.appendChild(addCalendarButton);
-
-        container.appendChild(additionalFields);
-        editorForm.appendChild(container);
+      if (fieldSchema.type === 'object') {
+        // Objekte als Cards anzeigen
+        this.generateObjectCard(key, value, fieldSchema, content);
       } else {
+        // Standardfelder
         const field = editorJS.generateFormField(key, fieldSchema, value);
         if (field) editorForm.appendChild(field);
       }
@@ -116,7 +29,7 @@ const sidebarJS = {
     const saveBtn = document.createElement('button');
     saveBtn.textContent = 'Speichern';
     saveBtn.type = 'button';
-    saveBtn.addEventListener('click', () => sidebarJS.saveSidebarData(content));
+    saveBtn.addEventListener('click', () => this.saveSidebarData(content));
 
     const cancelBtn = document.createElement('button');
     cancelBtn.textContent = 'Abbrechen';
@@ -128,6 +41,27 @@ const sidebarJS = {
     editorForm.appendChild(actions);
   },
 
+  generateObjectCard(key, value, fieldSchema, content) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.style.border = '1px solid #ccc';
+    card.style.padding = '10px';
+    card.style.marginBottom = '10px';
+
+    const cardHeader = document.createElement('h4');
+    cardHeader.textContent = fieldSchema.description || key;
+    card.appendChild(cardHeader);
+
+    Object.keys(fieldSchema.properties).forEach((subKey) => {
+      const subFieldSchema = fieldSchema.properties[subKey];
+      const subValue = value[subKey] !== undefined ? value[subKey] : subFieldSchema.default || '';
+      const subField = editorJS.generateFormField(`${key}-${subKey}`, subFieldSchema, subValue);
+      if (subField) card.appendChild(subField);
+    });
+
+    editorForm.appendChild(card);
+  },
+
   saveSidebarData(content) {
     const formData = new FormData(editorForm);
     const updatedContent = {};
@@ -137,6 +71,15 @@ const sidebarJS = {
       updatedContent[key] = value;
     });
 
-    editorJS.showStartPage();
+    // Speichern
+    ipcRenderer.invoke('write-file', {
+      filePath: path.join(currentDataFolder, 'sidebar.json'),
+      content: JSON.stringify(updatedContent, null, 2),
+    }).then(() => {
+      modalJS.showModal('Sidebar-Konfiguration erfolgreich gespeichert.');
+      editorJS.showStartPage();
+    }).catch((error) => {
+      console.error('Fehler beim Speichern der Sidebar:', error);
+    });
   },
 };

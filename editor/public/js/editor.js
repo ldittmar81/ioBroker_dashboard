@@ -79,6 +79,31 @@ const editorJS = {
         <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
         <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
     }
+    else if (fieldSchema.type === 'integer' || fieldSchema.type === 'number') {
+      input = document.createElement('input');
+      input.type = 'number';
+      input.value = value;
+      input.id = key;
+      input.name = key;
+
+      if (fieldSchema.minimum !== undefined) {
+        input.min = fieldSchema.minimum;
+      }
+
+      if (fieldSchema.maximum !== undefined) {
+        input.max = fieldSchema.maximum;
+      }
+
+      if (fieldSchema.type === 'integer') {
+        input.step = 1;
+      } else if (fieldSchema.type === 'number' && fieldSchema.multipleOf) {
+        input.step = fieldSchema.multipleOf;
+      }
+    }
+    else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
+      // Array mit Objekten als Karten
+      input = this.generateObjectArrayField(key, fieldSchema, value || []);
+    }
     else if (fieldSchema.type === 'array') {
       input = document.createElement('textarea');
       input.value = Array.isArray(value) ? value.join('\n') : '';
@@ -94,6 +119,72 @@ const editorJS = {
     container.appendChild(input);
 
     return container;
+  },
+
+  generateObjectArrayField(key, fieldSchema, valueArray) {
+    const container = document.createElement('div');
+    container.classList.add('array-container');
+    const label = document.createElement('h4');
+    label.textContent = fieldSchema.description || key;
+    container.appendChild(label);
+
+    const cardsContainer = document.createElement('div');
+    cardsContainer.classList.add('cards-container');
+    container.appendChild(cardsContainer);
+
+    // Karten für jedes Objekt im Array erstellen
+    valueArray.forEach((item, index) => {
+      const card = this.generateObjectCard(`${key}[${index}]`, fieldSchema.items, item, () => {
+        // Löschfunktion
+        valueArray.splice(index, 1);
+        this.generateObjectArrayField(key, fieldSchema, valueArray); // Neu rendern
+      });
+      cardsContainer.appendChild(card);
+    });
+
+    // Button zum Hinzufügen eines neuen Objekts
+    const addButton = document.createElement('button');
+    addButton.textContent = `Neues ${key} hinzufügen`;
+    addButton.type = 'button';
+    addButton.addEventListener('click', () => {
+      const newItem = {}; // Leeres Objekt für das neue Item
+      valueArray.push(newItem);
+      this.generateObjectArrayField(key, fieldSchema, valueArray); // Neu rendern
+    });
+    container.appendChild(addButton);
+
+    return container;
+  },
+
+  generateObjectCard(key, schema, value, onDelete) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.style.border = '1px solid #ccc';
+    card.style.padding = '10px';
+    card.style.marginBottom = '10px';
+    card.style.backgroundColor = '#aaa';
+
+    Object.keys(schema.properties).forEach((subKey) => {
+      const subSchema = schema.properties[subKey];
+      const subValue = value[subKey] || subSchema.default || '';
+      const field = this.generateFormField(`${key}.${subKey}`, subSchema, subValue);
+      if (field) {
+        field.addEventListener('input', (event) => {
+          value[subKey] = event.target.value;
+        });
+        card.appendChild(field);
+      }
+    });
+
+    // Button zum Löschen der Karte
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Löschen';
+    deleteButton.type = 'button';
+    deleteButton.style.marginTop = '10px';
+    deleteButton.addEventListener('click', onDelete);
+    card.appendChild(deleteButton);
+
+    return card;
   }
 }
 
@@ -140,6 +231,11 @@ ipcRenderer.on('open-section', (section) => {
     default:
       this.logdata(`Unbekannte Sektion: ${section}`);
   }
+});
+
+ipcRenderer.on('edit-sidebar', ({ path, content, schema }) => {
+  logdata(`Lade Seitenfenster-Konfiguration von: ${path}`);
+  sidebarJS.showSidebarForm(content, schema);
 });
 
 // Zeige Startseite beim Start

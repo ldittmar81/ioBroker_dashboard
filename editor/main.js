@@ -144,7 +144,7 @@ function createMenu() {
       submenu: [
         {
           label: 'Standard',
-          click: () => openSection('Seitenfenster'),
+          click: openSidebarConfig,
         },
         ...users
           .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, `sidebar_${user.user}.json`)))
@@ -401,6 +401,35 @@ function loadConfigFile(fileName) {
     }
   }
 }
+
+function openSidebarConfig() {
+  const sidebarPath = path.join(__dirname, '..', currentFolder, 'sidebar.json');
+  const schemaPath = path.join(__dirname, '..', 'schema', 'sidebar.schema.json');
+
+  // Lade das Schema
+  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+
+  if (!fs.existsSync(sidebarPath)) {
+    console.log('sidebar.json nicht gefunden. Erstelle eine neue Datei...');
+    // Erstelle eine leere Standarddatei basierend auf dem Schema
+    const defaultSidebarConfig = {
+      clock: schema.properties.clock.default || 'default',
+      openWeatherMap: schema.properties.openWeatherMap.default || {},
+      ioBroker_ical: schema.properties.ioBroker_ical.default || {},
+    };
+
+    fs.writeFileSync(sidebarPath, JSON.stringify(defaultSidebarConfig, null, 2), 'utf8');
+    console.log('sidebar.json erfolgreich erstellt.');
+  }
+
+  // Lade die bestehende oder erstellte Datei
+  const sidebarContent = JSON.parse(fs.readFileSync(sidebarPath, 'utf8'));
+  console.log('sidebar.json geladen:', sidebarContent);
+
+  // Sende die Datei an den Renderer-Prozess
+  mainWindow.webContents.send('edit-sidebar', { path: sidebarPath, content: sidebarContent, schema });
+}
+
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

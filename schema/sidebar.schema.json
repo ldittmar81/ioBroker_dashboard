@@ -14,21 +14,22 @@
       "type": "object",
       "description": "Konfiguration für die Wetteranzeige über OpenWeatherMap",
       "properties": {
-        "enabled": { "type": "boolean", "default": false },
-        "imageSet": { "type": "integer", "default": 1 },
+        "enabled": { "type": "boolean", "default": false, "description": "OpenWeatherMap anzeigen" },
+        "imageSet": { "type": "integer", "default": 1, "description": "Imageset aus assets/img/sidebar/weather" },
         "imageType": {
           "type": "string",
           "enum": ["gif", "svg", "png"],
-          "default": "gif"
+          "default": "gif",
+          "description": "Dateityp aus dem Imageset"
         },
-        "location": { "type": "string" },
-        "lat": { "type": "number" },
-        "lon": { "type": "number" },
-        "apiKey": { "type": "string" }
+        "location": { "type": "string", "description": "Ort für Wetterdaten" },
+        "lat": { "type": "number", "description": "Geographischen Koordinaten LAT" },
+        "lon": { "type": "number", "description": "Geographischen Koordinaten LON" },
+        "apiKey": { "type": "string", "description": "API Key für OpenWeatherMap" }
       },
       "anyOf": [
-        { "required": ["enabled", "lat", "lon", "apiKey"] },
-        { "required": ["enabled", "location", "apiKey"] }
+        { "required": ["enabled"] },
+        { "required": ["enabled"] }
       ],
       "additionalProperties": false
     },
@@ -36,15 +37,22 @@
       "type": "object",
       "description": "Konfiguration für ioBroker.ical",
       "properties": {
-        "enabled": { "type": "boolean", "default": false },
+        "enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "iCalender anzeigen"
+        },
         "calendars": {
           "type": "array",
+          "description": "Kalenderobjekte von ioBroker.ical",
           "items": {
             "type": "object",
             "properties": {
-              "cal": { "type": "string" },
-              "rgb": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$" },
-              "image": { "type": "string" }
+              "cal": { "type": "string", "description": "Datenpunkt für Kalender z.B. ical.0.data.table" },
+              "rgb": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$",
+                "description": "Kalenderfarbe"
+              },
+              "image": { "type": "string", "description": "Kalendericon aus dataFolder/img/devices/ioBroker_ical" }
             },
             "required": ["cal", "rgb"],
             "additionalProperties": false
@@ -55,6 +63,6 @@
       "additionalProperties": false
     }
   },
-  "required": ["clock"],
+  "required": ["clock","openWeatherMap","ioBroker_ical"],
   "additionalProperties": false
 }
