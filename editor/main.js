@@ -131,7 +131,7 @@ function createMenu() {
               }
 
               // Editor-Befehl an Renderer-Prozess senden
-              mainWindow.webContents.send('edit-theme', { user, themePath: userThemePath });
+              mainWindow.webContents.send('edit-theme', userThemePath);
             },
           })),
       ],
@@ -576,16 +576,10 @@ ipcMain.handle('get-schema', async (event, schemaName) => {
   }
 });
 
-ipcMain.handle('check-file-existence', async (event, { files }) => {
-  console.log('Check file existence:', files);
-  return files.map(({ path: filePath, editText }) => {
-    const fullPath = filePath.startsWith('/') ? filePath : path.join(__dirname, '..', filePath);
-    console.log('Checking path:', fullPath);
-    return {
-      exists: fs.existsSync(fullPath),
-      editText,
-    };
-  });
+ipcMain.handle('check-file-existence', async (event, filePath) => {
+  console.log('Check file existence:', filePath);
+  const fullPath = path.join(__dirname, '..', filePath);
+  return fs.existsSync(fullPath);
 });
 
 ipcMain.handle('copy-file', async (event, { source, destination }) => {

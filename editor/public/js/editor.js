@@ -389,8 +389,7 @@ ipcRenderer.on('edit-user', (user) => {
   usersJS.showUserForm(user); // Formular mit Benutzerinformationen anzeigen
 });
 
-ipcRenderer.on('edit-theme', ({ user, themePath }) => {
-  logdata(`Lade Theme-Editor für Benutzer "${user.name}" mit Pfad: ${themePath}`);
+ipcRenderer.on('edit-theme', (themePath) => {
   themeJS.showThemeForm(themePath);
 });
 

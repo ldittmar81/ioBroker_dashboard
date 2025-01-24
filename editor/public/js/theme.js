@@ -5,7 +5,7 @@ const themeJS = {
 
     logdata(defaultThemePath);
     ipcRenderer
-      .invoke('check-file-existence', { files: [{ path: defaultThemePath }] })
+      .invoke('check-file-existence', defaultThemePath)
       .then((results) => {
         const exists = results[0]?.exists;
 
