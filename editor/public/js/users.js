@@ -100,7 +100,6 @@ const usersJS = {
                 ipcRenderer.invoke('upload-icon', file.path).then((newIconName) => {
                   input.value = newIconName;
                   iconPreview.src = `../../${currentDataFolder}/img/users/${newIconName}`;
-                  modalJS.showModal(`Icon hochgeladen: ${newIconName}`);
                 });
               }
             });

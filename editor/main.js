@@ -424,7 +424,7 @@ function openSidebarConfig() {
 
   // Lade die bestehende oder erstellte Datei
   const sidebarContent = JSON.parse(fs.readFileSync(sidebarPath, 'utf8'));
-  console.log('sidebar.json geladen:', sidebarContent);
+  console.log('sidebar.json geladen:');
 
   // Sende die Datei an den Renderer-Prozess
   mainWindow.webContents.send('edit-sidebar', { path: sidebarPath, content: sidebarContent, schema });

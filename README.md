@@ -28,11 +28,14 @@ Installiere den Adapter wie in dessen [GitHub-Repo](https://github.com/ioBroker/
 2. Starte einen Webserver in deinem Projektverzeichnis.
 3. Öffne `http://localhost:xxxx/dist/index.html` in deinem Browser, wobei `xxxx` der Port deines Webservers ist.
 
+## Konfigurations Editor
+Um die JSON Dateien einfacher zu editieren, wurde ein Editor auf Basis von Node.JS entwickelt.
+
 ## Handhabung bei Produktivnutzung
 
 ## Changelog
 ### 0.0.1 (2025-02-xx)
-- (ldittmar) Konfiguration Editor (wird gemacht)
+- (ldittmar) Konfiguration Editor (in Arbeit)
 - (ldittmar) Grundfunktionen hinzugefügt
 - (ldittmar) Testdaten hinzugefügt
 - (ldittmar) Dokumentation hinzugefügt
