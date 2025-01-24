@@ -70,7 +70,7 @@ const sidebarJS = {
 
     // Hilfsfunktion, um verschachtelte Objekte zu erstellen
     const setNestedValue = (obj, path, value) => {
-      const keys = path.split('.');
+      const keys = path.replace(/\[(\d+)\]/g, '.$1').split('.'); // Unterstützt Arrays (z.B. "calendars[0].cal")
       keys.reduce((acc, key, index) => {
         if (index === keys.length - 1) {
           // Letzter Key, Wert setzen
@@ -78,8 +78,8 @@ const sidebarJS = {
             acc[key] = value;
           }
         } else {
-          // Zwischenobjekte erzeugen
-          if (!acc[key]) acc[key] = {};
+          // Zwischenobjekte oder Arrays erzeugen
+          if (!acc[key]) acc[key] = isNaN(keys[index + 1]) ? {} : [];
           return acc[key];
         }
       }, obj);
@@ -90,12 +90,16 @@ const sidebarJS = {
 
     inputs.forEach((input) => {
       const key = input.name || input.id;
-      const value =
-        input.type === 'checkbox'
-          ? input.checked
-          : input.type === 'number' || input.type === 'integer'
-            ? input.value !== '' ? Number(input.value) : null
-            : input.value;
+      let value;
+
+      // Typ erkennen und Wert korrekt interpretieren
+      if (input.dataset.type === 'boolean') {
+        value = input.value === 'true'; // Boolean umwandeln
+      } else if (input.type === 'number') {
+        value = input.value !== '' ? Number(input.value) : undefined; // Zahl oder undefined
+      } else {
+        value = input.value; // Standardwert
+      }
 
       // Verschachtelte Objekte/Arrays verarbeiten
       setNestedValue(updatedContent, key, value);

@@ -41,18 +41,18 @@ const editorJS = {
 
     return container;
   },
-  generateFormField(key, fieldSchema, value = '') {
+  generateFormField(key, fieldSchema, value = '', parentKey = '') {
     const container = this.createFormFieldContainer(fieldSchema, key);
 
     let input;
+    const fullKey = parentKey ? `${parentKey}.${key}` : key; // Verschachtelte Schlüssel
 
-    // Typen behandeln
     if (fieldSchema.type === 'string' && !fieldSchema.enum) {
       input = document.createElement('input');
       input.type = 'text';
       input.value = value;
-      input.id = key;
-      input.name = key;
+      input.id = fullKey;
+      input.name = fullKey;
 
       if (fieldSchema.pattern) {
         input.pattern = fieldSchema.pattern;
@@ -64,8 +64,8 @@ const editorJS = {
     } else if (fieldSchema.type === 'string' && fieldSchema.enum) {
       // Dropdown für enum-Werte
       input = document.createElement('select');
-      input.name = key;
-      input.id = key;
+      input.name = fullKey;
+      input.id = fullKey;
 
       fieldSchema.enum.forEach((option) => {
         const opt = document.createElement('option');
@@ -76,17 +76,18 @@ const editorJS = {
       });
     } else if (fieldSchema.type === 'boolean') {
       input = document.createElement('select');
-      input.name = key;
-      input.id = key;
+      input.name = fullKey;
+      input.id = fullKey;
+      input.dataset.type = 'boolean'; // Typ als Hinweis speichern
       input.innerHTML = `
-            <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
-            <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
+          <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
+          <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
     } else if (fieldSchema.type === 'integer' || fieldSchema.type === 'number') {
       input = document.createElement('input');
       input.type = 'number';
       input.value = value;
-      input.id = key;
-      input.name = key;
+      input.id = fullKey;
+      input.name = fullKey;
 
       if (fieldSchema.minimum !== undefined) {
         input.min = fieldSchema.minimum;
@@ -105,22 +106,21 @@ const editorJS = {
       // Array mit Objekten
       const arrayContainer = document.createElement('div');
       arrayContainer.classList.add('array-container');
-      arrayContainer.dataset.key = key;
+      arrayContainer.dataset.key = fullKey;
 
-      logdata(`Array mit Objekten: ${key}`);
+      logdata(`Array mit Objekten: ${fullKey}`);
       (value || []).forEach((item, index) => {
         const card = document.createElement('div');
         card.classList.add('array-item');
         card.dataset.index = index;
         card.classList.add('object-card');
 
-        logdata(`Array-Item: ${key}[${index}]`);
-        // Iteriere durch die Eigenschaften des Objekts im Array
+        logdata(`Array-Item: ${fullKey}[${index}]`);
         Object.keys(fieldSchema.items.properties).forEach((subKey) => {
           const subFieldSchema = fieldSchema.items.properties[subKey];
           const subValue = item[subKey] || '';
-          const subField = this.generateFormField(subKey, subFieldSchema, subValue);
-          logdata(`Sub-Feld: ${key}[${index}].${subKey}`);
+          const subField = this.generateFormField(subKey, subFieldSchema, subValue, `${fullKey}[${index}]`);
+          logdata(`Sub-Feld: ${fullKey}[${index}].${subKey}`);
           if (subField) {
             card.appendChild(subField);
           }
@@ -143,35 +143,21 @@ const editorJS = {
       addButton.textContent = 'Hinzufügen';
       addButton.type = 'button';
       addButton.addEventListener('click', () => {
-        const newItem = document.createElement('div');
-        newItem.classList.add('array-item');
-
+        const newItem = {};
         Object.keys(fieldSchema.items.properties).forEach((subKey) => {
-          const subFieldSchema = fieldSchema.items.properties[subKey];
-          const subField = this.generateFormField(subKey, subFieldSchema, '', `${key}[${arrayContainer.children.length}]`);
-          if (subField) {
-            newItem.appendChild(subField);
-          }
+          newItem[subKey] = fieldSchema.items.properties[subKey].default || '';
         });
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Löschen';
-        deleteButton.type = 'button';
-        deleteButton.addEventListener('click', () => {
-          arrayContainer.removeChild(newItem);
-        });
-        newItem.appendChild(deleteButton);
-
-        arrayContainer.appendChild(newItem);
+        value.push(newItem);
+        this.generateFormField(key, fieldSchema, value, parentKey); // Neu rendern
       });
-      logdata("Done with array with objects");
+
       arrayContainer.appendChild(addButton);
       container.appendChild(arrayContainer);
     } else if (fieldSchema.type === 'array') {
       input = document.createElement('textarea');
       input.value = Array.isArray(value) ? value.join('\n') : '';
-      input.id = key;
-      input.name = key;
+      input.id = fullKey;
+      input.name = fullKey;
     } else {
       logdata(`Feldtyp "${fieldSchema.type}" wird nicht unterstützt.`);
       return null;
