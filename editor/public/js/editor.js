@@ -235,6 +235,132 @@ const editorJS = {
     card.appendChild(deleteButton);
 
     return card;
+  },
+
+  saveData(content, filePath) {
+    const formContainer = document.querySelector('#editor-form');
+    const inputs = formContainer.querySelectorAll('input, select, textarea');
+
+    // Hilfsfunktion, um verschachtelte Objekte zu erstellen
+    const setNestedValue = (obj, path, value) => {
+      const keys = path.replace(/\[(\d+)\]/g, '.$1').split('.');
+      keys.reduce((acc, key, index) => {
+        if (index === keys.length - 1) {
+          if (value !== '' && value !== null && value !== undefined) acc[key] = value;
+        } else {
+          if (!acc[key]) acc[key] = isNaN(keys[index + 1]) ? {} : [];
+          return acc[key];
+        }
+      }, obj);
+    };
+
+    const updatedContent = { ...content };
+
+    inputs.forEach((input) => {
+      logdata(`Speichern von ${input.name || input.id}`);
+      const key = input.name || input.id;
+      let value;
+
+      // Typ erkennen und Wert korrekt interpretieren
+      if (input.dataset.type === 'boolean') {
+        value = input.value === 'true';
+      }
+      else if (input.type === 'number') {
+        value = input.value !== '' ? Number(input.value) : undefined;
+      }
+      else if (input.tagName === 'TEXTAREA' && Array.isArray(content[key])) {
+        value = input.value.split('\n').map((item) => item.trim()).filter((item) => item !== '');
+      }
+      else if (input.dataset.type === 'json') {
+        value = JSON.parse(input.value);
+      }
+      else {
+        value = input.value;
+      }
+
+      logdata(`Wert: ${value}`);
+
+      // Verschachtelte Objekte/Arrays verarbeiten
+      setNestedValue(updatedContent, key, value);
+    });
+
+    const cleanContent = this.cleanObject(updatedContent);
+
+    ipcRenderer
+      .invoke('write-file', { filePath, content: JSON.stringify(cleanContent, null, 2) })
+      .then(() => {
+        modalJS.showModal('Daten erfolgreich gespeichert.');
+        this.showStartPage();
+      })
+      .catch((error) => {
+        logdata(`Fehler beim Speichern: ${error.message}`, 'error');
+      });
+  },
+
+  cleanObject(obj) {
+    if (Array.isArray(obj)) {
+      // Arrays: Leere Elemente entfernen
+      return obj
+        .map((item) => this.cleanObject(item))
+        .filter((item) => item !== null && item !== undefined && Object.keys(item).length > 0);
+    } else if (typeof obj === 'object' && obj !== null) {
+      // Objekte: Leere Schlüssel entfernen
+      return Object.keys(obj).reduce((acc, key) => {
+        const value = this.cleanObject(obj[key]);
+        if (
+          value !== null &&
+          value !== undefined &&
+          !(typeof value === 'string' && value === '') &&
+          !(typeof value === 'number' && isNaN(value))
+        ) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+    }
+    return obj;
+  },
+  createHeader(text) {
+    // Überschrift hinzufügen
+    const header = document.createElement('h3');
+    header.textContent = text;
+    return header;
+  },
+  createButtons(onSaveCallback) {
+    // Speichern- und Abbrechen-Buttons
+    const actions = document.createElement('div');
+    actions.classList.add('actions');
+
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = 'Speichern';
+    saveBtn.type = 'button';
+
+    if (onSaveCallback && typeof onSaveCallback === 'function') {
+      saveBtn.addEventListener('click', onSaveCallback); // Save-Callback registrieren
+    }
+
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Abbrechen';
+    cancelBtn.type = 'button';
+    cancelBtn.addEventListener('click', this.showStartPage);
+
+    actions.appendChild(saveBtn);
+    actions.appendChild(cancelBtn);
+
+    return actions;
+  },
+  generateCardHeader(text) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.style.border = '1px solid #ccc';
+    card.style.padding = '10px';
+    card.style.marginBottom = '10px';
+
+    const cardHeader = document.createElement('h4');
+    cardHeader.textContent = text;
+    card.appendChild(cardHeader);
+
+    return card;
   }
 }
 
