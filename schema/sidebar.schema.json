@@ -27,10 +27,7 @@
         "lon": { "type": "number", "description": "Geographischen Koordinaten LON" },
         "apiKey": { "type": "string", "description": "API Key für OpenWeatherMap" }
       },
-      "anyOf": [
-        { "required": ["enabled"] },
-        { "required": ["enabled"] }
-      ],
+      "required": ["enabled"],
       "additionalProperties": false
     },
     "ioBroker_ical": {
@@ -48,7 +45,7 @@
           "items": {
             "type": "object",
             "properties": {
-              "cal": { "type": "string", "description": "Datenpunkt für Kalender z.B. ical.0.data.table" },
+              "cal": { "type": "string", "description": "Datenpunkt für Kalender z.B. ical.0.data.table", "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$" },
               "rgb": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$",
                 "description": "Kalenderfarbe"
               },

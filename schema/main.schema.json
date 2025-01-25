@@ -98,7 +98,8 @@
                       },
                       "value": {
                         "type": "string",
-                        "description": "ID aus ioBroker (z.B. 'alias.0.Wohnzimmer.Durchlüftung.TIMER')."
+                        "description": "ID aus ioBroker (z.B. 'alias.0.Wohnzimmer.Durchlüftung.TIMER').",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       },
                       "icon": {
                         "type": "string",

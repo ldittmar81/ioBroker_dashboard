@@ -77,67 +77,92 @@
                 },
                 "iconset": {
                   "type": "string",
-                  "description": "Andere Icons auswählen"
+                  "description": "Andere Icons auswählen",
+                  "$comment": "light"
                 },
                 "value": {
                   "type": "string",
-                  "description": "Der Wert oder Pfad des Geräts"
+                  "description": "Der Wert oder Pfad des Geräts",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                 },
                 "hidden": {
                   "type": "string",
-                  "description": "ioBroker ID zum Ausblenden des Gerätes"
+                  "description": "ioBroker ID zum Ausblenden des Gerätes",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                 },
                 "state": {
                   "type": "string",
-                  "description": "Zustand des Geräts"
+                  "description": "Zustand des Geräts",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                 },
                 "dimmer": {
                   "type": "string",
-                  "description": "Dimmer-Wert (nur für 'light')"
+                  "description": "Dimmer-Wert",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "light"
                 },
                 "rgb": {
                   "type": "string",
-                  "description": "RGB-Wert (nur für 'light', 'button' und 'plug')"
+                  "description": "RGB-Wert",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "light,button,plug"
                 },
                 "hue": {
                   "type": "string",
-                  "description": "HUE-Wert (nur für 'light')"
+                  "description": "HUE-Wert",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "light"
                 },
                 "temperature": {
                   "type": "string",
-                  "description": "Temperaturwert (für 'light' und 'heater')"
+                  "description": "Temperaturwert",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "light,heater,temperature"
                 },
                 "temperature_set": {
                   "type": "string",
-                  "description": "Eingestellte Temperatur (nur für 'heater')"
+                  "description": "Eingestellte Temperatur",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "heater"
                 },
                 "humidity": {
                   "type": "string",
-                  "description": "Luftfeuchtigkeit (nur für 'heater')"
+                  "description": "Luftfeuchtigkeit",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "heater,temperature"
                 },
                 "lock": {
                   "type": "string",
-                  "description": "Tür abgeschlossen (nur für 'door')"
+                  "description": "Tür abgeschlossen",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "door"
                 },
                 "icon": {
                   "type": "string",
-                  "description": "FontAwesome Icon-Klasse für das Gerät (nur für 'button')"
+                  "description": "FontAwesome Icon-Klasse für das Gerät",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "button"
                 },
                 "image": {
                   "type": "string",
-                  "description": "Bilddatei für den Button (nur für 'button')"
+                  "description": "Bilddatei für den Button",
+                  "$comment": "button"
                 },
                 "imageOn": {
                   "type": "string",
-                  "description": "Bilddatei für den 'An'-Zustand (nur für 'plug')"
+                  "description": "Bilddatei für den 'An'-Zustand",
+                  "$comment": "plug"
                 },
                 "imageOff": {
                   "type": "string",
-                  "description": "Bilddatei für den 'Aus'-Zustand (nur für 'plug')"
+                  "description": "Bilddatei für den 'Aus'-Zustand",
+                  "$comment": "plug"
                 },
                 "command": {
                   "type": "string",
-                  "description": "Befehleingabe für Gerät (nur für 'media')"
+                  "description": "Befehleingabe für Gerät",
+                  "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$",
+                  "$comment": "media"
                 },
                 "authorization": {
                   "type": "array",
@@ -185,19 +210,23 @@
                       },
                       "unreach": {
                         "type": "string",
-                        "description": "Unreach-Status der Hardware-Komponente"
+                        "description": "Unreach-Status der Hardware-Komponente",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       },
                       "rssi": {
                         "type": "string",
-                        "description": "Signalstärke der Hardware-Komponente"
+                        "description": "Signalstärke der Hardware-Komponente",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       },
                       "lowbat": {
                         "type": "string",
-                        "description": "Batteriestatus der Hardware-Komponente"
+                        "description": "Batteriestatus der Hardware-Komponente",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       },
                       "errorID": {
                         "type": "string",
-                        "description": "Fehler-ID der Hardware-Komponente"
+                        "description": "Fehler-ID der Hardware-Komponente",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       }
                     },
                     "required": [
@@ -214,7 +243,8 @@
                     "properties": {
                       "value": {
                         "type": "string",
-                        "description": "ioBroker ID des Statuswerts"
+                        "description": "ioBroker ID des Statuswerts",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       },
                       "icon": {
                         "type": "string",
@@ -248,7 +278,8 @@
                       },
                       "value": {
                         "type": "string",
-                        "description": "ioBroker ID des Informationswerts"
+                        "description": "ioBroker ID des Informationswerts",
+                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                       },
                       "unit": {
                         "type": "string",
@@ -371,7 +402,8 @@
                           "type": "object",
                           "properties": {
                             "cal": {
-                              "type": "string"
+                              "type": "string",
+                              "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
                             },
                             "rgb": {
                               "type": "string",
@@ -444,7 +476,8 @@
           },
           "id": {
             "type": "string",
-            "description": "ioBroker ID der Steuerfunktion"
+            "description": "ioBroker ID der Steuerfunktion",
+            "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
           },
           "step": {
             "type": "integer",
@@ -464,7 +497,8 @@
           },
           "allowed": {
             "type": "string",
-            "description": "Bedingung, die die Nutzung der Funktion erlaubt"
+            "description": "Bedingung, die die Nutzung der Funktion erlaubt",
+            "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
           },
           "type": {
             "type": "string",
@@ -549,7 +583,8 @@
           },
           "id": {
             "type": "string",
-            "description": "ioBroker ID für die Media-Information"
+            "description": "ioBroker ID für die Media-Information",
+            "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
           },
           "imageTyp": {
             "type": "string",
@@ -583,7 +618,8 @@
           },
           "id": {
             "type": "string",
-            "description": "ID zum Senden des Befehls"
+            "description": "ID zum Senden des Befehls",
+            "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
           },
           "sendValue": {
             "type": "string",

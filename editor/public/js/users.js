@@ -160,16 +160,36 @@ const usersJS = {
         });
 
         button.addEventListener('click', () => {
-          if (button.textContent.includes('bearbeiten')) {
-            // Öffne Editor
-            const filePath = `${currentDataFolder}/${action.file}`;
-            themeJS.showThemeForm(filePath);
-          } else {
-            const destinationPath = `${currentDataFolder}/theme/${user.user}.css`;
-            const sourcePath = 'assets/css/users/default.css'
-            ipcRenderer.invoke('copy-file', {source: sourcePath, destination: destinationPath}).then(() => {
-              themeJS.showThemeForm(destinationPath);
-            });
+          const bearbeiten = button.textContent.includes('bearbeiten');
+          if (button.textContent.startsWith('Theme')) {
+            if (bearbeiten) {
+              // Öffne Editor
+              const filePath = `${currentDataFolder}/${action.file}`;
+              themeJS.showThemeForm(filePath);
+            } else {
+              const destinationPath = `${currentDataFolder}/theme/${user.user}.css`;
+              const sourcePath = 'assets/css/users/default.css'
+              ipcRenderer.invoke('copy-file', {source: sourcePath, destination: destinationPath}).then(() => {
+                themeJS.showThemeForm(destinationPath);
+              });
+            }
+          }
+          else if (button.textContent.startsWith('Seitenfenster')) {
+            if(bearbeiten){
+              const filePath = `${currentDataFolder}/${action.file}`;
+              sidebarJS.showSidebarForm(filePath);
+            }
+            else {
+
+            }
+          }
+          else if (button.textContent.startsWith('Übersichtsseite')) {
+            if(bearbeiten){
+
+            }
+            else {
+
+            }
           }
         });
       }
