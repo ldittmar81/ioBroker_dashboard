@@ -194,22 +194,21 @@ const configJS = {
       initializeConnection(() => {
         servConn.getStates((err, states) => {
           if (err) {
-            console.error('Fehler beim Abrufen der States:', err);
-            modalJS.showModal('Fehler beim Abrufen der ioBroker-IDs.');
+            logdata('Fehler beim Abrufen der States: ' + err, 'error');
             return;
           }
 
           const ids = Object.keys(states);
           const jsonContent = JSON.stringify(ids, null, 2);
 
-          // IDs in Datei speichern
           ipcRenderer.invoke('write-file', { filePath, content: jsonContent })
             .then(() => {
               modalJS.showModal('ioBroker IDs erfolgreich gespeichert.');
+              editorJS.resetIoBrokerIDCache(); // Cache zurücksetzen
               updateButtonAndDisplay();
             })
             .catch((error) => {
-              console.error('Fehler beim Speichern der ID-Datei:', error);
+              logdata('Fehler beim Speichern der ID-Datei: ' + error, 'error');
               modalJS.showModal('Fehler beim Speichern der ioBroker-IDs.');
             });
         });

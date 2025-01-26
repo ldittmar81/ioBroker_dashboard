@@ -4,6 +4,7 @@ const editorForm = document.querySelector('#editor-form');
 const startPage = document.querySelector('#start-page');
 const editorContainer = document.querySelector('#editor-container');
 
+let cachedIoBrokerIDs = null;
 let currentDataFolder = null;
 
 function logdata(message, type = 'info') {
@@ -48,7 +49,6 @@ const editorJS = {
     const fullKey = parentKey ? `${parentKey}.${key}` : key; // Verschachtelte Schlüssel
 
     if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$') {
-      // Dropdown für ioBroker-IDs basierend auf dem Pattern
       input = document.createElement('input');
       input.type = 'text';
       input.value = value;
@@ -58,28 +58,26 @@ const editorJS = {
 
       const dropdown = document.createElement('datalist');
       dropdown.id = `${fullKey}-options`;
-
       input.setAttribute('list', dropdown.id);
 
-      // Asynchrone Filterung der ioBroker-IDs
+      // Asynchrone Filterung der IDs
       input.addEventListener('input', (event) => {
         const query = event.target.value.toLowerCase();
 
-        // Lade IDs und filtere nach Eingabe
-        ipcRenderer.invoke('read-file', `${currentDataFolder}/ioBroker_IDs.json`).then((data) => {
-          const ids = JSON.parse(data);
-          const filteredIds = ids.filter((id) => id.toLowerCase().includes(query)).slice(0, 50); // Max. 50 Ergebnisse
+        this.loadIoBrokerIDs()
+          .then((ids) => {
+            const filteredIds = ids.filter((id) => id.toLowerCase().includes(query)).slice(0, 50); // Max. 50 Ergebnisse
+            dropdown.innerHTML = '';
 
-          dropdown.innerHTML = ''; // Bestehende Optionen löschen
-
-          filteredIds.forEach((id) => {
-            const option = document.createElement('option');
-            option.value = id;
-            dropdown.appendChild(option);
+            filteredIds.forEach((id) => {
+              const option = document.createElement('option');
+              option.value = id;
+              dropdown.appendChild(option);
+            });
+          })
+          .catch((error) => {
+            console.error('Fehler beim Laden der IDs:', error);
           });
-        }).catch((error) => {
-          console.error('Fehler beim Laden der ioBroker-IDs:', error);
-        });
       });
 
       container.appendChild(dropdown);
@@ -398,6 +396,26 @@ const editorJS = {
     card.appendChild(cardHeader);
 
     return card;
+  },
+  loadIoBrokerIDs() {
+    return new Promise((resolve, reject) => {
+      if (cachedIoBrokerIDs) {
+        resolve(cachedIoBrokerIDs); // IDs aus dem Cache zurückgeben
+      } else {
+        ipcRenderer.invoke('read-file', `${currentDataFolder}/ioBroker_IDs.json`)
+          .then((data) => {
+            cachedIoBrokerIDs = JSON.parse(data); // IDs zwischenspeichern
+            resolve(cachedIoBrokerIDs);
+          })
+          .catch((error) => {
+            console.error('Fehler beim Laden der ioBroker-IDs:', error);
+            reject(error);
+          });
+      }
+    });
+  },
+  resetIoBrokerIDCache() {
+    cachedIoBrokerIDs = null;
   }
 }
 
