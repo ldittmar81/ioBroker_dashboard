@@ -144,58 +144,90 @@ const editorJS = {
       } else if (fieldSchema.type === 'number' && fieldSchema.multipleOf) {
         input.step = fieldSchema.multipleOf;
       }
-    } else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
-      // Array mit Objekten
+    }
+    else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
+      // For an array of objects
       const arrayContainer = document.createElement('div');
       arrayContainer.classList.add('array-container');
       arrayContainer.dataset.key = fullKey;
 
-      logdata(`Array mit Objekten: ${fullKey}`);
-      (value || []).forEach((item, index) => {
-        const card = document.createElement('div');
-        card.classList.add('array-item');
-        card.dataset.index = index;
-        card.classList.add('object-card');
+      // Store the array in a local variable 'value' (already done).
+      // We'll create a sub-function that re-renders the entire list:
 
-        logdata(`Array-Item: ${fullKey}[${index}]`);
-        Object.keys(fieldSchema.items.properties).forEach((subKey) => {
-          const subFieldSchema = fieldSchema.items.properties[subKey];
-          const subValue = item[subKey] || '';
-          const subField = this.generateFormField(subKey, subFieldSchema, subValue, `${fullKey}[${index}]`);
-          logdata(`Sub-Feld: ${fullKey}[${index}].${subKey}`);
-          if (subField) {
-            card.appendChild(subField);
-          }
+      const renderArrayItems = () => {
+        // First clear anything inside arrayContainer (except the addButton).
+        // We only want the "cards" area cleared.
+        //
+        // We can store the "Add" button in a variable so that we remove only the cards.
+        const oldCards = arrayContainer.querySelectorAll('.object-card');
+        oldCards.forEach(el => el.remove());
+
+        // Now iterate over our array "value" and create a card for each object
+        value.forEach((item, index) => {
+          const card = document.createElement('div');
+          card.classList.add('array-item', 'object-card');
+          card.dataset.index = index;
+
+          // For each property of the item
+          Object.keys(fieldSchema.items.properties).forEach((subKey) => {
+            const subFieldSchema = fieldSchema.items.properties[subKey];
+            const subValue = item[subKey] || '';
+            // Use the existing generateFormField for each sub property:
+            const subField = editorJS.generateFormField(
+              subKey,
+              subFieldSchema,
+              subValue,
+              `${fullKey}[${index}]`
+            );
+            if (subField) {
+              // We also want to watch changes so we sync the array
+              subField.addEventListener('input', e => {
+                item[subKey] = e.target.value;
+              });
+              card.appendChild(subField);
+            }
+          });
+
+          // Delete button for that card
+          const deleteButton = document.createElement('button');
+          deleteButton.textContent = 'Löschen';
+          deleteButton.type = 'button';
+          deleteButton.addEventListener('click', () => {
+            // Splice out the item in memory:
+            value.splice(index, 1);
+            // Re-render the array
+            renderArrayItems();
+          });
+          card.appendChild(deleteButton);
+
+          arrayContainer.insertBefore(card, addButton);
         });
+      };
 
-        // Löschen-Button für die Karte
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Löschen';
-        deleteButton.type = 'button';
-        deleteButton.addEventListener('click', () => {
-          arrayContainer.removeChild(card);
-        });
-        card.appendChild(deleteButton);
-
-        arrayContainer.appendChild(card);
-      });
-
-      // Hinzufügen-Button
+      // Create an "add" button:
       const addButton = document.createElement('button');
-      addButton.textContent = 'Hinzufügen';
       addButton.type = 'button';
+      addButton.textContent = 'Hinzufügen';
       addButton.addEventListener('click', () => {
+        // Create a brand-new object with default values
         const newItem = {};
         Object.keys(fieldSchema.items.properties).forEach((subKey) => {
           newItem[subKey] = fieldSchema.items.properties[subKey].default || '';
         });
+        // Add it to the array in memory
         value.push(newItem);
-        this.generateFormField(key, fieldSchema, value, parentKey); // Neu rendern
+        // Re-render so user sees it
+        renderArrayItems();
       });
 
       arrayContainer.appendChild(addButton);
+
+      // Finally, do an initial render so we see any existing items:
+      renderArrayItems();
+
       container.appendChild(arrayContainer);
-    } else if (fieldSchema.type === 'array') {
+    }
+    else if (fieldSchema.type === 'array') {
       input = document.createElement('textarea');
       input.value = Array.isArray(value) ? value.join('\n') : '';
       input.id = fullKey;
@@ -288,7 +320,9 @@ const editorJS = {
       const keys = path.replace(/\[(\d+)\]/g, '.$1').split('.');
       keys.reduce((acc, key, index) => {
         if (index === keys.length - 1) {
-          if (value !== '' && value !== null && value !== undefined) acc[key] = value;
+          if (value !== '' && value !== null && value !== undefined) {
+            acc[key] = value;
+          }
         } else {
           if (!acc[key]) acc[key] = isNaN(keys[index + 1]) ? {} : [];
           return acc[key];
