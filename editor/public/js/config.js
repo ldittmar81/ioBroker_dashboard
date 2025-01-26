@@ -134,7 +134,7 @@ const configJS = {
             idCountDisplay.textContent = `(${idCount} IDs)`;
             button.disabled = false;
           }).catch((error) => {
-            console.error('Fehler beim Lesen der ID-Datei:', error);
+            logdata('Fehler beim Lesen der ID-Datei: ' + error, 'error');
             button.textContent = 'ioBroker IDs Liste erneuern';
             idCountDisplay.textContent = '(Fehler beim Laden der IDs)';
             button.disabled = true;
@@ -154,7 +154,7 @@ const configJS = {
       const socketSession = document.querySelector('#socketSession')?.value || '';
 
       if (!connLink) {
-        console.error('Keine Verbindungsdaten gefunden.');
+        logdata('Keine Verbindungsdaten gefunden.', 'error');
         modalJS.showModal('Fehlende Verbindungsdaten für ioBroker.');
         return;
       }
@@ -171,17 +171,15 @@ const configJS = {
         {
           onConnChange: (isConnected) => {
             if (isConnected) {
-              console.log('Mit ioBroker verbunden.');
+              logdata('Mit ioBroker verbunden.');
               callback();
             } else {
-              console.warn('Verbindung zu ioBroker verloren.');
-              modalJS.showModal('Verbindung zu ioBroker verloren.');
+              logdata('Verbindung zu ioBroker verloren.', 'warn');
             }
           },
           onUpdate: () => {}, // Nicht relevant für diese Aktion
           onError: (error) => {
-            console.error('Verbindungsfehler:', error);
-            modalJS.showModal('Fehler bei der Verbindung zu ioBroker.');
+            logdata('Verbindungsfehler: ' + error, 'error');
           }
         },
         true,
@@ -209,7 +207,6 @@ const configJS = {
             })
             .catch((error) => {
               logdata('Fehler beim Speichern der ID-Datei: ' + error, 'error');
-              modalJS.showModal('Fehler beim Speichern der ioBroker-IDs.');
             });
         });
       });

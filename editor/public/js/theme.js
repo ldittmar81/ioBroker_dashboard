@@ -278,7 +278,7 @@ const themeJS = {
         editorJS.showStartPage();
       })
       .catch((error) => {
-        console.error('Fehler beim Speichern des Themes:', error);
+        logdata('Fehler beim Speichern des Themes: ' + error, 'error');
       });
   }
 };

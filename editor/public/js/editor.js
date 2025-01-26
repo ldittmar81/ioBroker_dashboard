@@ -62,12 +62,19 @@ const editorJS = {
 
       // Asynchrone Filterung der IDs
       input.addEventListener('input', (event) => {
-        const query = event.target.value.toLowerCase();
+        const query = event.target.value.toLowerCase().trim();
+
+        // Mehrere Suchbegriffe durch Leerzeichen trennen
+        const keywords = query.split(/\s+/); // Trennung nach Leerzeichen
 
         this.loadIoBrokerIDs()
           .then((ids) => {
-            const filteredIds = ids.filter((id) => id.toLowerCase().includes(query)).slice(0, 50); // Max. 50 Ergebnisse
-            dropdown.innerHTML = '';
+            // IDs filtern: Alle Schlüsselwörter müssen enthalten sein
+            const filteredIds = ids.filter((id) =>
+              keywords.every((keyword) => id.toLowerCase().includes(keyword))
+            ).slice(0, 50); // Maximal 50 Ergebnisse
+
+            dropdown.innerHTML = ''; // Vorherige Optionen löschen
 
             filteredIds.forEach((id) => {
               const option = document.createElement('option');
@@ -76,7 +83,7 @@ const editorJS = {
             });
           })
           .catch((error) => {
-            console.error('Fehler beim Laden der IDs:', error);
+            logdata('Fehler beim Laden der IDs: ' + error, 'error');
           });
       });
 
@@ -408,7 +415,7 @@ const editorJS = {
             resolve(cachedIoBrokerIDs);
           })
           .catch((error) => {
-            console.error('Fehler beim Laden der ioBroker-IDs:', error);
+            logdata('Fehler beim Laden der ioBroker-IDs: ' + error, 'error');
             reject(error);
           });
       }
