@@ -105,6 +105,124 @@ const configJS = {
       this.saveConfigData(jsonData);
     });
     editorForm.appendChild(actions);
+
+    const additionalActions = this.createAdditionalConfigActions();
+    editorForm.appendChild(additionalActions);
+  },
+
+  createAdditionalConfigActions() {
+    const actionsContainer = document.createElement('div');
+    actionsContainer.classList.add('additional-config-actions');
+
+    const filePath = `${currentDataFolder}/ioBroker_IDs.json`; // Pfad zur ID-Datei
+    const button = document.createElement('button');
+    button.type = 'button';
+
+    const idCountDisplay = document.createElement('span');
+    idCountDisplay.classList.add('id-count-display');
+    idCountDisplay.style.marginLeft = '10px';
+
+    // Funktion zum Aktualisieren des Buttons und der ID-Anzeige
+    const updateButtonAndDisplay = () => {
+      ipcRenderer.invoke('check-file-existence', filePath).then((exists) => {
+        if (exists) {
+          // Datei existiert: Anzahl der IDs laden
+          ipcRenderer.invoke('read-file', filePath).then((data) => {
+            const parsedData = JSON.parse(data);
+            const idCount = parsedData.length;
+            button.textContent = 'ioBroker IDs Liste erneuern';
+            idCountDisplay.textContent = `(${idCount} IDs)`;
+            button.disabled = false;
+          }).catch((error) => {
+            console.error('Fehler beim Lesen der ID-Datei:', error);
+            button.textContent = 'ioBroker IDs Liste erneuern';
+            idCountDisplay.textContent = '(Fehler beim Laden der IDs)';
+            button.disabled = true;
+          });
+        } else {
+          // Datei existiert nicht
+          button.textContent = 'ioBroker IDs Liste erzeugen';
+          idCountDisplay.textContent = '(0 IDs)';
+          button.disabled = false;
+        }
+      });
+    };
+
+    // Funktion zum Initialisieren der ioBroker-Verbindung
+    const initializeConnection = (callback) => {
+      const connLink = document.querySelector('#connLink')?.value || '';
+      const socketSession = document.querySelector('#socketSession')?.value || '';
+
+      if (!connLink) {
+        console.error('Keine Verbindungsdaten gefunden.');
+        modalJS.showModal('Fehlende Verbindungsdaten für ioBroker.');
+        return;
+      }
+
+      servConn.namespace = 'dashboard-connection';
+      servConn._useStorage = false;
+
+      servConn.init(
+        {
+          connLink,
+          name: 'dashboard-connection',
+          socketSession: socketSession || ''
+        },
+        {
+          onConnChange: (isConnected) => {
+            if (isConnected) {
+              console.log('Mit ioBroker verbunden.');
+              callback();
+            } else {
+              console.warn('Verbindung zu ioBroker verloren.');
+              modalJS.showModal('Verbindung zu ioBroker verloren.');
+            }
+          },
+          onUpdate: () => {}, // Nicht relevant für diese Aktion
+          onError: (error) => {
+            console.error('Verbindungsfehler:', error);
+            modalJS.showModal('Fehler bei der Verbindung zu ioBroker.');
+          }
+        },
+        true,
+        true
+      );
+    };
+
+    // Event-Listener für den Button
+    button.addEventListener('click', () => {
+      initializeConnection(() => {
+        servConn.getStates((err, states) => {
+          if (err) {
+            console.error('Fehler beim Abrufen der States:', err);
+            modalJS.showModal('Fehler beim Abrufen der ioBroker-IDs.');
+            return;
+          }
+
+          const ids = Object.keys(states);
+          const jsonContent = JSON.stringify(ids, null, 2);
+
+          // IDs in Datei speichern
+          ipcRenderer.invoke('write-file', { filePath, content: jsonContent })
+            .then(() => {
+              modalJS.showModal('ioBroker IDs erfolgreich gespeichert.');
+              updateButtonAndDisplay();
+            })
+            .catch((error) => {
+              console.error('Fehler beim Speichern der ID-Datei:', error);
+              modalJS.showModal('Fehler beim Speichern der ioBroker-IDs.');
+            });
+        });
+      });
+    });
+
+    // Initiale Anzeige aktualisieren
+    updateButtonAndDisplay();
+
+    actionsContainer.appendChild(button);
+    actionsContainer.appendChild(idCountDisplay);
+
+    return actionsContainer;
   },
 
   saveConfigData(content) {

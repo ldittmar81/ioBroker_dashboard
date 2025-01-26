@@ -47,7 +47,44 @@ const editorJS = {
     let input;
     const fullKey = parentKey ? `${parentKey}.${key}` : key; // Verschachtelte Schlüssel
 
-    if (fieldSchema.type === 'string' && !fieldSchema.enum) {
+    if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$') {
+      // Dropdown für ioBroker-IDs basierend auf dem Pattern
+      input = document.createElement('input');
+      input.type = 'text';
+      input.value = value;
+      input.id = fullKey;
+      input.name = fullKey;
+      input.placeholder = 'ID auswählen oder eingeben...';
+
+      const dropdown = document.createElement('datalist');
+      dropdown.id = `${fullKey}-options`;
+
+      input.setAttribute('list', dropdown.id);
+
+      // Asynchrone Filterung der ioBroker-IDs
+      input.addEventListener('input', (event) => {
+        const query = event.target.value.toLowerCase();
+
+        // Lade IDs und filtere nach Eingabe
+        ipcRenderer.invoke('read-file', `${currentDataFolder}/ioBroker_IDs.json`).then((data) => {
+          const ids = JSON.parse(data);
+          const filteredIds = ids.filter((id) => id.toLowerCase().includes(query)).slice(0, 50); // Max. 50 Ergebnisse
+
+          dropdown.innerHTML = ''; // Bestehende Optionen löschen
+
+          filteredIds.forEach((id) => {
+            const option = document.createElement('option');
+            option.value = id;
+            dropdown.appendChild(option);
+          });
+        }).catch((error) => {
+          console.error('Fehler beim Laden der ioBroker-IDs:', error);
+        });
+      });
+
+      container.appendChild(dropdown);
+    }
+    else if (fieldSchema.type === 'string' && !fieldSchema.enum) {
       input = document.createElement('input');
       input.type = 'text';
       input.value = value;

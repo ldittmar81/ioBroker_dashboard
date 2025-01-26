@@ -7,3 +7,4 @@ private
 credentials.json
 dist
 data/theme/default.css
+data/ioBroker_IDs.json
