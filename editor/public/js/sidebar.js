@@ -1,5 +1,5 @@
 const sidebarJS = {
-  showSidebarForm(content = {}, schema) {
+  showSidebarForm(content = {}, schema, file = 'sidebar.json') {
     editorJS.showEditor();
     editorForm.innerHTML = '';
 
@@ -18,7 +18,7 @@ const sidebarJS = {
     });
 
     const actions = editorJS.createButtons(() => {
-      this.saveSidebarData(content);
+      this.saveSidebarData(content, file);
     });
     editorForm.appendChild(actions);
   },
@@ -75,8 +75,8 @@ const sidebarJS = {
     editorForm.appendChild(card);
   },
 
-  saveSidebarData(content) {
-    const filePath = `${currentDataFolder}/sidebar.json`;
+  saveSidebarData(content,file) {
+    const filePath = `${currentDataFolder}/${file}`;
     editorJS.saveData(content, filePath);
   }
 };

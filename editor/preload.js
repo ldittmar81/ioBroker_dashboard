@@ -26,7 +26,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     const validChannels = [
       'get-root-folders',
       'create-folder',
-      'validate-page-name',
       'save-user',
       'upload-icon',
       'get-schema',

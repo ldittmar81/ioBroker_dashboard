@@ -597,7 +597,7 @@ ipcRenderer.on('open-section', (section) => {
 
 ipcRenderer.on('edit-sidebar', ({ path, content, schema }) => {
   logdata(`Lade Seitenfenster-Konfiguration von: ${path}`);
-  sidebarJS.showSidebarForm(content, schema);
+  sidebarJS.showSidebarForm(content, schema, path.split('/').pop());
 });
 
 // Zeige Startseite beim Start

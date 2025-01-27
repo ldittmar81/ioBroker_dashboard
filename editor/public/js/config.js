@@ -316,22 +316,19 @@ const configJS = {
 
   addNewPage(pagesContainer, currentPages) {
     this.showPageCreationPrompt().then((newPageName) => {
-      if (newPageName) {
-        ipcRenderer.invoke('validate-page-name', newPageName).then((isValid) => {
-          if (isValid) {
-            if (!currentPages.includes(newPageName)) {
-              currentPages.push(newPageName); // Füge die neue Seite zur Liste hinzu
-              this.renderPages(currentPages, pagesContainer); // Aktualisiere die Anzeige
+      const regex = new RegExp(/^[a-zA-Z0-9_-]+\.json$/);
+      if (newPageName && regex.test(newPageName)) {
+        if (!currentPages.includes(newPageName)) {
+          currentPages.push(newPageName); // Füge die neue Seite zur Liste hinzu
+          this.renderPages(currentPages, pagesContainer); // Aktualisiere die Anzeige
 
-              const hiddenInput = document.getElementById('pages-hidden-input');
-              this.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
-            } else {
-              modalJS.showModal('Diese Seite existiert bereits.');
-            }
-          } else {
-            modalJS.showModal('Ungültiger Seitenname. Der Name muss dem Muster entsprechen: [a-zA-Z0-9_-]+\\.json');
-          }
-        });
+          const hiddenInput = document.getElementById('pages-hidden-input');
+          this.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
+        } else {
+          modalJS.showModal('Diese Seite existiert bereits.');
+        }
+      } else {
+        modalJS.showModal('Ungültiger Seitenname. Der Name muss dem Muster entsprechen: [a-zA-Z0-9_-]+\\.json');
       }
     });
   },

@@ -177,18 +177,78 @@ const usersJS = {
           else if (button.textContent.startsWith('Seitenfenster')) {
             if(bearbeiten){
               const filePath = `${currentDataFolder}/${action.file}`;
-              sidebarJS.showSidebarForm(filePath);
+              ipcRenderer.invoke('read-file', filePath).then((fileData) => {
+                const content = JSON.parse(fileData);
+                return ipcRenderer.invoke('get-schema', 'sidebar.schema.json').then((schema) => {
+                  sidebarJS.showSidebarForm(content, schema, action.file);
+                });
+              })
             }
             else {
+              const filePath = `${currentDataFolder}/sidebar_${user.user}.json`;
+              const defaultSidebarContent = {
+                clock: "default",
+                openWeatherMap: {
+                  enabled: false,
+                  imageSet: 1,
+                  imageType: "svg",
+                  location: "",
+                  apiKey: ""
+                },
+                ioBroker_ical: {
+                  enabled: false,
+                  calendars: []
+                }
+              };
 
+              ipcRenderer
+                .invoke('write-file', {
+                  filePath,
+                  content: JSON.stringify(defaultSidebarContent, null, 2),
+                  reload: true
+                })
+                .then(() => {
+                  return ipcRenderer.invoke('get-schema', 'sidebar.schema.json').then((schema) => {
+                    sidebarJS.showSidebarForm(defaultSidebarContent, schema, `sidebar_${user.user}.json`);
+                  });
+                });
             }
           }
           else if (button.textContent.startsWith('Übersichtsseite')) {
             if(bearbeiten){
-
+              const filePath = `${currentDataFolder}/${action.file}`;
+              ipcRenderer.invoke('read-file', filePath).then((fileData) => {
+                const content = JSON.parse(fileData);
+                return ipcRenderer.invoke('get-schema', 'overview.schema.json').then((schema) => {
+                  overviewJS.showOverviewForm(content, schema, action.file);
+                });
+              })
             }
             else {
+              const filePath = `${currentDataFolder}/overview_${user.user}.json`;
+              const defaultOverviewContent = {
+                name: "Meine Übersicht",
+                type: "overview",
+                icon: "fa-home",
+                content: [
+                  {
+                    category: "Beispiel-Kategorie",
+                    devices: []
+                  }
+                ]
+              };
 
+              ipcRenderer
+                .invoke('write-file', {
+                  filePath,
+                  content: JSON.stringify(defaultOverviewContent, null, 2),
+                  reload: true
+                })
+                .then(() => {
+                  return ipcRenderer.invoke('get-schema', 'overview.schema.json').then((schema) => {
+                    overviewJS.showOverviewForm(defaultOverviewContent, schema, `overview_${user.user}.json`);
+                  });
+                });
             }
           }
         });

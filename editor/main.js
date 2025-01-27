@@ -152,7 +152,7 @@ function createMenu() {
             label: user.name,
             click: () => {
               console.log(`Seitenfenster für Benutzer "${user.name}" ausgewählt.`);
-              mainWindow.webContents.send('edit-sidebar', user);
+              openSidebarConfig(user.user);
             },
           })),
       ],
@@ -165,7 +165,7 @@ function createMenu() {
       submenu: [
         {
           label: 'Standard',
-          click: () => openSection('Übersichtsfenster'),
+          click: openOverviewConfig,
         },
         ...users
           .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, `overview_${user.user}.json`)))
@@ -173,7 +173,7 @@ function createMenu() {
             label: user.name,
             click: () => {
               console.log(`Übersichtsfenster für Benutzer "${user.name}" ausgewählt.`);
-              mainWindow.webContents.send('edit-overview', user);
+              openOverviewConfig(user.user);
             },
           })),
       ],
@@ -402,8 +402,14 @@ function loadConfigFile(fileName) {
   }
 }
 
-function openSidebarConfig() {
-  const sidebarPath = path.join(__dirname, '..', currentFolder, 'sidebar.json');
+function openSidebarConfig(user = '') {
+
+  let sidebarPath;
+  if (user) {
+    sidebarPath = path.join(__dirname, '..', currentFolder, `sidebar_${user}.json`);
+  } else {
+    sidebarPath = path.join(__dirname, '..', currentFolder, 'sidebar.json');
+  }
   const schemaPath = path.join(__dirname, '..', 'schema', 'sidebar.schema.json');
 
   // Lade das Schema
@@ -428,6 +434,44 @@ function openSidebarConfig() {
 
   // Sende die Datei an den Renderer-Prozess
   mainWindow.webContents.send('edit-sidebar', { path: sidebarPath, content: sidebarContent, schema });
+}
+
+function openOverviewConfig(user = '') {
+
+  let overviewPath;
+  if (user) {
+    overviewPath = path.join(__dirname, '..', currentFolder, `overview_${user}.json`);
+  } else {
+    overviewPath = path.join(__dirname, '..', currentFolder, 'overview.json');
+  }
+  const schemaPath = path.join(__dirname, '..', 'schema', 'overview.schema.json');
+
+  // Lade das Schema
+  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+
+  if (!fs.existsSync(overviewPath)) {
+    console.log('overview.json nicht gefunden. Erstelle eine neue Datei...');
+    // Erstelle eine leere Standarddatei basierend auf dem Schema
+    const defaultOverviewConfig = {
+      name: "Meine Übersicht",
+      type: "overview",
+      icon: "fa-home",
+      content: [{
+          category: "Beispiel-Kategorie",
+          devices: []
+      }]
+    };
+
+    fs.writeFileSync(overviewPath, JSON.stringify(defaultOverviewConfig, null, 2), 'utf8');
+    console.log('overview.json erfolgreich erstellt.');
+  }
+
+  // Lade die bestehende oder erstellte Datei
+  const overviewContent = JSON.parse(fs.readFileSync(overviewPath, 'utf8'));
+  console.log('overview.json geladen:');
+
+  // Sende die Datei an den Renderer-Prozess
+  mainWindow.webContents.send('edit-overview', { path: overviewPath, content: overviewContent, schema });
 }
 
 
@@ -493,13 +537,6 @@ ipcMain.handle('create-folder', async (event, folderName) => {
     console.error('Fehler beim Erstellen des Ordners:', error);
     return false;
   }
-});
-
-ipcMain.handle('validate-page-name', async (event, pageName) => {
-  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
-  const pagePattern = schema.properties.pages.items.pattern;
-
-  return new RegExp(pagePattern).test(pageName);
 });
 
 ipcMain.handle('save-user', async (event, { newUser, existingUserId }) => {
@@ -613,15 +650,26 @@ ipcMain.handle('read-file', (event, filePath) => {
   });
 });
 
-ipcMain.handle('write-file', (event, { filePath, content }) => {
+ipcMain.handle('write-file', async (event, { filePath, content, reload = false }) => {
   const resolvedPath = path.resolve(__dirname, '..', filePath);
   console.log('write-file: ' + resolvedPath);
 
-  return fs.promises.writeFile(resolvedPath, content, 'utf8').catch(error => {
-    console.error(`Error occurred while writing to file "${resolvedPath}":`, error);
+  try {
+    await fs.promises.writeFile(resolvedPath, content, 'utf8');
+    console.log(`Datei geschrieben: ${resolvedPath}`);
+
+    if (reload) {
+      createMenu();
+      console.log('createMenu() wurde ausgeführt, weil reload = true war.');
+    }
+
+    return true;
+  } catch (error) {
+    console.error(`Fehler beim Schreiben der Datei "${resolvedPath}":`, error);
     throw error;
-  });
+  }
 });
+
 
 ipcMain.handle('get-icon-path', async (event, { fileName, subFolder, dataFolder }) => {
   const dataFilePath = path.join(__dirname, '..', dataFolder, subFolder, fileName);
