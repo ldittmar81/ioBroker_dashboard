@@ -24,6 +24,9 @@ const editorJS = {
   updateHiddenInput(hiddenInput, pagesArray) {
     hiddenInput.value = JSON.stringify(pagesArray);
   },
+  isHexColor(str) {
+    return /^#[A-Fa-f0-9]{6}$/.test(str);
+  },
   createFormFieldContainer(schema, key) {
     const container = document.createElement('div');
     container.classList.add('form-field');
@@ -42,13 +45,107 @@ const editorJS = {
 
     return container;
   },
-  generateFormField(key, fieldSchema, value = '', parentKey = '') {
+  generateFormField(key, fieldSchema, value = '', parentKey = '', type = '') {
     const container = this.createFormFieldContainer(fieldSchema, key);
 
     let input;
     const fullKey = parentKey ? `${parentKey}.${key}` : key; // Verschachtelte Schlüssel
 
-    if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$') {
+    if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$') {
+
+      const preview = document.createElement('img');
+      preview.alt = 'Icon Vorschau';
+      preview.style.width = '50px';
+      preview.style.height = '50px';
+      preview.style.objectFit = 'cover';
+
+      // Readonly-Feld
+      input = document.createElement('input');
+      input.type = 'text';
+      input.id = fullKey;
+      input.name = fullKey;
+      input.value = value;
+      input.readOnly = true;
+
+      if(!value){
+        preview.src = 'img/no-pic.png';
+      } else {
+        ipcRenderer.invoke('get-icon-path', {
+          fileName: value,
+          subFolder: fieldSchema.$comment,
+          dataFolder: currentDataFolder
+        }).then((resolvedPath) => {
+          preview.src = resolvedPath;
+        }).catch((error) => {
+          logdata(`Fehler beim Ermitteln des Icon-Pfads: ${error}`, 'error');
+          preview.src = 'img/no-pic.png';
+        });
+      }
+
+      // Durchsuchen-Button
+      const uploadButton = document.createElement('button');
+      uploadButton.textContent = 'Durchsuchen';
+      uploadButton.type = 'button';
+      uploadButton.addEventListener('click', () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.jpg,.jpeg,.png,.svg,.gif,.webp';
+        fileInput.addEventListener('change', (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            ipcRenderer.invoke('upload-icon', file.path, fieldSchema.$comment).then((newIconName) => {
+              input.value = newIconName;
+              preview.src = `../../${currentDataFolder}/${fieldSchema.$comment}/${newIconName}`;
+            });
+          }
+        });
+        fileInput.click();
+      });
+
+      // Container aufbauen
+      const uploadContainer = document.createElement('div');
+      uploadContainer.classList.add('icon-upload-container');
+      uploadContainer.appendChild(preview);
+      uploadContainer.appendChild(input);
+      uploadContainer.appendChild(uploadButton);
+      container.appendChild(uploadContainer);
+    }
+    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^#([A-Fa-f0-9]{6})$') {
+      // Erst ein Wrapper-Element erstellen
+      const colorWrapper = document.createElement('div');
+      colorWrapper.classList.add('color-field-wrapper');
+
+      input = document.createElement('input');
+      input.type = 'text';
+      input.name = fullKey;
+      input.id = fullKey;
+      input.value = value;         // e.g. "#FF0000"
+      input.placeholder = '#RRGGBB';
+      input.classList.add('color-input');
+
+      const colorPicker = document.createElement('input');
+      colorPicker.type = 'color';
+      colorPicker.classList.add('color-picker');
+      colorPicker.value = this.isHexColor(value) ? value : '#000000';
+
+      input.addEventListener('input', () => {
+        if (this.isHexColor(input.value)) {
+          colorPicker.value = input.value;
+        }
+      });
+
+      colorPicker.addEventListener('input', () => {
+        input.value = colorPicker.value.toUpperCase();
+      });
+
+      // Beide Felder ins Wrapper-Element packen
+      colorWrapper.appendChild(input);
+      colorWrapper.appendChild(colorPicker);
+
+      // Und dieses Wrapper-Element kommt dann in den Container
+      container.appendChild(colorWrapper);
+    }
+    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$') {
       input = document.createElement('input');
       input.type = 'text';
       input.value = value;
@@ -103,7 +200,8 @@ const editorJS = {
       if (fieldSchema.maxLength) {
         input.maxLength = fieldSchema.maxLength;
       }
-    } else if (fieldSchema.type === 'string' && fieldSchema.enum) {
+    }
+    else if (fieldSchema.type === 'string' && fieldSchema.enum) {
       // Dropdown für enum-Werte
       input = document.createElement('select');
       input.name = fullKey;
@@ -116,7 +214,8 @@ const editorJS = {
         opt.selected = option === value;
         input.appendChild(opt);
       });
-    } else if (fieldSchema.type === 'boolean') {
+    }
+    else if (fieldSchema.type === 'boolean') {
       input = document.createElement('select');
       input.name = fullKey;
       input.id = fullKey;
@@ -124,7 +223,8 @@ const editorJS = {
       input.innerHTML = `
           <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
           <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
-    } else if (fieldSchema.type === 'integer' || fieldSchema.type === 'number') {
+    }
+    else if (fieldSchema.type === 'integer' || fieldSchema.type === 'number') {
       input = document.createElement('input');
       input.type = 'number';
       input.value = value;
@@ -146,33 +246,22 @@ const editorJS = {
       }
     }
     else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
-      // For an array of objects
       const arrayContainer = document.createElement('div');
       arrayContainer.classList.add('array-container');
       arrayContainer.dataset.key = fullKey;
 
-      // Store the array in a local variable 'value' (already done).
-      // We'll create a sub-function that re-renders the entire list:
-
       const renderArrayItems = () => {
-        // First clear anything inside arrayContainer (except the addButton).
-        // We only want the "cards" area cleared.
-        //
-        // We can store the "Add" button in a variable so that we remove only the cards.
         const oldCards = arrayContainer.querySelectorAll('.object-card');
         oldCards.forEach(el => el.remove());
 
-        // Now iterate over our array "value" and create a card for each object
         value.forEach((item, index) => {
           const card = document.createElement('div');
           card.classList.add('array-item', 'object-card');
           card.dataset.index = index;
 
-          // For each property of the item
           Object.keys(fieldSchema.items.properties).forEach((subKey) => {
             const subFieldSchema = fieldSchema.items.properties[subKey];
             const subValue = item[subKey] || '';
-            // Use the existing generateFormField for each sub property:
             const subField = editorJS.generateFormField(
               subKey,
               subFieldSchema,
@@ -180,7 +269,6 @@ const editorJS = {
               `${fullKey}[${index}]`
             );
             if (subField) {
-              // We also want to watch changes so we sync the array
               subField.addEventListener('input', e => {
                 item[subKey] = e.target.value;
               });
@@ -188,14 +276,11 @@ const editorJS = {
             }
           });
 
-          // Delete button for that card
           const deleteButton = document.createElement('button');
           deleteButton.textContent = 'Löschen';
           deleteButton.type = 'button';
           deleteButton.addEventListener('click', () => {
-            // Splice out the item in memory:
             value.splice(index, 1);
-            // Re-render the array
             renderArrayItems();
           });
           card.appendChild(deleteButton);
@@ -204,25 +289,20 @@ const editorJS = {
         });
       };
 
-      // Create an "add" button:
       const addButton = document.createElement('button');
       addButton.type = 'button';
       addButton.textContent = 'Hinzufügen';
       addButton.addEventListener('click', () => {
-        // Create a brand-new object with default values
         const newItem = {};
         Object.keys(fieldSchema.items.properties).forEach((subKey) => {
           newItem[subKey] = fieldSchema.items.properties[subKey].default || '';
         });
-        // Add it to the array in memory
         value.push(newItem);
-        // Re-render so user sees it
         renderArrayItems();
       });
 
       arrayContainer.appendChild(addButton);
 
-      // Finally, do an initial render so we see any existing items:
       renderArrayItems();
 
       container.appendChild(arrayContainer);
@@ -232,7 +312,8 @@ const editorJS = {
       input.value = Array.isArray(value) ? value.join('\n') : '';
       input.id = fullKey;
       input.name = fullKey;
-    } else {
+    }
+    else {
       logdata(`Feldtyp "${fieldSchema.type}" wird nicht unterstützt.`);
       return null;
     }

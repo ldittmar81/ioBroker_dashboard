@@ -34,6 +34,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
       'copy-file',
       'read-file',
       'write-file',
+      'get-icon-path'
     ];
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);

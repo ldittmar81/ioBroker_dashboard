@@ -86,8 +86,8 @@ const usersJS = {
 
     // Vorschau-Bild
     const previewLink = user?.icon
-      ? `../../${currentDataFolder}/img/users/${user.icon}`
-      : 'img/no-user.webp';
+      ? `../../${currentDataFolder}/${fieldSchema.$comment}/${user.icon}`
+      : 'img/no-pic.webp';
     const preview = document.createElement('img');
     preview.src = previewLink;
     preview.alt = 'Icon Vorschau';
@@ -114,9 +114,9 @@ const usersJS = {
       fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
-          ipcRenderer.invoke('upload-icon', file.path).then((newIconName) => {
+          ipcRenderer.invoke('upload-icon', file.path, fieldSchema.$comment).then((newIconName) => {
             input.value = newIconName;
-            preview.src = `../../${currentDataFolder}/img/users/${newIconName}`;
+            preview.src = `../../${currentDataFolder}/${fieldSchema.$comment}/${newIconName}`;
           });
         }
       });

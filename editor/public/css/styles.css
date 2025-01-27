@@ -341,3 +341,26 @@ input[readonly] {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leichter Schatten für Tiefe */
   background-color: #cdcdcd; /* Hellgrauer Hintergrund */
 }
+
+.color-field-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Abstand zwischen Textfeld und Colorpicker */
+  width: 100%;
+  max-width: 400px; /* falls du eine maximale Breite willst */
+}
+
+.color-input {
+  flex: 1; /* Das Textfeld darf mehr Platz einnehmen */
+  min-width: 100px; /* mindest-Breite */
+}
+
+.color-picker {
+  width: 40px;
+  height: 36px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+

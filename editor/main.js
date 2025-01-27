@@ -519,13 +519,13 @@ ipcMain.handle('save-user', async (event, { newUser, existingUserId }) => {
   return true;
 });
 
-ipcMain.handle('upload-icon', async (event, filePath) => {
+ipcMain.handle('upload-icon', async (event, { filePath, subFolder }) => {
   if (!currentConfig || !currentFolder) {
     throw new Error('dataFolder ist in der Konfiguration nicht definiert.');
   }
 
   const dataFolder = path.join(__dirname, '..', currentFolder);
-  const userImgFolder = path.join(dataFolder, 'img', 'users');
+  const userImgFolder = path.join(dataFolder, subFolder);
 
   // Ziel-Pattern (Beispiel)
   const schemaPattern = /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|svg|gif|webp)$/;
@@ -622,3 +622,18 @@ ipcMain.handle('write-file', (event, { filePath, content }) => {
     throw error;
   });
 });
+
+ipcMain.handle('get-icon-path', async (event, { fileName, subFolder, dataFolder }) => {
+  const dataFilePath = path.join(__dirname, '..', dataFolder, subFolder, fileName);
+  if (fs.existsSync(dataFilePath)) {
+    return `../../${dataFolder}/${subFolder}/${fileName}`;
+  }
+
+  const assetsFilePath = path.join(__dirname, '..', 'assets', subFolder, fileName);
+  if (fs.existsSync(assetsFilePath)) {
+    return `../../assets/${subFolder}/${fileName}`;
+  }
+
+  return 'img/no-pic.png';
+});
+

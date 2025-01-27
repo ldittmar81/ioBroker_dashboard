@@ -19,7 +19,8 @@
       "icon": {
         "type": "string",
         "description": "Dateiname des Benutzer-Icons (z.B. 'benutzer.jpg')",
-        "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$"
+        "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$",
+        "$comment": "img/users"
       },
       "pin": {
         "type": "string",

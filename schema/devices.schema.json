@@ -129,16 +129,19 @@
             "image": {
               "type": "string",
               "description": "Bilddatei für den Button",
+              "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$",
               "$comment": "button"
             },
             "imageOn": {
               "type": "string",
               "description": "Bilddatei für den 'An'-Zustand",
+              "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$",
               "$comment": "plug"
             },
             "imageOff": {
               "type": "string",
               "description": "Bilddatei für den 'Aus'-Zustand",
+              "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$",
               "$comment": "plug"
             },
             "command": {
@@ -393,7 +396,8 @@
                           "pattern": "^#([A-Fa-f0-9]{6})$"
                         },
                         "image": {
-                          "type": "string"
+                          "type": "string",
+                          "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$"
                         }
                       },
                       "required": [

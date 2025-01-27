@@ -15,10 +15,10 @@
       "description": "Konfiguration für die Wetteranzeige über OpenWeatherMap",
       "properties": {
         "enabled": { "type": "boolean", "default": false, "description": "OpenWeatherMap anzeigen" },
-        "imageSet": { "type": "integer", "default": 1, "description": "Imageset aus assets/img/sidebar/weather" },
+        "imageSet": { "type": "integer", "default": 1, "description": "Imageset aus assets/img/sidebar/weather"},
         "imageType": {
           "type": "string",
-          "enum": ["gif", "svg", "png"],
+          "enum": ["gif", "svg", "png", "webp"],
           "default": "gif",
           "description": "Dateityp aus dem Imageset"
         },
@@ -46,10 +46,8 @@
             "type": "object",
             "properties": {
               "cal": { "type": "string", "description": "Datenpunkt für Kalender z.B. ical.0.data.table", "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$" },
-              "rgb": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$",
-                "description": "Kalenderfarbe"
-              },
-              "image": { "type": "string", "description": "Kalendericon aus dataFolder/img/devices/ioBroker_ical" }
+              "rgb": { "type": "string", "pattern": "^#([A-Fa-f0-9]{6})$", "description": "Kalenderfarbe"},
+              "image": { "type": "string", "description": "Kalendericon", "$comment": "img/devices/ioBroker_ical", "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$" }
             },
             "required": ["cal", "rgb"],
             "additionalProperties": false
