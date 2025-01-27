@@ -29,8 +29,47 @@ const sidebarJS = {
     Object.keys(fieldSchema.properties).forEach((subKey) => {
       const subFieldSchema = fieldSchema.properties[subKey];
       const subValue = value[subKey] !== undefined ? value[subKey] : subFieldSchema.default || '';
-      const subField = editorJS.generateFormField(`${key}.${subKey}`, subFieldSchema, subValue);
-      if (subField) card.appendChild(subField);
+
+      if (subKey === 'imageSet') {
+        logdata(subValue, 'info');
+        // Container im gleichen Stil wie bei den anderen Feldern
+        const container = editorJS.createFormFieldContainer(fieldSchema.properties[subKey], `${key}.${subKey}`);
+
+        // Erstelle ein SELECT
+        const select = document.createElement('select');
+        select.id = `${key}.${subKey}`;
+        select.name = `${key}.${subKey}`;
+        select.dataset.type = 'integer';
+
+        // Optional: Lade dynamisch alle Ordner
+        ipcRenderer
+          .invoke('list-subfolders', 'assets/img/sidebar/weather') // Pfad, in dem gesucht werden soll
+          .then((folders) => {
+            folders.forEach((folder) => {
+              const opt = document.createElement('option');
+              opt.value = folder;
+              opt.textContent = folder;
+              if (folder === subValue) {
+                opt.selected = true;
+              }
+              select.appendChild(opt);
+            });
+          })
+          .catch((error) => {
+            console.error('Fehler bei list-subfolders:', error);
+          });
+
+        select.addEventListener('change', (event) => {
+          value[subKey] = event.target.value;
+        });
+
+        container.appendChild(select);
+        card.appendChild(container);
+      } else {
+        const subField = editorJS.generateFormField(`${key}.${subKey}`, subFieldSchema, subValue);
+        if (subField) card.appendChild(subField);
+      }
+
     });
 
     editorForm.appendChild(card);

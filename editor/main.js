@@ -637,3 +637,16 @@ ipcMain.handle('get-icon-path', async (event, { fileName, subFolder, dataFolder 
   return 'img/no-pic.png';
 });
 
+ipcMain.handle('list-subfolders', async (event, relativeDirPath) => {
+  const dirPath = path.join(__dirname, '..', relativeDirPath);
+
+  try {
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+    return entries
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+  } catch (error) {
+    console.error(`Fehler beim Lesen des Verzeichnisses ${dirPath}:`, error);
+    return [];
+  }
+});

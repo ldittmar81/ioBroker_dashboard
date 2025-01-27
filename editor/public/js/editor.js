@@ -418,9 +418,19 @@ const editorJS = {
       const key = input.name || input.id;
       let value;
 
+      const fieldType = input.dataset.type;
+
       // Typ erkennen und Wert korrekt interpretieren
-      if (input.dataset.type === 'boolean') {
+      if (fieldType === 'boolean') {
         value = input.value === 'true';
+      }
+      else if (fieldType === 'integer') {
+        if (input.value === '') {
+          value = undefined;
+        } else {
+          value = parseInt(input.value, 10);
+          if (isNaN(value)) value = undefined;
+        }
       }
       else if (input.type === 'number') {
         value = input.value !== '' ? Number(input.value) : undefined;
@@ -428,7 +438,7 @@ const editorJS = {
       else if (input.tagName === 'TEXTAREA' && Array.isArray(content[key])) {
         value = input.value.split('\n').map((item) => item.trim()).filter((item) => item !== '');
       }
-      else if (input.dataset.type === 'json') {
+      else if (fieldType === 'json') {
         value = JSON.parse(input.value);
       }
       else {
