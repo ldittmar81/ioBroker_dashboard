@@ -374,8 +374,9 @@ const editorJS = {
       input = document.createElement('select');
       input.name = fullKey;
       input.id = fullKey;
-      input.dataset.type = 'boolean'; // Typ als Hinweis speichern
+      input.dataset.type = 'boolean';
       input.innerHTML = `
+          <option value="" ${value === '' ? 'selected' : ''}></option>
           <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
           <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
     }
@@ -407,17 +408,68 @@ const editorJS = {
       arrayContainer.dataset.key = fullKey;
 
       const renderArrayItems = () => {
-        const oldCards = arrayContainer.querySelectorAll('.object-card');
+        // Alte Cards entfernen
+        const oldCards = arrayContainer.querySelectorAll('.object-card, .object-card-odd');
         oldCards.forEach(el => el.remove());
 
+        // Für jedes Objekt im Array
         value.forEach((item, index) => {
           const card = document.createElement('div');
-          card.classList.add('array-item');
-          if(deep%2 === 0) card.classList.add('object-card');
-          else card.classList.add('object-card-odd');
           card.dataset.index = index;
 
-          Object.keys(fieldSchema.items.properties).forEach((subKey) => {
+          if (deep % 2 === 0) card.classList.add('object-card');
+          else card.classList.add('object-card-odd');
+
+          const subKeys = Object.keys(fieldSchema.items.properties);
+
+          const titleKey = subKeys[0]; // z.B. "category" oder "name"
+          const firstFieldSchema = fieldSchema.items.properties[titleKey];
+          const firstFieldValue = item[titleKey] || '';
+
+          const headerDiv = document.createElement('div');
+          headerDiv.classList.add('collapsible-header');
+
+          const firstField = editorJS.generateFormField(
+            type,
+            subtype,
+            titleKey,
+            firstFieldSchema,
+            firstFieldValue,
+            `${fullKey}[${index}]`,
+            deep
+          );
+          headerDiv.appendChild(firstField);
+
+          // 5) Button zum Ein-/Ausklappen
+          const toggleBtn = document.createElement('button');
+          toggleBtn.type = 'button';
+          toggleBtn.textContent = '▼'; // oder "►" / "▼"
+          toggleBtn.style.marginLeft = '8px';
+
+          // collapsibleContainer: Restliche Felder
+          const collapsibleContainer = document.createElement('div');
+          collapsibleContainer.classList.add('collapsible-content');
+
+          // Standard: eingeklappt
+          let isCollapsed = true;
+          collapsibleContainer.style.display = 'none';
+          toggleBtn.textContent = '►';
+
+          toggleBtn.addEventListener('click', () => {
+            isCollapsed = !isCollapsed;
+            if (isCollapsed) {
+              collapsibleContainer.style.display = 'none';
+              toggleBtn.textContent = '►';
+            } else {
+              collapsibleContainer.style.display = '';
+              toggleBtn.textContent = '▼';
+            }
+          });
+
+          headerDiv.appendChild(toggleBtn);
+          card.appendChild(headerDiv);
+
+          subKeys.slice(1).forEach((subKey) => {
             const subFieldSchema = fieldSchema.items.properties[subKey];
             const subValue = item[subKey] || '';
             const subField = editorJS.generateFormField(
@@ -433,19 +485,24 @@ const editorJS = {
               subField.addEventListener('input', e => {
                 item[subKey] = e.target.value;
               });
-              card.appendChild(subField);
+              collapsibleContainer.appendChild(subField);
             }
           });
 
           const deleteButton = document.createElement('button');
           deleteButton.textContent = 'Löschen';
           deleteButton.type = 'button';
+          deleteButton.style.marginTop = '8px';
           deleteButton.addEventListener('click', () => {
             value.splice(index, 1);
             renderArrayItems();
           });
-          card.appendChild(deleteButton);
+          collapsibleContainer.appendChild(deleteButton);
 
+          // collapsibleContainer unten ans card anhängen
+          card.appendChild(collapsibleContainer);
+
+          // Ins DOM einfügen
           arrayContainer.insertBefore(card, addButton);
         });
       };
@@ -509,7 +566,6 @@ const editorJS = {
     const updatedContent = { ...content };
 
     inputs.forEach((input) => {
-      logdata(`Speichern von ${input.name || input.id}`);
       const key = input.name || input.id;
       let value;
 
@@ -517,7 +573,11 @@ const editorJS = {
 
       // Typ erkennen und Wert korrekt interpretieren
       if (fieldType === 'boolean') {
-        value = input.value === 'true';
+        if (input.value === '') {
+          value = undefined;
+        } else {
+          value = input.value === 'true';
+        }
       }
       else if (fieldType === 'integer') {
         if (input.value === '') {
@@ -531,16 +591,18 @@ const editorJS = {
         value = input.value !== '' ? Number(input.value) : undefined;
       }
       else if (input.tagName === 'TEXTAREA' && Array.isArray(content[key])) {
-        value = input.value.split('\n').map((item) => item.trim()).filter((item) => item !== '');
+        if (input.value === '') value = undefined;
+        else value = input.value.split('\n').map((item) => item.trim()).filter((item) => item !== '');
       }
       else if (fieldType === 'json') {
-        value = JSON.parse(input.value);
+        if (input.value === '[]') value = undefined;
+        else value = JSON.parse(input.value);
       }
       else {
-        value = input.value;
+        logdata(input.value + " bha!");
+        if (input.value === '' || input.value === null || input.value === undefined) value = undefined;
+        else value = input.value;
       }
-
-      logdata(`Wert: ${value}`);
 
       // Verschachtelte Objekte/Arrays verarbeiten
       setNestedValue(updatedContent, key, value);

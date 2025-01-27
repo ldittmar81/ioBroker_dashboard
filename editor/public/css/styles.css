@@ -387,3 +387,7 @@ input[readonly] {
   margin-left: 5px;
 }
 
+.collapsible-header .form-field {
+  margin: 0;
+}
+
