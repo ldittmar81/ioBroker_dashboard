@@ -364,3 +364,17 @@ input[readonly] {
   margin: 0;
 }
 
+.checkbox-user-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Abstand zwischen den Labels */
+}
+
+.icon-select-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+.icon-select-wrapper select {
+  margin-left: 5px;
+}
+

@@ -6,6 +6,8 @@ const editorContainer = document.querySelector('#editor-container');
 
 let cachedIoBrokerIDs = null;
 let currentDataFolder = null;
+let reloadMenu = false;
+let availableFAIcons = [];
 
 function logdata(message, type = 'info') {
   type = type.toUpperCase();
@@ -45,13 +47,119 @@ const editorJS = {
 
     return container;
   },
+  loadFAIcons() {
+    return fetch('../../assets/vendor/fontawesome/css/all.min.css')
+      .then((response) => response.text())
+      .then((cssContent) => {
+        const regex = /\.fa-([a-zA-Z0-9-]+):before\s*\{/g;
+
+        const icons = [];
+        let match;
+        while ((match = regex.exec(cssContent)) !== null) {
+          icons.push(`fa-${match[1]}`);
+        }
+
+        availableFAIcons = [...new Set(icons)];
+        console.log('FontAwesome Icons geladen:', availableFAIcons.length);
+        return availableFAIcons;
+      })
+      .catch((err) => {
+        logdata('Fehler beim Laden/Parsen von all.min.css:' + err, 'error');
+        availableFAIcons = [];
+        return [];
+      });
+  },
   generateFormField(key, fieldSchema, value = '', parentKey = '', type = '') {
     const container = this.createFormFieldContainer(fieldSchema, key);
 
     let input;
     const fullKey = parentKey ? `${parentKey}.${key}` : key; // Verschachtelte Schlüssel
 
-    if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$') {
+    if (key === 'authorization' || key === 'authorization_read') {
+      // 1) Container + Label für das Feld
+      const container = this.createFormFieldContainer(fieldSchema, key);
+
+      // 2) Hidden Input zum Speichern als JSON
+      const hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = fullKey;
+      hiddenInput.id = fullKey;
+      hiddenInput.dataset.type = 'json';
+
+      let currentValue = Array.isArray(value) ? [...value] : [];
+      hiddenInput.value = JSON.stringify(currentValue);
+      container.appendChild(hiddenInput);
+
+      // 3) Container für die Checkboxen
+      const checkboxContainer = document.createElement('div');
+      // CSS-Klasse zum flex-wrap
+      checkboxContainer.classList.add('checkbox-user-container');
+
+      // 4) Nutzerliste laden
+      ipcRenderer.invoke('get-all-users')
+        .then((allUsers) => {
+          allUsers.forEach((usr) => {
+            // Ausgewählt?
+            const isChecked = currentValue.includes(usr.user);
+
+            // Ein Label als Wrapper für Checkbox + User-Name
+            const labelEl = document.createElement('label');
+            labelEl.style.display = 'inline-flex';
+            labelEl.style.alignItems = 'center';
+            labelEl.style.marginRight = '1rem';
+            // Du kannst margin oder padding anpassen,
+            // oder auch komplett via CSS-Klasse.
+
+            // Checkbox
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = usr.user;
+            checkbox.checked = isChecked;
+            checkbox.style.marginRight = '4px';
+
+            checkbox.addEventListener('change', () => {
+              if (checkbox.checked && !currentValue.includes(usr.user)) {
+                currentValue.push(usr.user);
+              } else if (!checkbox.checked) {
+                currentValue = currentValue.filter(u => u !== usr.user);
+              }
+              hiddenInput.value = JSON.stringify(currentValue);
+            });
+
+            // Textknoten für den Anzeigenamen
+            const textNode = document.createTextNode(usr.name);
+
+            // Alles ins Label
+            labelEl.appendChild(checkbox);
+            labelEl.appendChild(textNode);
+
+            // Label in den Container
+            checkboxContainer.appendChild(labelEl);
+          });
+        })
+        .catch((err) => {
+          console.error('Fehler beim Laden aller Benutzer:', err);
+        });
+
+      container.appendChild(checkboxContainer);
+
+      return container;
+    }
+    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^\\d{4}$') {
+      input = document.createElement('input');
+      input.type = 'text';
+      input.value = value;
+      input.id = fullKey;
+      input.name = fullKey;
+      input.maxLength = fieldSchema.maxLength || 4; // Standard 4-stellig
+
+      input.addEventListener('input', (event) => {
+        event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+      });
+
+      container.appendChild(input);
+    }
+    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$') {
 
       const preview = document.createElement('img');
       preview.alt = 'Icon Vorschau';
@@ -109,6 +217,58 @@ const editorJS = {
       uploadContainer.appendChild(input);
       uploadContainer.appendChild(uploadButton);
       container.appendChild(uploadContainer);
+    }
+    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^fa[a-zA-Z-]*$') {
+      // Container
+      const container = this.createFormFieldContainer(fieldSchema, key);
+
+      // Wrapper für Select + Icon
+      const iconWrapper = document.createElement('div');
+      iconWrapper.classList.add('icon-select-wrapper');
+
+      const iconPreview = document.createElement('i');
+      iconPreview.style.marginRight = '8px';
+      iconPreview.classList.add('fa');
+      if (value) {
+        iconPreview.classList.add(value);
+      }
+
+      // Select-Feld
+      const select = document.createElement('select');
+      select.name = fullKey;
+      select.id = fullKey;
+
+      // Option "leer" oder Standard
+      const emptyOption = document.createElement('option');
+      emptyOption.value = '';
+      emptyOption.textContent = '-- Icon wählen --';
+      select.appendChild(emptyOption);
+
+      // Alle bekannten FontAwesome-Icons in den Select packen
+      availableFAIcons.forEach((iconClass) => {
+        const opt = document.createElement('option');
+        opt.value = iconClass;
+        opt.textContent = iconClass; // oder nur iconClass.slice(3)?
+        if (iconClass === value) {
+          opt.selected = true;
+        }
+        select.appendChild(opt);
+      });
+
+      // Beim Ändern => i-Klasse aktualisieren
+      select.addEventListener('change', () => {
+        iconPreview.className = 'fa';
+        if (select.value) {
+          iconPreview.classList.add(select.value);
+        }
+      });
+
+      // Zusammenbauen
+      iconWrapper.appendChild(iconPreview);
+      iconWrapper.appendChild(select);
+      container.appendChild(iconWrapper);
+
+      return container; // return, damit es dem DOM hinzugefügt wird
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^#([A-Fa-f0-9]{6})$') {
       // Erst ein Wrapper-Element erstellen
@@ -454,13 +614,15 @@ const editorJS = {
     const cleanContent = this.cleanObject(updatedContent);
 
     ipcRenderer
-      .invoke('write-file', { filePath, content: JSON.stringify(cleanContent, null, 2) })
+      .invoke('write-file', { filePath, content: JSON.stringify(cleanContent, null, 2), reload: reloadMenu })
       .then(() => {
         modalJS.showModal('Daten erfolgreich gespeichert.');
+        reloadMenu = false;
         this.showStartPage();
       })
       .catch((error) => {
         logdata(`Fehler beim Speichern: ${error.message}`, 'error');
+        reloadMenu = false;
       });
   },
 
@@ -615,5 +777,5 @@ ipcRenderer.on('edit-sidebar', ({ path, content, schema }) => {
   sidebarJS.showSidebarForm(content, schema, path.split('/').pop());
 });
 
-// Zeige Startseite beim Start
-editorJS.showStartPage();
+editorJS.loadFAIcons().then(() => editorJS.showStartPage());
+

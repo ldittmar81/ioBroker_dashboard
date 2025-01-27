@@ -34,7 +34,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
       'read-file',
       'write-file',
       'get-icon-path',
-      'list-subfolders'
+      'list-subfolders',
+      'get-all-users'
     ];
     if (validChannels.includes(channel)) {
       return ipcRenderer.invoke(channel, data);

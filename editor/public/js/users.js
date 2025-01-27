@@ -28,8 +28,6 @@ const usersJS = {
           // Spezielle Logik für bestimmte Felder
           if (key === 'user') {
             this.createReadOnlyField(fieldSchema, key, value);
-          } else if (key === 'pin') {
-            this.createPinField(fieldSchema, key, value);
           } else if (key === 'icon') {
             this.createIconField(fieldSchema, key, value, user);
           } else {
@@ -60,23 +58,6 @@ const usersJS = {
     input.id = key;
     input.name = key;
     input.readOnly = !!value; // Nur lesbar, wenn bereits ein Wert vorhanden ist
-    container.appendChild(input);
-    editorForm.appendChild(container);
-  },
-
-  createPinField(fieldSchema, key, value) {
-    const container = editorJS.createFormFieldContainer(fieldSchema, key);
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = value;
-    input.id = key;
-    input.name = key;
-    input.maxLength = fieldSchema.maxLength || 4; // Standard 4-stellig
-
-    input.addEventListener('input', (event) => {
-      event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 4);
-    });
-
     container.appendChild(input);
     editorForm.appendChild(container);
   },

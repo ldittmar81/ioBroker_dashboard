@@ -652,15 +652,24 @@ ipcMain.handle('read-file', (event, filePath) => {
 
 ipcMain.handle('write-file', async (event, { filePath, content, reload = false }) => {
   const resolvedPath = path.resolve(__dirname, '..', filePath);
-  console.log('write-file: ' + resolvedPath);
+  console.log('write-file: ' + resolvedPath + ' reload: ' + reload);
 
   try {
     await fs.promises.writeFile(resolvedPath, content, 'utf8');
     console.log(`Datei geschrieben: ${resolvedPath}`);
 
+    const fileName = path.basename(filePath);
+    if ((fileName === "config.json" || fileName === "config_prod.json") && reload) {
+      currentConfig = JSON.parse(content);
+      currentFolder = currentConfig.dataFolder;
+      console.log("Config: ", currentConfig);
+
+      createMenu();
+      reload = false;
+    }
+
     if (reload) {
       createMenu();
-      console.log('createMenu() wurde ausgeführt, weil reload = true war.');
     }
 
     return true;
@@ -697,4 +706,8 @@ ipcMain.handle('list-subfolders', async (event, relativeDirPath) => {
     console.error(`Fehler beim Lesen des Verzeichnisses ${dirPath}:`, error);
     return [];
   }
+});
+
+ipcMain.handle('get-all-users', async () => {
+  return users;
 });

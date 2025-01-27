@@ -1,6 +1,5 @@
 const configJS = {
   currentFile: null,
-
   createFormFromSchema(schema, jsonData = {}) {
     editorJS.showEditor(); // Wechsle zur Editor-Ansicht
     editorForm.innerHTML = ''; // Bestehendes Formular löschen
@@ -271,6 +270,7 @@ const configJS = {
 
     this.renderPages(currentPages, pagesContainer);
     editorJS.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
+    reloadMenu = true;
   },
 
   showPageCreationPrompt() {
@@ -323,7 +323,8 @@ const configJS = {
           this.renderPages(currentPages, pagesContainer); // Aktualisiere die Anzeige
 
           const hiddenInput = document.getElementById('pages-hidden-input');
-          this.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
+          editorJS.updateHiddenInput(hiddenInput, currentPages); // Aktualisiere das Hidden-Feld
+          reloadMenu = true;
         } else {
           modalJS.showModal('Diese Seite existiert bereits.');
         }
