@@ -10,6 +10,7 @@ const pagesJS = {
       : `Neue Hauptseite`;
     editorForm.appendChild(editorJS.createHeader(headerText));
 
+    let subtype = '';
     // Durch die Schema-Eigenschaften iterieren und Felder erzeugen
     Object.keys(schema.properties).forEach((key) => {
       const fieldSchema = schema.properties[key];
@@ -25,9 +26,11 @@ const pagesJS = {
         input.readOnly = true;
         container.appendChild(input);
         editorForm.appendChild(container);
+
+        subtype = value;
       }
       else {
-        const field = editorJS.generateFormField(key, fieldSchema, value);
+        const field = editorJS.generateFormField('main', subtype, key, fieldSchema, value);
         if (field) {
           editorForm.appendChild(field);
         }

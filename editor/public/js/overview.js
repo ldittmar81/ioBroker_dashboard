@@ -12,7 +12,7 @@ const overviewJS = {
       if (fieldSchema.type === 'object') {
         this.generateObjectCard(key, value, fieldSchema);
       } else {
-        const field = editorJS.generateFormField(key, fieldSchema, value);
+        const field = editorJS.generateFormField('overview', '', key, fieldSchema, value);
         if (field) editorForm.appendChild(field);
       }
     });
@@ -28,7 +28,7 @@ const overviewJS = {
     Object.keys(fieldSchema.properties).forEach((subKey) => {
       const subFieldSchema = fieldSchema.properties[subKey];
       const subValue = value[subKey] !== undefined ? value[subKey] : subFieldSchema.default || '';
-      const subField = editorJS.generateFormField(`${key}.${subKey}`, subFieldSchema, subValue);
+      const subField = editorJS.generateFormField('overview', '',`${key}.${subKey}`, subFieldSchema, subValue);
       if (subField) card.appendChild(subField);
     });
 

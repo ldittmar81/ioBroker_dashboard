@@ -12,7 +12,7 @@ const sidebarJS = {
       if (fieldSchema.type === 'object') {
         this.generateObjectCard(key, value, fieldSchema);
       } else {
-        const field = editorJS.generateFormField(key, fieldSchema, value);
+        const field = editorJS.generateFormField('sidebar', '', key, fieldSchema, value);
         if (field) editorForm.appendChild(field);
       }
     });
@@ -66,7 +66,7 @@ const sidebarJS = {
         container.appendChild(select);
         card.appendChild(container);
       } else {
-        const subField = editorJS.generateFormField(`${key}.${subKey}`, subFieldSchema, subValue);
+        const subField = editorJS.generateFormField('sidebar', '', `${key}.${subKey}`, subFieldSchema, subValue);
         if (subField) card.appendChild(subField);
       }
 

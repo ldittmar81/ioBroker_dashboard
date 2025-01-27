@@ -32,7 +32,7 @@ const usersJS = {
             this.createIconField(fieldSchema, key, value, user);
           } else {
             // Generisches Formularfeld
-            const field = editorJS.generateFormField(key, fieldSchema, value);
+            const field = editorJS.generateFormField('users', '', key, fieldSchema, value);
             if (field) editorForm.appendChild(field);
           }
         });

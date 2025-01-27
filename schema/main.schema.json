@@ -73,8 +73,8 @@
                 "image": {
                   "type": "string",
                   "description": "Der Dateiname des Bildes (z.B. 'WohnEsszimmer.webp').",
-                  "pattern": "^[a-zA-Z0-9_-]+\\.(webp|jpg|jpeg|png)$",
-                  "$comment": "img/main/${name}"
+                  "pattern": "^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$",
+                  "$comment": "img/main/${subtype}"
                 },
                 "authorization": {
                   "type": "array",

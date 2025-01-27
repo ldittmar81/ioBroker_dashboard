@@ -342,6 +342,15 @@ input[readonly] {
   background-color: #cdcdcd; /* Hellgrauer Hintergrund */
 }
 
+.object-card-odd {
+  border: 1px solid #ccc; /* Grauer Rahmen */
+  border-radius: 8px; /* Abgerundete Ecken */
+  padding: 16px; /* Innenabstand */
+  margin-bottom: 16px; /* Abstand zwischen den Karten */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Leichter Schatten für Tiefe */
+  background-color: #f4f4f4; /* Hellgrauer Hintergrund */
+}
+
 .color-field-wrapper {
   display: flex;
   align-items: center;

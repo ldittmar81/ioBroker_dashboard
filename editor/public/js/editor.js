@@ -47,6 +47,7 @@ const editorJS = {
 
     return container;
   },
+
   loadFAIcons() {
     return fetch('../../assets/vendor/fontawesome/css/all.min.css')
       .then((response) => response.text())
@@ -69,17 +70,16 @@ const editorJS = {
         return [];
       });
   },
-  generateFormField(key, fieldSchema, value = '', parentKey = '', type = '') {
+
+  generateFormField(type = '', subtype = '', key, fieldSchema, value = '', parentKey = '', deep = 0) {
     const container = this.createFormFieldContainer(fieldSchema, key);
 
     let input;
-    const fullKey = parentKey ? `${parentKey}.${key}` : key; // Verschachtelte Schlüssel
+    const fullKey = parentKey ? `${parentKey}.${key}` : key;
 
     if (key === 'authorization' || key === 'authorization_read') {
-      // 1) Container + Label für das Feld
       const container = this.createFormFieldContainer(fieldSchema, key);
 
-      // 2) Hidden Input zum Speichern als JSON
       const hiddenInput = document.createElement('input');
       hiddenInput.type = 'hidden';
       hiddenInput.name = fullKey;
@@ -90,27 +90,20 @@ const editorJS = {
       hiddenInput.value = JSON.stringify(currentValue);
       container.appendChild(hiddenInput);
 
-      // 3) Container für die Checkboxen
       const checkboxContainer = document.createElement('div');
-      // CSS-Klasse zum flex-wrap
       checkboxContainer.classList.add('checkbox-user-container');
 
-      // 4) Nutzerliste laden
       ipcRenderer.invoke('get-all-users')
         .then((allUsers) => {
           allUsers.forEach((usr) => {
             // Ausgewählt?
             const isChecked = currentValue.includes(usr.user);
 
-            // Ein Label als Wrapper für Checkbox + User-Name
             const labelEl = document.createElement('label');
             labelEl.style.display = 'inline-flex';
             labelEl.style.alignItems = 'center';
             labelEl.style.marginRight = '1rem';
-            // Du kannst margin oder padding anpassen,
-            // oder auch komplett via CSS-Klasse.
 
-            // Checkbox
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.value = usr.user;
@@ -126,14 +119,11 @@ const editorJS = {
               hiddenInput.value = JSON.stringify(currentValue);
             });
 
-            // Textknoten für den Anzeigenamen
             const textNode = document.createTextNode(usr.name);
 
-            // Alles ins Label
             labelEl.appendChild(checkbox);
             labelEl.appendChild(textNode);
 
-            // Label in den Container
             checkboxContainer.appendChild(labelEl);
           });
         })
@@ -175,12 +165,17 @@ const editorJS = {
       input.value = value;
       input.readOnly = true;
 
+      let subFolder = fieldSchema.$comment;
+      if (subFolder && subFolder.includes('${subtype}')) {
+        subFolder = subFolder.replace('${subtype}', subtype);
+      }
+
       if(!value){
         preview.src = 'img/no-pic.png';
       } else {
         ipcRenderer.invoke('get-icon-path', {
           fileName: value,
-          subFolder: fieldSchema.$comment,
+          subFolder: subFolder,
           dataFolder: currentDataFolder
         }).then((resolvedPath) => {
           preview.src = resolvedPath;
@@ -406,6 +401,7 @@ const editorJS = {
       }
     }
     else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
+      deep++;
       const arrayContainer = document.createElement('div');
       arrayContainer.classList.add('array-container');
       arrayContainer.dataset.key = fullKey;
@@ -416,17 +412,22 @@ const editorJS = {
 
         value.forEach((item, index) => {
           const card = document.createElement('div');
-          card.classList.add('array-item', 'object-card');
+          card.classList.add('array-item');
+          if(deep%2 === 0) card.classList.add('object-card');
+          else card.classList.add('object-card-odd');
           card.dataset.index = index;
 
           Object.keys(fieldSchema.items.properties).forEach((subKey) => {
             const subFieldSchema = fieldSchema.items.properties[subKey];
             const subValue = item[subKey] || '';
             const subField = editorJS.generateFormField(
+              type,
+              subtype,
               subKey,
               subFieldSchema,
               subValue,
-              `${fullKey}[${index}]`
+              `${fullKey}[${index}]`,
+              deep
             );
             if (subField) {
               subField.addEventListener('input', e => {
@@ -484,72 +485,6 @@ const editorJS = {
     }
 
     return container;
-  },
-
-  generateObjectArrayField(key, fieldSchema, valueArray) {
-    const container = document.createElement('div');
-    container.classList.add('array-container');
-    const label = document.createElement('h4');
-    label.textContent = fieldSchema.description || key;
-    container.appendChild(label);
-
-    const cardsContainer = document.createElement('div');
-    cardsContainer.classList.add('cards-container');
-    container.appendChild(cardsContainer);
-
-    // Karten für jedes Objekt im Array erstellen
-    valueArray.forEach((item, index) => {
-      const card = this.generateObjectCard(`${key}[${index}]`, fieldSchema.items, item, () => {
-        // Löschfunktion
-        valueArray.splice(index, 1);
-        this.generateObjectArrayField(key, fieldSchema, valueArray); // Neu rendern
-      });
-      cardsContainer.appendChild(card);
-    });
-
-    // Button zum Hinzufügen eines neuen Objekts
-    const addButton = document.createElement('button');
-    addButton.textContent = `Neues ${key} hinzufügen`;
-    addButton.type = 'button';
-    addButton.addEventListener('click', () => {
-      const newItem = {}; // Leeres Objekt für das neue Item
-      valueArray.push(newItem);
-      this.generateObjectArrayField(key, fieldSchema, valueArray); // Neu rendern
-    });
-    container.appendChild(addButton);
-
-    return container;
-  },
-
-  generateObjectCard(key, schema, value, onDelete) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.style.border = '1px solid #ccc';
-    card.style.padding = '10px';
-    card.style.marginBottom = '10px';
-    card.style.backgroundColor = '#aaa';
-
-    Object.keys(schema.properties).forEach((subKey) => {
-      const subSchema = schema.properties[subKey];
-      const subValue = value[subKey] || subSchema.default || '';
-      const field = this.generateFormField(`${key}.${subKey}`, subSchema, subValue);
-      if (field) {
-        field.addEventListener('input', (event) => {
-          value[subKey] = event.target.value;
-        });
-        card.appendChild(field);
-      }
-    });
-
-    // Button zum Löschen der Karte
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Löschen';
-    deleteButton.type = 'button';
-    deleteButton.style.marginTop = '10px';
-    deleteButton.addEventListener('click', onDelete);
-    card.appendChild(deleteButton);
-
-    return card;
   },
 
   saveData(content, filePath) {

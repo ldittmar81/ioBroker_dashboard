@@ -95,7 +95,7 @@ const configJS = {
         editorForm.appendChild(container);
       }
       else {
-        const field = editorJS.generateFormField(key, fieldSchema, value);
+        const field = editorJS.generateFormField('config', '', key, fieldSchema, value);
         if (field) editorForm.appendChild(field);
       }
     });
