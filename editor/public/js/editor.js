@@ -580,6 +580,21 @@ ipcRenderer.on('edit-theme', (themePath) => {
   themeJS.showThemeForm(themePath);
 });
 
+ipcRenderer.on('edit-page', ({ pageName, pagePath }) => {
+  logdata(`Lade Navigation-Konfiguration: ${pageName}`);
+  ipcRenderer.invoke('get-schema', 'main.schema.json')
+    .then((schema) => {
+      return ipcRenderer.invoke('read-file', pagePath)
+        .then((fileContent) => {
+          const content = JSON.parse(fileContent);
+          pagesJS.showMainPage(content, schema, pagePath);
+        });
+    })
+    .catch((err) => {
+      console.error('Fehler beim Laden der Seite oder des Schemas:', err);
+    });
+});
+
 ipcRenderer.on('open-section', (section) => {
   switch (section) {
     case 'Seitenfenster':

@@ -450,7 +450,7 @@ function openOverviewConfig(user = '') {
   const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 
   if (!fs.existsSync(overviewPath)) {
-    console.log('overview.json nicht gefunden. Erstelle eine neue Datei...');
+    console.log(overviewPath + ' nicht gefunden. Erstelle eine neue Datei...');
     // Erstelle eine leere Standarddatei basierend auf dem Schema
     const defaultOverviewConfig = {
       name: "Meine Übersicht",
@@ -463,12 +463,12 @@ function openOverviewConfig(user = '') {
     };
 
     fs.writeFileSync(overviewPath, JSON.stringify(defaultOverviewConfig, null, 2), 'utf8');
-    console.log('overview.json erfolgreich erstellt.');
+    console.log(overviewPath + ' erfolgreich erstellt.');
   }
 
   // Lade die bestehende oder erstellte Datei
   const overviewContent = JSON.parse(fs.readFileSync(overviewPath, 'utf8'));
-  console.log('overview.json geladen:');
+  console.log(overviewPath + ' geladen:');
 
   // Sende die Datei an den Renderer-Prozess
   mainWindow.webContents.send('edit-overview', { path: overviewPath, content: overviewContent, schema });
