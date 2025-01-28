@@ -209,22 +209,57 @@ function createMenu() {
 
         // Dateiinhalt laden, um den Namen zu holen
         let pageLabel = pageName;
+        let categorySubmenus = [];
         try {
           const pageData = JSON.parse(fs.readFileSync(pagePath, 'utf8'));
+
           if (pageData.name) {
             pageLabel = pageData.name;
+          }
+
+          if (Array.isArray(pageData.content)) {
+            pageData.content.forEach((cat) => {
+              const catName = cat.category || '(Unbenannte Kategorie)';
+              let tileMenuItems = [];
+
+              if (Array.isArray(cat.tiles)) {
+                cat.tiles.forEach((tile) => {
+                  tileMenuItems.push({
+                    label: tile.name || '(unbenannt)',
+                    click: () => {
+                      console.log(`Tile "${tile.name}" geklickt!`);
+                    },
+                  });
+                });
+              }
+
+              // Einen Kategorie-Menüeintrag erstellen mit den Tiles als submenu
+              categorySubmenus.push({
+                label: catName,
+                submenu: tileMenuItems,
+              });
+            });
           }
         } catch (error) {
           console.error(`Fehler beim Lesen der Datei ${pagePath}:`, error);
         }
 
+
         // Menüeintrag hinzufügen
         navigationMenu.submenu.push({
           label: pageLabel,
-          click: () => {
-            console.log(`Navigationsseite "${pageLabel}" ausgewählt.`);
-            mainWindow.webContents.send('edit-page', { pageName, pagePath });
-          },
+          submenu: [
+            {
+              label: 'Seite bearbeiten',
+              click: () => {
+                console.log(`Navigationsseite "${pageLabel}" ausgewählt.`);
+                mainWindow.webContents.send('edit-page', { pageName, pagePath });
+              }
+            },
+            { type: 'separator' },
+            // ... jetzt hängen wir die "categorySubmenus" an
+            ...categorySubmenus,
+          ]
         });
       });
 
