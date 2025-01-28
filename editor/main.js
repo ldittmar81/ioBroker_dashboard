@@ -270,11 +270,37 @@ function createMenu() {
         if (fs.existsSync(demoPath)) {
           // Dateiinhalt laden, um den Namen zu holen
           let demoLabel = 'Demo';
+          let demoCatSubmenus = [];
           try {
             const demoData = JSON.parse(fs.readFileSync(demoPath, 'utf8'));
             if (demoData.name) {
               demoLabel = demoData.name;
             }
+
+            if (Array.isArray(demoData.content)) {
+              demoData.content.forEach(cat => {
+                const catName = cat.category || '(Unbenannte Kategorie)';
+
+                // Tiles
+                let tileItems = [];
+                if (Array.isArray(cat.tiles)) {
+                  cat.tiles.forEach(tile => {
+                    tileItems.push({
+                      label: tile.name || '(unbenannt)',
+                      click: () => {
+                        console.log(`Tile "${tile.name}" in "${catName}" geklickt.`);
+                      }
+                    });
+                  });
+                }
+
+                demoCatSubmenus.push({
+                  label: catName,
+                  submenu: tileItems
+                });
+              });
+            }
+
           } catch (error) {
             console.error(`Fehler beim Lesen der Datei ${demoPath}:`, error);
           }
@@ -282,10 +308,17 @@ function createMenu() {
           // Menüeintrag für demo.json hinzufügen
           navigationMenu.submenu.push({
             label: demoLabel,
-            click: () => {
-              console.log(`Navigationsseite "${demoLabel}" ausgewählt.`);
-              mainWindow.webContents.send('edit-page', { pageName: 'demo', pagePath: demoPath });
-            },
+            submenu: [
+              {
+                label: 'Seite bearbeiten',
+                click: () => {
+                  console.log(`Navigationsseite "${demoLabel}" ausgewählt.`);
+                  mainWindow.webContents.send('edit-page', { pageName: 'demo', pagePath: demoPath });
+                }
+              },
+              { type: 'separator' },
+              ...demoCatSubmenus
+            ]
           });
         }
       }

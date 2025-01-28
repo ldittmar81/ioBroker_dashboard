@@ -9,99 +9,106 @@
       "tiles": [
         {
           "name": "Licht (light)",
+          "json": "light",
           "image": "Licht.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Licht.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Licht.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Licht.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Licht.Status"
             }
           ]
         },
         {
           "name": "Tür (door)",
+          "json": "door",
           "image": "Tuer.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.DekorationsLicht.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.DekorationsLicht.Status"
             }
           ]
         },
         {
           "name": "Fenster (window)",
+          "json": "window",
           "image": "Fenster.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Rollladen.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Rollladen.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Rollladen.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Rollladen.Status"
             }
           ]
         },
         {
           "name": "Heizung (heater)",
+          "json": "heater",
           "image": "Heizung.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Heizung.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Heizung.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Heizung.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Heizung.Status"
             }
           ]
         },
         {
           "name": "Steckdose (plug)",
+          "json": "plug",
           "image": "Steckdose.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Haushalt.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Haushalt.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Haushalt.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Haushalt.Status"
             }
           ]
         },
         {
           "name": "Ausgabegeräte (media)",
+          "json": "media",
           "image": "Unterhaltung.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Unterhaltung.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Unterhaltung.Status"
             }
           ]
         },
         {
           "name": "Knöpfe (buttons)",
+          "json": "buttons",
           "image": "Buttons.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Unterhaltung.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Unterhaltung.Status"
             }
           ]
         }
