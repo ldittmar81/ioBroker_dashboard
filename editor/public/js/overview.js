@@ -9,10 +9,12 @@ const overviewJS = {
     Object.keys(schema.properties).forEach((key) => {
       const fieldSchema = schema.properties[key];
       const value = content[key] !== undefined ? content[key] : fieldSchema.default || '';
+      const isRequired = fieldSchema.required?.includes(key);
+
       if (fieldSchema.type === 'object') {
-        this.generateObjectCard(key, value, fieldSchema);
+        this.generateObjectCard(key, value, fieldSchema, isRequired);
       } else {
-        const field = editorJS.generateFormField('overview', '', key, fieldSchema, value);
+        const field = editorJS.generateFormField('overview', '', key, fieldSchema, value, isRequired);
         if (field) editorForm.appendChild(field);
       }
     });
@@ -22,13 +24,15 @@ const overviewJS = {
     });
     editorForm.appendChild(actions);
   },
-  generateObjectCard(key, value, fieldSchema) {
-    const card = editorJS.generateCardHeader(fieldSchema.description || key);
+  generateObjectCard(key, value, fieldSchema, required = false) {
+    const card = editorJS.generateCardHeader(fieldSchema.description || key, required);
 
     Object.keys(fieldSchema.properties).forEach((subKey) => {
       const subFieldSchema = fieldSchema.properties[subKey];
       const subValue = value[subKey] !== undefined ? value[subKey] : subFieldSchema.default || '';
-      const subField = editorJS.generateFormField('overview', '',`${key}.${subKey}`, subFieldSchema, subValue);
+      const isRequired = fieldSchema.required?.includes(key);
+
+      const subField = editorJS.generateFormField('overview', '',`${key}.${subKey}`, subFieldSchema, subValue, isRequired);
       if (subField) card.appendChild(subField);
     });
 

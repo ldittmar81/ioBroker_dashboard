@@ -29,7 +29,7 @@ const editorJS = {
   isHexColor(str) {
     return /^#[A-Fa-f0-9]{6}$/.test(str);
   },
-  createFormFieldContainer(schema, key) {
+  createFormFieldContainer(schema, key, required = false) {
     const container = document.createElement('div');
     container.classList.add('form-field');
 
@@ -38,7 +38,7 @@ const editorJS = {
     label.htmlFor = key;
 
     const requiredSpan = document.createElement('span');
-    if (schema?.items?.required?.includes(key)) {
+    if (required) {
       requiredSpan.textContent = ' *';
       requiredSpan.classList.add('required-star');
     }
@@ -74,46 +74,47 @@ const editorJS = {
       });
   },
 
-  generateFormField(type = '', subtype = '', key, fieldSchema, value = '', parentKey = '', deep = 0) {
+  generateFormField(type = '', subtype = '', key, fieldSchema, value = '', required = false, parentKey = '', deep = 0) {
 
-    const container = this.createFormFieldContainer(fieldSchema, key);
+    const container = this.createFormFieldContainer(fieldSchema, key, required);
     const fullKey = parentKey ? `${parentKey}.${key}` : key;
 
     if (key === 'authorization' || key === 'authorization_read') {
-      formFieldsJS.createAuthorizationField(fullKey, value, container);
+      formFieldsJS.createAuthorizationField(fullKey, value, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^\\d{4}$') {
-      formFieldsJS.createPinField(value, fullKey, fieldSchema, container);
+      formFieldsJS.createPinField(value, fullKey, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.(jpg|jpeg|png|svg|gif|webp)$') {
-      formFieldsJS.createImageUploadField(fullKey, value, fieldSchema, subtype, container);
+      formFieldsJS.createImageUploadField(fullKey, value, fieldSchema, subtype, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^fa[a-zA-Z-]*$') {
-      formFieldsJS.createIconSelectField(value, fullKey, container);
+      formFieldsJS.createIconSelectField(value, fullKey, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^#([A-Fa-f0-9]{6})$') {
-      formFieldsJS.createColorPickerField(fullKey, value, fieldSchema, container);
+
+      formFieldsJS.createColorPickerField(fullKey, value, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$') {
-      formFieldsJS.createIoBrokerIDField(value, fullKey, fieldSchema, container);
+      formFieldsJS.createIoBrokerIDField(value, fullKey, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'string' && !fieldSchema.enum) {
-      formFieldsJS.createInputTextField(value, fullKey, fieldSchema, container);
+      formFieldsJS.createInputTextField(value, fullKey, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.enum) {
-      formFieldsJS.createEnumSelectorField(fullKey, fieldSchema, value, container);
+      formFieldsJS.createEnumSelectorField(fullKey, fieldSchema, value, container, required);
     }
     else if (fieldSchema.type === 'boolean') {
-      formFieldsJS.createBooleanField(fullKey, value, fieldSchema, container);
+      formFieldsJS.createBooleanField(fullKey, value, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'integer' || fieldSchema.type === 'number') {
-      formFieldsJS.createNumberField(value, fullKey, fieldSchema, container);
+      formFieldsJS.createNumberField(value, fullKey, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
-      formFieldsJS.createObjectCard(deep, fullKey, value, fieldSchema, type, subtype, container);
+      formFieldsJS.createObjectCard(deep, fullKey, value, fieldSchema, type, subtype, container, required);
     }
     else if (fieldSchema.type === 'array') {
-      formFieldsJS.createArrayField(value, fullKey, fieldSchema, container);
+      formFieldsJS.createArrayField(value, fullKey, fieldSchema, container, required);
     }
     else {
       logdata(`Feldtyp "${fieldSchema.type}" wird nicht unterstützt.`);
@@ -254,7 +255,7 @@ const editorJS = {
 
     return actions;
   },
-  generateCardHeader(text) {
+  generateCardHeader(text, required = false) {
     const card = document.createElement('div');
     card.classList.add('card');
     card.style.border = '1px solid #ccc';

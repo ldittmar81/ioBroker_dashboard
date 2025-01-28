@@ -19,18 +19,20 @@ const usersJS = {
         }
 
         const fields = fieldSchema.items.properties;
+        const requiredFields = fieldSchema.items.required || [];
 
         // Iteriere über die Felder im Schema
         Object.keys(fields).forEach((key) => {
           const fieldSchema = fields[key];
           const value = user?.[key] || '';
+          const isRequired = requiredFields.includes(key) || false;
 
           // Spezielle Logik für bestimmte Felder
          if (key === 'icon') {
-            this.createIconField(fieldSchema, key, value, user);
+            this.createIconField(fieldSchema, key, value, user, isRequired);
           } else {
             // Generisches Formularfeld
-            const field = editorJS.generateFormField('users', '', key, fieldSchema, value);
+            const field = editorJS.generateFormField('users', '', key, fieldSchema, value, isRequired);
             if (field) editorForm.appendChild(field);
           }
         });
@@ -48,8 +50,8 @@ const usersJS = {
       });
   },
 
-  createIconField(fieldSchema, key, value, user) {
-    const container = editorJS.createFormFieldContainer(fieldSchema, key);
+  createIconField(fieldSchema, key, value, user, required = false) {
+    const container = editorJS.createFormFieldContainer(fieldSchema, key, required);
 
     // Vorschau-Bild
     const previewLink = user?.icon
@@ -69,6 +71,7 @@ const usersJS = {
     input.name = key;
     input.value = value;
     input.readOnly = true;
+    input.required = required;
 
     // Durchsuchen-Button
     const uploadButton = document.createElement('button');

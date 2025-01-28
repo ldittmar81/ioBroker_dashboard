@@ -144,7 +144,10 @@ function createMenu() {
       submenu: [
         {
           label: 'Standard',
-          click: openSidebarConfig,
+          click: () => {
+            console.log("Standard Seitenfenster geöffnet");
+            openSidebarConfig();
+          },
         },
         ...users
           .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, `sidebar_${user.user}.json`)))
@@ -165,7 +168,10 @@ function createMenu() {
       submenu: [
         {
           label: 'Standard',
-          click: openOverviewConfig,
+          click: ()  => {
+            console.log("Standard Übersichtsfenster geöffnet");
+            openOverviewConfig();
+          },
         },
         ...users
           .filter(user => fs.existsSync(path.join(__dirname, '..', currentFolder, `overview_${user.user}.json`)))

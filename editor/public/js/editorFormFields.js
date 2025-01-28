@@ -1,11 +1,12 @@
 const formFieldsJS = {
 
-  createAuthorizationField(fullKey, value, container) {
+  createAuthorizationField(fullKey, value, container, required = false) {
     const hiddenInput = document.createElement('input');
     hiddenInput.type = 'hidden';
     hiddenInput.name = fullKey;
     hiddenInput.id = fullKey;
     hiddenInput.dataset.type = 'json';
+    hiddenInput.required = required;
 
     let currentValue = Array.isArray(value) ? [...value] : [];
     hiddenInput.value = JSON.stringify(currentValue);
@@ -55,13 +56,13 @@ const formFieldsJS = {
     container.appendChild(checkboxContainer);
   },
 
-  createPinField(value, fullKey, fieldSchema, container) {
+  createPinField(value, fullKey, fieldSchema, container, required = false) {
     const input = document.createElement('input');
     input.type = 'text';
     input.value = value;
     input.id = fullKey;
     input.name = fullKey;
-    input.required = fieldSchema.required || false;
+    input.required = required;
     input.maxLength = fieldSchema.maxLength || 4; // Standard 4-stellig
 
     input.addEventListener('input', (event) => {
@@ -71,7 +72,7 @@ const formFieldsJS = {
     container.appendChild(input);
   },
 
-  createImageUploadField(fullKey, value, fieldSchema, subtype, container) {
+  createImageUploadField(fullKey, value, fieldSchema, subtype, container, required) {
     const preview = document.createElement('img');
     preview.alt = 'Icon Vorschau';
     preview.style.width = '50px';
@@ -85,6 +86,7 @@ const formFieldsJS = {
     input.name = fullKey;
     input.value = value;
     input.readOnly = true;
+    input.required = required;
 
     let subFolder = fieldSchema.$comment;
     if (subFolder && subFolder.includes('${subtype}')) {
@@ -135,7 +137,7 @@ const formFieldsJS = {
     container.appendChild(uploadContainer);
   },
 
-  createIconSelectField(value, fullKey, container) {
+  createIconSelectField(value, fullKey, container, required = false) {
     // Wrapper für Select + Icon
     const iconWrapper = document.createElement('div');
     iconWrapper.classList.add('icon-select-wrapper');
@@ -151,6 +153,7 @@ const formFieldsJS = {
     const select = document.createElement('select');
     select.name = fullKey;
     select.id = fullKey;
+    select.required = required;
 
     // Option "leer" oder Standard
     const emptyOption = document.createElement('option');
@@ -169,7 +172,7 @@ const formFieldsJS = {
       select.appendChild(opt);
     });
 
-    // Beim Ändern => i-Klasse aktualisieren
+    // Beim Ändern → i-Klasse aktualisieren
     select.addEventListener('change', () => {
       iconPreview.className = 'fa';
       if (select.value) {
@@ -183,7 +186,7 @@ const formFieldsJS = {
     container.appendChild(iconWrapper);
   },
 
-  createColorPickerField(fullKey, value, fieldSchema, container) {
+  createColorPickerField(fullKey, value, fieldSchema, container, required = false) {
     // Erst ein Wrapper-Element erstellen
     const colorWrapper = document.createElement('div');
     colorWrapper.classList.add('color-field-wrapper');
@@ -195,15 +198,15 @@ const formFieldsJS = {
     input.value = value;         // e.g. "#FF0000"
     input.placeholder = '#RRGGBB';
     input.classList.add('color-input');
-    input.required = fieldSchema.required || false;
+    input.required = required;
 
     const colorPicker = document.createElement('input');
     colorPicker.type = 'color';
     colorPicker.classList.add('color-picker');
-    colorPicker.value = this.isHexColor(value) ? value : '#000000';
+    colorPicker.value = editorJS.isHexColor(value) ? value : '#000000';
 
     input.addEventListener('input', () => {
-      if (this.isHexColor(input.value)) {
+      if (editorJS.isHexColor(input.value)) {
         colorPicker.value = input.value;
       }
     });
@@ -220,14 +223,14 @@ const formFieldsJS = {
     container.appendChild(colorWrapper);
   },
 
-  createIoBrokerIDField(value, fullKey, fieldSchema, container) {
+  createIoBrokerIDField(value, fullKey, fieldSchema, container, required = false) {
     const input = document.createElement('input');
     input.type = 'text';
     input.value = value;
     input.id = fullKey;
     input.name = fullKey;
     input.placeholder = 'ID auswählen oder eingeben...';
-    input.required = fieldSchema.required || false;
+    input.required = required;
 
     const dropdown = document.createElement('datalist');
     dropdown.id = `${fullKey}-options`;
@@ -240,7 +243,7 @@ const formFieldsJS = {
       // Mehrere Suchbegriffe durch Leerzeichen trennen
       const keywords = query.split(/\s+/); // Trennung nach Leerzeichen
 
-      this.loadIoBrokerIDs()
+      editorJS.loadIoBrokerIDs()
         .then((ids) => {
           // IDs filtern: Alle Schlüsselwörter müssen enthalten sein
           const filteredIds = ids.filter((id) =>
@@ -263,13 +266,13 @@ const formFieldsJS = {
     container.appendChild(dropdown);
   },
 
-  createInputTextField(value, fullKey, fieldSchema, container) {
+  createInputTextField(value, fullKey, fieldSchema, container, required = false) {
     const input = document.createElement('input');
     input.type = 'text';
     input.value = value;
     input.id = fullKey;
     input.name = fullKey;
-    input.required = fieldSchema.required || false;
+    input.required = required;
     input.readOnly = fieldSchema.readOnly;
 
     if (fieldSchema.pattern) {
@@ -283,12 +286,20 @@ const formFieldsJS = {
     container.appendChild(input);
   },
 
-  createEnumSelectorField(fullKey, fieldSchema, value, container) {
+  createEnumSelectorField(fullKey, fieldSchema, value, container, required = false) {
     // Dropdown für enum-Werte
     const input = document.createElement('select');
     input.name = fullKey;
     input.id = fullKey;
-    input.required = fieldSchema.required || false;
+    input.required = required;
+
+    if(!required){
+      const opt = document.createElement('option');
+      opt.value = "";
+      opt.textContent = "";
+      opt.selected = "" === value;
+      input.appendChild(opt);
+    }
 
     fieldSchema.enum.forEach((option) => {
       const opt = document.createElement('option');
@@ -301,27 +312,40 @@ const formFieldsJS = {
     container.appendChild(input);
   },
 
-  createBooleanField(fullKey, value, fieldSchema, container) {
+  createBooleanField(fullKey, value, fieldSchema, container, required = false) {
     const input = document.createElement('select');
     input.name = fullKey;
     input.id = fullKey;
     input.dataset.type = 'boolean';
-    input.innerHTML = `
-          <option value="" ${value === '' ? 'selected' : ''}></option>
-          <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
-          <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>`;
-    input.required = fieldSchema.required || false;
+
+    // Basis-Optionen „true“ und „false“
+    let optionsHtml = `
+    <option value="true" ${value === true || value === 'true' ? 'selected' : ''}>Ja</option>
+    <option value="false" ${value === false || value === 'false' ? 'selected' : ''}>Nein</option>
+  `;
+
+    // Falls nicht required -> leeren Eintrag hinzufügen
+    if (!required) {
+      // Falls value aktuell '' sein soll
+      optionsHtml = `
+      <option value="" ${value === '' ? 'selected' : ''}></option>
+      ${optionsHtml}
+    `;
+    }
+
+    input.innerHTML = optionsHtml;
+    input.required = required;
 
     container.appendChild(input);
   },
 
-  createNumberField(value, fullKey, fieldSchema, container) {
+  createNumberField(value, fullKey, fieldSchema, container, required = false) {
     const input = document.createElement('input');
     input.type = 'number';
     input.value = value;
     input.id = fullKey;
     input.name = fullKey;
-    input.required = fieldSchema.required || false;
+    input.required = required;
 
     if (fieldSchema.minimum !== undefined) {
       input.min = fieldSchema.minimum;
@@ -340,7 +364,7 @@ const formFieldsJS = {
     container.appendChild(input);
   },
 
-  createObjectCard(deep, fullKey, value, fieldSchema, type, subtype, container) {
+  createObjectCard(deep, fullKey, value, fieldSchema, type, subtype, container, required = false) {
     deep++;
     const arrayContainer = document.createElement('div');
     arrayContainer.classList.add('array-container');
@@ -360,6 +384,7 @@ const formFieldsJS = {
         else card.classList.add('object-card-odd');
 
         const subKeys = Object.keys(fieldSchema.items.properties);
+        const requiredKeys = Object.keys(fieldSchema.required || {});
 
         const titleKey = subKeys[0]; // z.B. "category" oder "name"
         const firstFieldSchema = fieldSchema.items.properties[titleKey];
@@ -374,12 +399,12 @@ const formFieldsJS = {
           titleKey,
           firstFieldSchema,
           firstFieldValue,
+          requiredKeys.includes(titleKey),
           `${fullKey}[${index}]`,
           deep
         );
         headerDiv.appendChild(firstField);
 
-        // 5) Button zum Ein-/Ausklappen
         const toggleBtn = document.createElement('button');
         toggleBtn.type = 'button';
         toggleBtn.textContent = '▼'; // oder "►" / "▼"
@@ -410,6 +435,7 @@ const formFieldsJS = {
 
         subKeys.slice(1).forEach((subKey) => {
           const subFieldSchema = fieldSchema.items.properties[subKey];
+          const subFieldRequiredKeys = fieldSchema.items.required || [];
           const subValue = item[subKey] || '';
           const subField = editorJS.generateFormField(
             type,
@@ -417,6 +443,7 @@ const formFieldsJS = {
             subKey,
             subFieldSchema,
             subValue,
+            subFieldRequiredKeys.includes(subKey),
             `${fullKey}[${index}]`,
             deep
           );
@@ -465,12 +492,12 @@ const formFieldsJS = {
     container.appendChild(arrayContainer);
   },
 
-  createArrayField(value, fullKey, fieldSchema, container) {
+  createArrayField(value, fullKey, fieldSchema, container, required = false) {
     const input = document.createElement('textarea');
     input.value = Array.isArray(value) ? value.join('\n') : '';
     input.id = fullKey;
     input.name = fullKey;
-    input.required = fieldSchema.required || false;
+    input.required = required;
     container.appendChild(input);
   },
 

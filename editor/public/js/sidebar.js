@@ -9,10 +9,12 @@ const sidebarJS = {
     Object.keys(schema.properties).forEach((key) => {
       const fieldSchema = schema.properties[key];
       const value = content[key] !== undefined ? content[key] : fieldSchema.default || '';
+      const isRequired = schema.required?.includes(key);
+
       if (fieldSchema.type === 'object') {
-        this.generateObjectCard(key, value, fieldSchema);
+        this.generateObjectCard(key, value, fieldSchema, isRequired);
       } else {
-        const field = editorJS.generateFormField('sidebar', '', key, fieldSchema, value);
+        const field = editorJS.generateFormField('sidebar', '', key, fieldSchema, value, isRequired);
         if (field) editorForm.appendChild(field);
       }
     });
@@ -23,17 +25,18 @@ const sidebarJS = {
     editorForm.appendChild(actions);
   },
 
-  generateObjectCard(key, value, fieldSchema) {
-    const card = editorJS.generateCardHeader(fieldSchema.description || key);
+  generateObjectCard(key, value, fieldSchema, required = false) {
+    const card = editorJS.generateCardHeader(fieldSchema.description || key, required);
 
     Object.keys(fieldSchema.properties).forEach((subKey) => {
       const subFieldSchema = fieldSchema.properties[subKey];
       const subValue = value[subKey] !== undefined ? value[subKey] : subFieldSchema.default || '';
+      const isRequired = fieldSchema.required?.includes(key);
 
       if (subKey === 'imageSet') {
         logdata(subValue, 'info');
         // Container im gleichen Stil wie bei den anderen Feldern
-        const container = editorJS.createFormFieldContainer(fieldSchema.properties[subKey], `${key}.${subKey}`);
+        const container = editorJS.createFormFieldContainer(fieldSchema.properties[subKey], `${key}.${subKey}`, isRequired);
 
         // Erstelle ein SELECT
         const select = document.createElement('select');
@@ -65,8 +68,9 @@ const sidebarJS = {
 
         container.appendChild(select);
         card.appendChild(container);
-      } else {
-        const subField = editorJS.generateFormField('sidebar', '', `${key}.${subKey}`, subFieldSchema, subValue);
+      }
+      else {
+        const subField = editorJS.generateFormField('sidebar', '', `${key}.${subKey}`, subFieldSchema, subValue, isRequired);
         if (subField) card.appendChild(subField);
       }
 

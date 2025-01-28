@@ -54,7 +54,7 @@
           }
         }
       },
-      "required": ["enabled", "calendars"],
+      "required": ["enabled"],
       "additionalProperties": false
     }
   },

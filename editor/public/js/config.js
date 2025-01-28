@@ -9,10 +9,12 @@ const configJS = {
     // Durch alle Schema-Eigenschaften iterieren
     Object.keys(schema.properties).forEach((key) => {
       const fieldSchema = schema.properties[key];
+      const isRequired = schema.required?.includes(key);
+
       const value = jsonData[key] !== undefined ? jsonData[key] : fieldSchema.default || '';
 
       if (key === 'pages') {
-        const container = editorJS.createFormFieldContainer(fieldSchema, key);
+        const container = editorJS.createFormFieldContainer(fieldSchema, key, isRequired);
 
         const pagesContainer = document.createElement('div');
         pagesContainer.id = 'pages-container';
@@ -43,7 +45,7 @@ const configJS = {
         editorForm.appendChild(container);
       }
       else if (key === 'dataFolder') {
-        const container = editorJS.createFormFieldContainer(fieldSchema, key);
+        const container = editorJS.createFormFieldContainer(fieldSchema, key, isRequired);
 
         const input = document.createElement('select');
         input.id = key;
@@ -95,7 +97,7 @@ const configJS = {
         editorForm.appendChild(container);
       }
       else {
-        const field = editorJS.generateFormField('config', '', key, fieldSchema, value);
+        const field = editorJS.generateFormField('config', '', key, fieldSchema, value, isRequired);
         if (field) editorForm.appendChild(field);
       }
     });

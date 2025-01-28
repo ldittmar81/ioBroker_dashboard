@@ -15,11 +15,10 @@ const pagesJS = {
     Object.keys(schema.properties).forEach((key) => {
       const fieldSchema = schema.properties[key];
       const value = (content[key] !== undefined) ? content[key] : fieldSchema.default;
+      const isRequired = schema.required?.includes(key);
 
-      const field = editorJS.generateFormField('main', subtype, key, fieldSchema, value);
-      if (field) {
-        editorForm.appendChild(field);
-      }
+      const field = editorJS.generateFormField('main', subtype, key, fieldSchema, value, isRequired);
+      if (field) editorForm.appendChild(field);
 
     });
 
