@@ -9,7 +9,8 @@
       "user": {
         "type": "string",
         "description": "Eindeutiger Benutzername",
-        "minLength": 1
+        "minLength": 1,
+        "readOnly": true
       },
       "name": {
         "type": "string",

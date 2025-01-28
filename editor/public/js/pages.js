@@ -16,24 +16,9 @@ const pagesJS = {
       const fieldSchema = schema.properties[key];
       const value = (content[key] !== undefined) ? content[key] : fieldSchema.default;
 
-      if(key === 'type'){
-        const container = editorJS.createFormFieldContainer(fieldSchema, key);
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = value;
-        input.id = key;
-        input.name = key;
-        input.readOnly = true;
-        container.appendChild(input);
-        editorForm.appendChild(container);
-
-        subtype = value;
-      }
-      else {
-        const field = editorJS.generateFormField('main', subtype, key, fieldSchema, value);
-        if (field) {
-          editorForm.appendChild(field);
-        }
+      const field = editorJS.generateFormField('main', subtype, key, fieldSchema, value);
+      if (field) {
+        editorForm.appendChild(field);
       }
 
     });

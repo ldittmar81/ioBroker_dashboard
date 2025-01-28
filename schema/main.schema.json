@@ -12,7 +12,8 @@
     "type": {
       "type": "string",
       "description": "Typ der Seite - auch Ordner für img und data/devices",
-      "minLength": 1
+      "minLength": 1,
+      "readOnly": true
     },
     "icon": {
       "type": "string",
@@ -70,6 +71,12 @@
                   "description": "Der Name der Kachel (z.B. 'Wohn- und Esszimmer').",
                   "minLength": 1
                 },
+                "json": {
+                  "type": "string",
+                  "description": "Name der entsprechende JSON-Datei",
+                  "minLength": 1,
+                  "readOnly": true
+                },
                 "image": {
                   "type": "string",
                   "description": "Der Dateiname des Bildes (z.B. 'WohnEsszimmer.webp').",
@@ -100,7 +107,7 @@
                       "value": {
                         "type": "string",
                         "description": "ID aus ioBroker (z.B. 'alias.0.Wohnzimmer.Durchlüftung.TIMER').",
-                        "pattern": "^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$"
+                        "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
                       },
                       "icon": {
                         "type": "string",
@@ -142,7 +149,7 @@
               },
               "required": [
                 "name",
-                "status"
+                "json"
               ],
               "additionalProperties": false
             }

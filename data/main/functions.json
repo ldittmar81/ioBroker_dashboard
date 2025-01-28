@@ -11,127 +11,136 @@
       "tiles": [
         {
           "name": "Licht",
+          "json": "licht",
           "image": "Licht.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Licht.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Licht.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Licht.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Licht.Status"
             }
           ]
         },
         {
           "name": "Dekorations Licht",
+          "json": "dekorationslicht",
           "image": "DekorationsLicht.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.DekorationsLicht.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.DekorationsLicht.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.DekorationsLicht.Status"
             }
           ]
         },
         {
           "name": "Fenster",
+          "json": "fenster",
           "image": "Fenster.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Rollladen.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Rollladen.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Rollladen.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Rollladen.Status"
             }
           ]
         },
         {
           "name": "Heizung",
+          "json": "heizung",
           "image": "Heizung.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Heizung.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Heizung.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Heizung.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Heizung.Status"
             }
           ]
         },
         {
           "name": "Haushalt",
+          "json": "haushalt",
           "image": "Haushalt.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Haushalt.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Haushalt.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Haushalt.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Haushalt.Status"
             }
           ]
         },
         {
           "name": "Gartengeräte",
+          "json": "gartengerate",
           "image": "Gartengeraete.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Gartengeraete.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Gartengeraete.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Gartengeraete.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Gartengeraete.Status"
             }
           ]
         },
         {
           "name": "Unterhaltung",
+          "json": "unterhaltung",
           "image": "Unterhaltung.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Unterhaltung.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Unterhaltung.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Unterhaltung.Status"
             }
           ]
         },
         {
           "name": "Sicherheit",
+          "json": "sicherheit",
           "image": "Sicherheit.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Sicherheit.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Sicherheit.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Sicherheit.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Sicherheit.Status"
             }
           ]
         },
         {
           "name": "Wetter",
+          "json": "wetter",
           "image": "Wetter.webp",
           "status": [
             {
               "label": "Verbrauch",
-              "value": "ioBrokerObjekte.Funktionen.Wetter.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Funktionen.Wetter.Stromverbrauch"
             },
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Funktionen.Wetter.Status"
+              "value": "ioBrokerObjekte.0.Funktionen.Wetter.Status"
             }
           ]
         }

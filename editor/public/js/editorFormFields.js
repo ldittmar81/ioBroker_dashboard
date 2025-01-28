@@ -270,6 +270,7 @@ const formFieldsJS = {
     input.id = fullKey;
     input.name = fullKey;
     input.required = fieldSchema.required || false;
+    input.readOnly = fieldSchema.readOnly;
 
     if (fieldSchema.pattern) {
       input.pattern = fieldSchema.pattern;

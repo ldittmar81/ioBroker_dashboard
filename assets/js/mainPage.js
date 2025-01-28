@@ -197,7 +197,6 @@ const mainPageJS = {
           collapseIcon.setAttribute('data-icon', 'angle-down');
         }
 
-
         categorySection.classList.toggle('collapsed');
         tiles.style.maxHeight = isCollapsed ? tiles.scrollHeight + 'px' : '0';
       });
@@ -300,7 +299,7 @@ const mainPageJS = {
 
         const tile = document.createElement('div');
         tile.classList.add('tile');
-        tile.onclick = () => mainDeviceJS.openItem(tileData.name, pageData.type);
+        tile.onclick = () => mainDeviceJS.openItem(tileData.name, pageData.type, tileData.json);
 
         // Sammle den Tile-Namen in categoryTiles für spätere Verwendung
         categoryTiles.push(tileData.name);

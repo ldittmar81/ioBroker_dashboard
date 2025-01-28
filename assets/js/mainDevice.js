@@ -615,9 +615,10 @@ const mainDeviceJS = {
    * @memberof mainDeviceJS
    * @param {string} name - Der Name/Bezeichner der Kachel / Device / Raum etc.
    * @param {string} type - Typ (z. B. "room", "function"), um die richtige JSON-Datei zu laden.
+   * @param {string} jsonfile - Dateiname
    * @returns {Promise<void>}
    */
-  async openItem(name, type) {
+  async openItem(name, type, jsonfile) {
     const mainContent = document.querySelector('.main-content');
     mainContent.innerHTML = '';
     ioBrokerJS.clearPageIds();
@@ -628,7 +629,7 @@ const mainDeviceJS = {
     connectionIcon.style.color = (servConn._isConnected || isDemoVersion) ? 'green' : 'red';
     mainContent.appendChild(connectionIcon);
 
-    mainDeviceJS.createTileMenuButton(mainContent, name, type);
+    mainDeviceJS.createTileMenuButton(mainContent, name, type, jsonfile);
 
     const title = document.createElement('h2');
     title.textContent = name;
@@ -649,10 +650,7 @@ const mainDeviceJS = {
     });
 
     // Dateiname konstruieren
-    const itemFileName = `${dashboardConfig.dataFolder}/devices/${type}/${name.normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-zA-Z0-9]/g, '')
-      .toLowerCase()}.json?v=${dashboardVersion}`;
+    const itemFileName = `${dashboardConfig.dataFolder}/devices/${type}/${jsonfile}.json?v=${dashboardVersion}`;
 
     try {
       const response = await fetch(itemFileName + "?v=" + dashboardVersion);
@@ -680,9 +678,10 @@ const mainDeviceJS = {
    * @param {HTMLElement} mainContent - Haupt-Container für den Button und das Overlay.
    * @param {string} currentTileName - Name der aktuell geöffneten Kachel.
    * @param {string} type - Typ (z. B. "room" oder "function").
+   * @param {string} jsonfile - JSON Dateiname
    * @returns {void}
    */
-  createTileMenuButton(mainContent, currentTileName, type) {
+  createTileMenuButton(mainContent, currentTileName, type, jsonfile) {
     const button = document.createElement('button');
     button.classList.add('tile-menu-toggle');
 
@@ -711,7 +710,7 @@ const mainDeviceJS = {
         item.addEventListener('click', () => {
           if (!item.classList.contains('disabled')) {
             overlay.style.display = 'none';
-            mainDeviceJS.openItem(tile, type);
+            mainDeviceJS.openItem(tile, type, jsonfile);
           }
         });
       }

@@ -94,7 +94,7 @@ const editorJS = {
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^#([A-Fa-f0-9]{6})$') {
       formFieldsJS.createColorPickerField(fullKey, value, fieldSchema, container);
     }
-    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-]+\\.\\d+\\.[a-zA-Z0-9._-]+$') {
+    else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$') {
       formFieldsJS.createIoBrokerIDField(value, fullKey, fieldSchema, container);
     }
     else if (fieldSchema.type === 'string' && !fieldSchema.enum) {

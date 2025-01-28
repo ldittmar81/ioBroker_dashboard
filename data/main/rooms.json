@@ -13,6 +13,7 @@
       "tiles": [
         {
           "name": "Wohn- und Esszimmer",
+          "json": "wohnundesszimmer",
           "image": "WohnEsszimmer.webp",
           "status": [
             {
@@ -44,6 +45,7 @@
         },
         {
           "name": "Küche",
+          "json": "kuche",
           "image": "Kueche.webp",
           "status": [
             {
@@ -67,6 +69,7 @@
         },
         {
           "name": "Büro",
+          "json": "buro",
           "image": "Buero.webp",
           "status": [
             {
@@ -98,6 +101,7 @@
         },
         {
           "name": "Schlafzimmer",
+          "json": "schlafzimmer",
           "image": "Schlafzimmer.webp",
           "status": [
             {
@@ -129,6 +133,7 @@
         },
         {
           "name": "Bad EG",
+          "json": "badeg",
           "image": "BadEG.webp",
           "status": [
             {
@@ -160,6 +165,7 @@
         },
         {
           "name": "Flur EG",
+          "json": "flureg",
           "image": "FlurEG.webp",
           "status": [
             {
@@ -196,6 +202,7 @@
       "tiles": [
         {
           "name": "Hobbyzimmer",
+          "json": "hobbyzimmer",
           "image": "Hobbyzimmer.webp",
           "status": [
             {
@@ -227,6 +234,7 @@
         },
         {
           "name": "Gästezimmer",
+          "json": "gastezimmer",
           "image": "Gaestezimmer.webp",
           "status": [
             {
@@ -258,6 +266,7 @@
         },
         {
           "name": "Spielzimmer",
+          "json": "spielzimmer",
           "image": "Spielzimmer.webp",
           "status": [
             {
@@ -281,6 +290,7 @@
         },
         {
           "name": "Kind 3 Zimmer",
+          "json": "kind3zimmer",
           "image": "Kind3Zimmer.webp",
           "status": [
             {
@@ -312,6 +322,7 @@
         },
         {
           "name": "Kind 2 Zimmer",
+          "json": "kind2zimmer",
           "image": "Kind2Zimmer.webp",
           "status": [
             {
@@ -343,6 +354,7 @@
         },
         {
           "name": "Kind 1 Zimmer",
+          "json": "kind1zimmer",
           "image": "Kind1Zimmer.webp",
           "status": [
             {
@@ -374,12 +386,14 @@
         },
         {
           "name": "Balkon",
+          "json": "balkon",
           "image": "Balkon.webp",
           "status": [
           ]
         },
         {
           "name": "Bad OG",
+          "json": "badog",
           "image": "BadOG.webp",
           "status": [
             {
@@ -411,6 +425,7 @@
         },
         {
           "name": "Flur OG",
+          "json": "flurog",
           "image": "FlurOG.webp",
           "status": [
             {
@@ -430,6 +445,7 @@
       "tiles": [
         {
           "name": "Partyraum",
+          "json": "partyraum",
           "image": "Partyraum.webp",
           "status": [
             {
@@ -461,6 +477,7 @@
         },
         {
           "name": "HWR",
+          "json": "hwr",
           "image": "HWR.webp",
           "status": [
             {
@@ -476,6 +493,7 @@
         },
         {
           "name": "Gäste WC",
+          "json": "gastewc",
           "image": "GaesteWC.webp",
           "status": [
             {
@@ -499,6 +517,7 @@
         },
         {
           "name": "Keller",
+          "json": "keller",
           "image": "Keller.webp",
           "status": [
             {
@@ -522,6 +541,7 @@
         },
         {
           "name": "Partyraum Dachgeschoss",
+          "json": "partyraumdachgeschoss",
           "image": "PartyraumDG.webp",
           "status": [
             {
@@ -545,6 +565,7 @@
         },
         {
           "name": "Haupthaus Dachgeschoss",
+          "json": "haupthausdachgeschoss",
           "image": "HaupthausDG.webp",
           "status": [
           ]
@@ -556,18 +577,21 @@
       "tiles": [
         {
           "name": "Garten",
+          "json": "garten",
           "image": "Garten.webp",
           "status": [
           ]
         },
         {
           "name": "Terrasse",
+          "json": "terrasse",
           "image": "Terrasse.webp",
           "status": [
           ]
         },
         {
           "name": "Hof",
+          "json": "hof",
           "image": "Hof.webp",
           "status": [
           ]

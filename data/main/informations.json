@@ -11,133 +11,143 @@
       "tiles": [
         {
           "name": "Verbrauch",
+          "json": "verbrauch",
           "image": "Verbrauch.webp",
           "status": [
             {
               "label": "Stromverbrauch",
-              "value": "ioBrokerObjekte.Informationen.Verbrauch.Stromverbrauch"
+              "value": "ioBrokerObjekte.0.Informationen.Verbrauch.Stromverbrauch"
             },
             {
               "label": "Wasserverbrauch",
-              "value": "ioBrokerObjekte.Informationen.Verbrauch.Wasserverbrauch"
+              "value": "ioBrokerObjekte.0.Informationen.Verbrauch.Wasserverbrauch"
             }
           ]
         },
         {
           "name": "Nicht erreichbar",
+          "json": "nichterreichbar",
           "image": "NichtErreichbar.webp",
           "status": [
             {
               "label": "Geräte offline",
-              "value": "ioBrokerObjekte.Informationen.NichtErreichbar.GeräteOffline"
+              "value": "ioBrokerObjekte.0.Informationen.NichtErreichbar.GeräteOffline"
             }
           ]
         },
         {
           "name": "Batterie schwach",
+          "json": "batterieschwach",
           "image": "BatterieSchwach.webp",
           "status": [
             {
               "label": "Anzahl",
-              "value": "ioBrokerObjekte.Informationen.BatterieSchwach.AnzahlSchwach"
+              "value": "ioBrokerObjekte.0.Informationen.BatterieSchwach.AnzahlSchwach"
             }
           ]
         },
         {
           "name": "IT Infrastruktur",
+          "json": "itinfrastruktur",
           "image": "ITInfrastruktur.webp",
           "status": [
             {
               "label": "Serverstatus",
-              "value": "ioBrokerObjekte.Informationen.ITInfrastruktur.Serverstatus"
+              "value": "ioBrokerObjekte.0.Informationen.ITInfrastruktur.Serverstatus"
             },
             {
               "label": "Netzwerk",
-              "value": "ioBrokerObjekte.Informationen.ITInfrastruktur.Netzwerk"
+              "value": "ioBrokerObjekte.0.Informationen.ITInfrastruktur.Netzwerk"
             }
           ]
         },
         {
           "name": "Mama",
+          "json": "mama",
           "image": "mama.jpg",
           "status": [
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Informationen.Mama.Status"
+              "value": "ioBrokerObjekte.0.Informationen.Mama.Status"
             },
             {
               "label": "Anwesenheit",
-              "value": "ioBrokerObjekte.Informationen.Mama.Anwesenheit"
+              "value": "ioBrokerObjekte.0.Informationen.Mama.Anwesenheit"
             }
           ]
         },
         {
           "name": "Big Papa",
+          "json": "papa",
           "image": "papa.jpg",
           "status": [
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Informationen.Papa.Status"
+              "value": "ioBrokerObjekte.0.Informationen.Papa.Status"
             },
             {
               "label": "Anwesenheit",
-              "value": "ioBrokerObjekte.Informationen.Papa.Anwesenheit"
+              "value": "ioBrokerObjekte.0.Informationen.Papa.Anwesenheit"
             }
           ]
         },
         {
           "name": "Little Princess",
+          "json": "kind1",
           "image": "kind1.jpg",
           "status": [
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Informationen.Kind1.Status"
+              "value": "ioBrokerObjekte.0.Informationen.Kind1.Status"
             },
             {
               "label": "Anwesenheit",
-              "value": "ioBrokerObjekte.Informationen.Kind1.Anwesenheit"
+              "value": "ioBrokerObjekte.0.Informationen.Kind1.Anwesenheit"
             }
           ]
         },
         {
           "name": "Metal Kid",
+          "json": "kind2",
           "image": "kind2.jpg",
           "status": [
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Informationen.Kind2.Status"
+              "value": "ioBrokerObjekte.0.Informationen.Kind2.Status"
             },
             {
               "label": "Anwesenheit",
-              "value": "ioBrokerObjekte.Informationen.Kind2.Anwesenheit"
+              "value": "ioBrokerObjekte.0.Informationen.Kind2.Anwesenheit"
             }
           ]
         },
         {
           "name": "Junior Gamer",
+          "json": "kind3",
           "image": "kind3.jpg",
           "status": [
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Informationen.Kind3.Status"
+              "value": "ioBrokerObjekte.0.Informationen.Kind3.Status"
             },
             {
               "label": "Anwesenheit",
-              "value": "ioBrokerObjekte.Informationen.Kind3.Anwesenheit"
+              "value": "ioBrokerObjekte.0.Informationen.Kind3.Anwesenheit"
             }
           ]
         },
         {
           "name": "Dog",
+          "json": "hund",
           "image": "hund.jpg",
           "status": [
             {
               "label": "Status",
-              "value": "ioBrokerObjekte.Informationen.Dog.Status"
+              "value": "ioBrokerObjekte.0.Informationen.Dog.Status"
             },
             {
               "label": "Anwesenheit",
-              "value": "ioBrokerObjekte.Informationen.Dog.Anwesenheit"
+              "value": "ioBrokerObjekte.0.Informationen.Dog.Anwesenheit"
             }
           ]
         }

@@ -26,9 +26,7 @@ const usersJS = {
           const value = user?.[key] || '';
 
           // Spezielle Logik für bestimmte Felder
-          if (key === 'user') {
-            this.createReadOnlyField(fieldSchema, key, value);
-          } else if (key === 'icon') {
+         if (key === 'icon') {
             this.createIconField(fieldSchema, key, value, user);
           } else {
             // Generisches Formularfeld
@@ -48,18 +46,6 @@ const usersJS = {
       .catch((error) => {
         logdata('Fehler beim Abrufen des Schemas: ' + error, 'error');
       });
-  },
-
-  createReadOnlyField(fieldSchema, key, value) {
-    const container = editorJS.createFormFieldContainer(fieldSchema, key);
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = value;
-    input.id = key;
-    input.name = key;
-    input.readOnly = !!value; // Nur lesbar, wenn bereits ein Wert vorhanden ist
-    container.appendChild(input);
-    editorForm.appendChild(container);
   },
 
   createIconField(fieldSchema, key, value, user) {
