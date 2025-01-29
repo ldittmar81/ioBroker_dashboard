@@ -155,11 +155,13 @@ const formFieldsJS = {
     select.id = fullKey;
     select.required = required;
 
-    // Option "leer" oder Standard
-    const emptyOption = document.createElement('option');
-    emptyOption.value = '';
-    emptyOption.textContent = '-- Icon wählen --';
-    select.appendChild(emptyOption);
+    if(!required) {
+      // Option "leer" oder Standard
+      const emptyOption = document.createElement('option');
+      emptyOption.value = '';
+      emptyOption.textContent = '-- Icon wählen --';
+      select.appendChild(emptyOption);
+    }
 
     // Alle bekannten FontAwesome-Icons in den Select packen
     availableFAIcons.forEach((iconClass) => {
@@ -174,9 +176,8 @@ const formFieldsJS = {
 
     // Beim Ändern → i-Klasse aktualisieren
     select.addEventListener('change', () => {
-      iconPreview.className = 'fa';
       if (select.value) {
-        iconPreview.classList.add(select.value);
+        iconWrapper.querySelector('svg').setAttribute('data-icon', select.value.substring(3));
       }
     });
 
@@ -263,6 +264,7 @@ const formFieldsJS = {
         });
     });
 
+    container.appendChild(input);
     container.appendChild(dropdown);
   },
 
@@ -287,27 +289,39 @@ const formFieldsJS = {
   },
 
   createEnumSelectorField(fullKey, fieldSchema, value, container, required = false) {
-    // Dropdown für enum-Werte
-    const input = document.createElement('select');
-    input.name = fullKey;
-    input.id = fullKey;
-    input.required = required;
+    let input;
 
-    if(!required){
-      const opt = document.createElement('option');
-      opt.value = "";
-      opt.textContent = "";
-      opt.selected = "" === value;
-      input.appendChild(opt);
+    if((value || fieldSchema.default) && fieldSchema.readOnly) {
+      input = document.createElement('input');
+      input.type = 'text';
+      input.value = value || fieldSchema.default;
+      input.id = fullKey;
+      input.name = fullKey;
+      input.required = required;
+      input.readOnly = true;
     }
+    else {
+      input = document.createElement('select');
+      input.name = fullKey;
+      input.id = fullKey;
+      input.required = required;
 
-    fieldSchema.enum.forEach((option) => {
-      const opt = document.createElement('option');
-      opt.value = option;
-      opt.textContent = option;
-      opt.selected = option === value;
-      input.appendChild(opt);
-    });
+      if (!required) {
+        const opt = document.createElement('option');
+        opt.value = "";
+        opt.textContent = "";
+        opt.selected = "" === value;
+        input.appendChild(opt);
+      }
+
+      fieldSchema.enum.forEach((option) => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        opt.selected = option === value;
+        input.appendChild(opt);
+      });
+    }
 
     container.appendChild(input);
   },
@@ -371,12 +385,11 @@ const formFieldsJS = {
     arrayContainer.dataset.key = fullKey;
 
     const renderArrayItems = () => {
-      // Alte Cards entfernen
       const oldCards = arrayContainer.querySelectorAll('.object-card, .object-card-odd');
       oldCards.forEach(el => el.remove());
 
-      // Für jedes Objekt im Array
       value.forEach((item, index) => {
+        logdata(`item: ${JSON.stringify(item)}`, 'debug');
         const card = document.createElement('div');
         card.dataset.index = index;
 

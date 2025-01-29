@@ -9,6 +9,10 @@ let currentDataFolder = null;
 let reloadMenu = false;
 let availableFAIcons = [];
 
+let mainSchema;
+let subtypeDeviceSelected = '';
+let subtypeControlSelected = '';
+
 function logdata(message, type = 'info') {
   type = type.toUpperCase();
   ipcRenderer.send('log-message', `*${type}* ${message}`);
@@ -74,10 +78,49 @@ const editorJS = {
       });
   },
 
+  resolveFieldSchema(schema, fieldSchema) {
+    if (fieldSchema && fieldSchema.$ref) {
+      const refPath = fieldSchema.$ref;
+      const definitionName = refPath.replace(/^#\/definitions\//, '');
+
+      const refObj = schema.definitions?.[definitionName];
+      if (!refObj) {
+        console.warn(`Konnte $ref '${refPath}' nicht auflösen; definiert?`);
+        return fieldSchema;
+      }
+
+      return { ...refObj };
+    }
+
+    return fieldSchema;
+  },
+
   generateFormField(type = '', subtype = '', key, fieldSchema, value = '', required = false, parentKey = '', deep = 0) {
 
-    const container = this.createFormFieldContainer(fieldSchema, key, required);
     const fullKey = parentKey ? `${parentKey}.${key}` : key;
+
+    if(type === 'overview' && deep === 3 && key === 'type') subtypeControlSelected = value;
+    else if(subtypeControlSelected && type === 'overview' && deep < 3) subtypeControlSelected = '';
+    if(type === 'overview' && deep === 2 && key === 'type') subtypeDeviceSelected = value;
+    else if(subtypeDeviceSelected && type === 'overview' && deep < 2) subtypeDeviceSelected = '';
+    if(subtypeDeviceSelected){
+      subtype = subtypeDeviceSelected;
+      if(subtypeControlSelected){
+        if (fieldSchema.$comment && !fieldSchema.$comment.includes('/') && !fieldSchema.$comment.includes(subtypeControlSelected)) {
+          logdata(key + " rejected by subtypeControlSelected - deep " + deep);
+          return;
+        }
+      } else {
+        if (fieldSchema.$comment && !fieldSchema.$comment.includes('/') && !fieldSchema.$comment.includes(subtype)) {
+          logdata(key + " rejected by subtype - deep " + deep);
+          return;
+        }
+      }
+    }
+
+    const container = this.createFormFieldContainer(fieldSchema, key, required);
+
+    logdata(`Generiere Feld: ${fullKey} (${type}, ${subtype})`);
 
     if (key === 'authorization' || key === 'authorization_read') {
       formFieldsJS.createAuthorizationField(fullKey, value, container, required);
@@ -92,7 +135,6 @@ const editorJS = {
       formFieldsJS.createIconSelectField(value, fullKey, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^#([A-Fa-f0-9]{6})$') {
-
       formFieldsJS.createColorPickerField(fullKey, value, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'string' && fieldSchema.pattern === '^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$') {
@@ -111,12 +153,25 @@ const editorJS = {
       formFieldsJS.createNumberField(value, fullKey, fieldSchema, container, required);
     }
     else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object') {
+      if(!value){
+        value = [];
+      }
       formFieldsJS.createObjectCard(deep, fullKey, value, fieldSchema, type, subtype, container, required);
     }
     else if (fieldSchema.type === 'array') {
       formFieldsJS.createArrayField(value, fullKey, fieldSchema, container, required);
     }
+    else if (fieldSchema.$ref) {
+      const resolved = this.resolveFieldSchema(mainSchema, fieldSchema);
+      if (!resolved) {
+        logdata(`Konnte $ref nicht auflösen für: ${fieldSchema.$ref}`, 'error');
+        return null;
+      }
+
+      return this.generateFormField(type, subtype, key, resolved, value, required, parentKey, deep);
+    }
     else {
+      logdata(JSON.stringify(fieldSchema, null, 2));
       logdata(`Feldtyp "${fieldSchema.type}" wird nicht unterstützt.`);
       return null;
     }
@@ -352,6 +407,11 @@ ipcRenderer.on('open-section', (section) => {
 ipcRenderer.on('edit-sidebar', ({ path, content, schema }) => {
   logdata(`Lade Seitenfenster-Konfiguration von: ${path}`);
   sidebarJS.showSidebarForm(content, schema, path.split('/').pop());
+});
+
+ipcRenderer.on('edit-overview', ({ path, content, schema }) => {
+  logdata(`Lade Übersichtsfenster-Konfiguration von: ${path}`);
+  overviewJS.showOverviewForm(content, schema, path.split('/').pop());
 });
 
 editorJS.loadFAIcons().then(() => editorJS.showStartPage());

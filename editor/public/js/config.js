@@ -3,6 +3,9 @@ const configJS = {
   createFormFromSchema(schema, jsonData = {}) {
     editorJS.showEditor(); // Wechsle zur Editor-Ansicht
     editorForm.innerHTML = ''; // Bestehendes Formular löschen
+    mainSchema = schema;
+    subtypeDeviceSelected = '';
+    subtypeControlSelected = '';
 
     editorForm.appendChild(editorJS.createHeader(`Bearbeite: ${this.currentFile || 'Neue Konfiguration'}`));
 

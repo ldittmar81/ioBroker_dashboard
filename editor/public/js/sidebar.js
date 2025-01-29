@@ -2,6 +2,9 @@ const sidebarJS = {
   showSidebarForm(content = {}, schema, file = 'sidebar.json') {
     editorJS.showEditor();
     editorForm.innerHTML = '';
+    mainSchema = schema;
+    subtypeDeviceSelected = '';
+    subtypeControlSelected = '';
 
     editorForm.appendChild(editorJS.createHeader('Sidebar-Konfiguration'));
 
@@ -34,7 +37,6 @@ const sidebarJS = {
       const isRequired = fieldSchema.required?.includes(key);
 
       if (subKey === 'imageSet') {
-        logdata(subValue, 'info');
         // Container im gleichen Stil wie bei den anderen Feldern
         const container = editorJS.createFormFieldContainer(fieldSchema.properties[subKey], `${key}.${subKey}`, isRequired);
 

@@ -18,6 +18,10 @@ const usersJS = {
           return;
         }
 
+        mainSchema = fieldSchema;
+        subtypeDeviceSelected = '';
+        subtypeControlSelected = '';
+
         const fields = fieldSchema.items.properties;
         const requiredFields = fieldSchema.items.required || [];
 

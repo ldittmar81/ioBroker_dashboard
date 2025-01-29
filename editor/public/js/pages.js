@@ -3,6 +3,9 @@ const pagesJS = {
     // Editorbereich anzeigen
     editorJS.showEditor();
     editorForm.innerHTML = ''; // altes Formular leeren
+    mainSchema = schema;
+    subtypeDeviceSelected = '';
+    subtypeControlSelected = '';
 
     // Überschrift hinzufügen
     const headerText = content.name
@@ -16,6 +19,8 @@ const pagesJS = {
       const fieldSchema = schema.properties[key];
       const value = (content[key] !== undefined) ? content[key] : fieldSchema.default;
       const isRequired = schema.required?.includes(key);
+
+      if(key === 'type') subtype = value;
 
       const field = editorJS.generateFormField('main', subtype, key, fieldSchema, value, isRequired);
       if (field) editorForm.appendChild(field);

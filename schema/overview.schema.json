@@ -11,11 +11,13 @@
     "type": {
       "type": "string",
       "description": "Der Typ der Seite (sollte 'overview' sein)",
-      "const": "overview"
+      "const": "overview",
+      "readOnly": true
     },
     "icon": {
       "type": "string",
-      "description": "Icon-Klasse für die Darstellung"
+      "description": "Icon-Klasse für die Darstellung",
+      "pattern": "^fa[a-zA-Z-]*$"
     },
     "content": {
       "type": "array",
@@ -73,7 +75,8 @@
                     "temperature",
                     "ioBroker_ical",
                     "iframe"
-                  ]
+                  ],
+                  "readOnly": true
                 },
                 "iconset": {
                   "type": "string",
@@ -186,12 +189,15 @@
                   "$ref": "#/definitions/controls"
                 },
                 "channels": {
+                  "$comment": "media",
                   "$ref": "#/definitions/channels"
                 },
                 "channellists": {
+                  "$comment": "media",
                   "$ref": "#/definitions/channellists"
                 },
                 "mediainfo": {
+                  "$comment": "media",
                   "$ref": "#/definitions/mediainfo"
                 },
                 "hardware": {
@@ -474,32 +480,6 @@
             "type": "string",
             "description": "Name der Funktion"
           },
-          "id": {
-            "type": "string",
-            "description": "ioBroker ID der Steuerfunktion",
-            "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
-          },
-          "step": {
-            "type": "integer",
-            "description": "Schrittweite (für type number)"
-          },
-          "min": {
-            "type": "integer",
-            "description": "Mindestwert (für type number und colorList)"
-          },
-          "max": {
-            "type": "integer",
-            "description": "Maximalwert (für type number und colorList)"
-          },
-          "unit": {
-            "type": "string",
-            "description": "Einheit der Funktion"
-          },
-          "allowed": {
-            "type": "string",
-            "description": "Bedingung, die die Nutzung der Funktion erlaubt",
-            "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
-          },
           "type": {
             "type": "string",
             "description": "Datentyp der Funktion (Standard: button)",
@@ -511,35 +491,73 @@
               "color",
               "colorList",
               "list"
-            ]
+            ],
+            "default": "button",
+            "readOnly": true
+          },
+          "id": {
+            "type": "string",
+            "description": "ioBroker ID der Steuerfunktion",
+            "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
+          },
+          "step": {
+            "type": "integer",
+            "description": "Schrittweite (für type number)",
+            "$comment": "number"
+          },
+          "min": {
+            "type": "integer",
+            "description": "Mindestwert (für type number und colorList)",
+            "$comment": "number,colorList"
+          },
+          "max": {
+            "type": "integer",
+            "description": "Maximalwert (für type number und colorList)",
+            "$comment": "number,colorList"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Einheit der Funktion"
+          },
+          "allowed": {
+            "type": "string",
+            "description": "Bedingung, die die Nutzung der Funktion erlaubt",
+            "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
           },
           "values": {
             "type": "array",
-            "description": "Liste der möglichen Werte (nur für type list)"
+            "description": "Liste der möglichen Werte (nur für type list)",
+            "$comment": "list"
           },
           "json": {
             "type": "boolean",
-            "description": "Liste als JSON zurückgeben (nur für colorList)"
+            "description": "Liste als JSON zurückgeben (nur für colorList)",
+            "$comment": "colorList"
           },
           "separator": {
             "type": "string",
-            "description": "Wie eine Liste zurückgegeben werden soll (nur für colorList)"
+            "description": "Wie eine Liste zurückgegeben werden soll (nur für colorList)",
+            "$comment": "colorList"
           },
           "sendValue": {
             "type": "string",
-            "description": "Wert der zurückgegeben werden soll (nur für button und boolean)"
+            "description": "Wert der zurückgegeben werden soll (nur für button und boolean)",
+            "$comment": "button,boolean"
           },
           "sendValueOff": {
             "type": "string",
-            "description": "Wert der zurückgegeben werden soll (nur für boolean)"
+            "description": "Wert der zurückgegeben werden soll (nur für boolean)",
+            "$comment": "boolean"
           },
           "labelOn": {
             "type": "string",
-            "description": "Label für eingeschalteten Zustand (nur für boolean)"
+            "description": "Label für eingeschalteten Zustand (nur für boolean)",
+            "$comment": "boolean"
           },
           "labelOff": {
             "type": "string",
-            "description": "Label für ausgeschalteten Zustand (nur für boolean)"
+            "description": "Label für ausgeschalteten Zustand (nur für boolean)",
+            "$comment": "boolean"
           }
         },
         "required": [
