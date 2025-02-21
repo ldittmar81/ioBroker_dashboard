@@ -17,6 +17,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
       'edit-sidebar',
       'edit-overview',
       'edit-page',
+      'edit-devices'
     ];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => func(...args));

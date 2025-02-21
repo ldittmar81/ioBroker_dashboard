@@ -414,5 +414,10 @@ ipcRenderer.on('edit-overview', ({ path, content, schema }) => {
   overviewJS.showOverviewForm(content, schema, path.split('/').pop());
 });
 
+ipcRenderer.on('edit-devices', ({ path, content, schema }) => {
+  logdata(`Lade Geräte-Konfiguration von: ${path}`);
+  deviceJS.showDeviceForm(content, schema, path);
+});
+
 editorJS.loadFAIcons().then(() => editorJS.showStartPage());
 

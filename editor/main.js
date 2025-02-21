@@ -234,6 +234,7 @@ function createMenu() {
                     label: tile.name || '(unbenannt)',
                     click: () => {
                       console.log(`Tile "${tile.name}" geklickt!`);
+                      openDeviceConfig(tile.type, tile.json);
                     },
                   });
                 });
@@ -295,6 +296,7 @@ function createMenu() {
                       label: tile.name || '(unbenannt)',
                       click: () => {
                         console.log(`Tile "${tile.name}" in "${catName}" geklickt.`);
+                        openDeviceConfig(tile.type, tile.json);
                       }
                     });
                   });
@@ -548,6 +550,37 @@ function openOverviewConfig(user = '') {
   mainWindow.webContents.send('edit-overview', { path: overviewPath, content: overviewContent, schema });
 }
 
+function openDeviceConfig(type, file) {
+
+  const devicePath = path.join(__dirname, '..', currentFolder, 'devices', type,`${file}.json`);
+
+  const schemaPath = path.join(__dirname, '..', 'schema', 'devices.schema.json');
+
+  // Lade das Schema
+  const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+
+  if (!fs.existsSync(devicePath)) {
+    console.log(devicePath + ' nicht gefunden. Erstelle eine neue Datei...');
+    // Erstelle eine leere Standarddatei basierend auf dem Schema
+    const defaultDeviceConfig = [
+      {
+        "category": "Beispiel-Kategorie",
+        "collapsed": false,
+        "devices": []
+      }
+    ];
+
+    fs.writeFileSync(devicePath, JSON.stringify(defaultDeviceConfig, null, 2), 'utf8');
+    console.log(devicePath + ' erfolgreich erstellt.');
+  }
+
+  // Lade die bestehende oder erstellte Datei
+  const devicesContent = JSON.parse(fs.readFileSync(devicePath, 'utf8'));
+  console.log(devicePath + ' geladen:');
+
+  // Sende die Datei an den Renderer-Prozess
+  mainWindow.webContents.send('edit-devices', { path: devicePath, content: devicesContent, schema });
+}
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

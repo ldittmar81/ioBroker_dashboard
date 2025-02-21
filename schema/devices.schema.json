@@ -58,25 +58,43 @@
                 "iframe"
               ]
             },
-            "iconset": {
-              "type": "string",
-              "description": "Andere Icons auswählen",
-              "$comment": "light"
+            "authorization": {
+              "type": "array",
+              "description": "Liste der autorisierten Benutzer auf Geräteebene",
+              "items": {
+                "type": "string",
+                "description": "Benutzername aus users.json"
+              },
+              "minItems": 1
             },
-            "value": {
-              "type": "string",
-              "description": "Der Wert oder Pfad des Geräts",
-              "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
+            "authorization_read": {
+              "type": "array",
+              "description": "Liste der Benutzer mit Leserechten auf Geräteebene",
+              "items": {
+                "type": "string",
+                "description": "Benutzername aus users.json"
+              },
+              "minItems": 1
             },
             "hidden": {
               "type": "string",
               "description": "ioBroker ID zum Ausblenden des Gerätes",
               "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
             },
+            "value": {
+              "type": "string",
+              "description": "Der Wert oder Pfad des Geräts",
+              "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
+            },
             "state": {
               "type": "string",
               "description": "Zustand des Geräts",
               "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$"
+            },
+            "iconset": {
+              "type": "string",
+              "description": "Andere Icons auswählen",
+              "$comment": "light"
             },
             "dimmer": {
               "type": "string",
@@ -149,24 +167,6 @@
               "description": "Befehleingabe für Gerät",
               "pattern": "^[a-zA-Z0-9_-äöüÄÖÜß]+\\.\\d+\\.[a-zA-Z0-9._-äöüÄÖÜß]+$",
               "$comment": "media"
-            },
-            "authorization": {
-              "type": "array",
-              "description": "Liste der autorisierten Benutzer auf Geräteebene",
-              "items": {
-                "type": "string",
-                "description": "Benutzername aus users.json"
-              },
-              "minItems": 1
-            },
-            "authorization_read": {
-              "type": "array",
-              "description": "Liste der Benutzer mit Leserechten auf Geräteebene",
-              "items": {
-                "type": "string",
-                "description": "Benutzername aus users.json"
-              },
-              "minItems": 1
             },
             "controls": {
               "$ref": "#/definitions/controls"
