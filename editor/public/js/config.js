@@ -127,94 +127,84 @@ const configJS = {
     idCountDisplay.style.marginLeft = '10px';
 
     // Funktion zum Aktualisieren des Buttons und der ID-Anzeige
-    const updateButtonAndDisplay = () => {
-      ipcRenderer.invoke('check-file-existence', filePath).then((exists) => {
-        if (exists) {
-          // Datei existiert: Anzahl der IDs laden
-          ipcRenderer.invoke('read-file', filePath).then((data) => {
-            const parsedData = JSON.parse(data);
-            const idCount = parsedData.length;
-            button.textContent = 'ioBroker IDs Liste erneuern';
-            idCountDisplay.textContent = `(${idCount} IDs)`;
-            button.disabled = false;
-          }).catch((error) => {
-            logdata('Fehler beim Lesen der ID-Datei: ' + error, 'error');
-            button.textContent = 'ioBroker IDs Liste erneuern';
-            idCountDisplay.textContent = '(Fehler beim Laden der IDs)';
-            button.disabled = true;
-          });
-        } else {
+    const updateButtonAndDisplay = async () => {
+      try {
+        const exists = await ipcRenderer.invoke('check-file-existence', filePath);
+        if (!exists) {
           // Datei existiert nicht
           button.textContent = 'ioBroker IDs Liste erzeugen';
           idCountDisplay.textContent = '(0 IDs)';
           button.disabled = false;
+          return;
         }
-      });
+        // Datei existiert -> Inhalt lesen
+        const data = await ipcRenderer.invoke('read-file', filePath);
+        const parsedData = JSON.parse(data);
+        const idCount = parsedData.length;
+
+        button.textContent = 'ioBroker IDs Liste erneuern';
+        idCountDisplay.textContent = `(${idCount} IDs)`;
+        button.disabled = false;
+      }
+      catch (error) {
+        logdata('Fehler beim Lesen der ID-Datei: ' + error, 'error');
+        button.textContent = 'ioBroker IDs Liste erneuern';
+        idCountDisplay.textContent = '(Fehler beim Laden der IDs)';
+        button.disabled = true;
+      }
     };
 
     // Funktion zum Initialisieren der ioBroker-Verbindung
-    const initializeConnection = (callback) => {
-      const connLink = document.querySelector('#connLink')?.value || '';
-      const socketSession = document.querySelector('#socketSession')?.value || '';
+    const initializeConnection = async () => {
+      const host = document.querySelector('#host')?.value || '192.168.0.50';
+      const port = document.querySelector('#port')?.value || '8081';
 
-      if (!connLink) {
+      if (!host || !port || !host.trim() || !port.trim() || isNaN(port) || port < 1 || port > 65535) {
         logdata('Keine Verbindungsdaten gefunden.', 'error');
         modalJS.showModal('Fehlende Verbindungsdaten für ioBroker.');
-        return;
+        return null; // Abbruch
       }
 
-      servConn.namespace = 'dashboard-connection';
-      servConn._useStorage = false;
+      const adminConnection = new window.AdminConnection({
+        protocol: 'ws',
+        host: host,
+        port: port,
+        admin5only: false,
+        autoSubscribes: []
+      });
 
-      servConn.init(
-        {
-          connLink,
-          name: 'dashboard-connection',
-          socketSession: socketSession || ''
-        },
-        {
-          onConnChange: (isConnected) => {
-            if (isConnected) {
-              logdata('Mit ioBroker verbunden.');
-              callback();
-            } else {
-              logdata('Verbindung zu ioBroker verloren.', 'warn');
-            }
-          },
-          onUpdate: () => {}, // Nicht relevant für diese Aktion
-          onError: (error) => {
-            logdata('Verbindungsfehler: ' + error, 'error');
-          }
-        },
-        true,
-        true
-      );
+      await adminConnection.startSocket();
+      await adminConnection.waitForFirstConnection();
+
+      return adminConnection;
     };
 
     // Event-Listener für den Button
-    button.addEventListener('click', () => {
-      initializeConnection(() => {
-        servConn.getStates((err, states) => {
-          if (err) {
-            logdata('Fehler beim Abrufen der States: ' + err, 'error');
-            return;
-          }
+    button.addEventListener('click', async () => {
+      const adminConnection = await initializeConnection();
+      if (!adminConnection){
+        logdata('Fehler beim Initialisieren der Verbindung.', 'error');
+        return; // Falls die Verbindung fehlgeschlagen ist
+      }
 
-          const ids = Object.keys(states);
-          const jsonContent = JSON.stringify(ids, null, 2);
+      try {
+        const states = await adminConnection.getStates('*');
+        logdata(`getStates abgeschlossen: ${Object.keys(states).length} States`, 'info');
 
-          ipcRenderer.invoke('write-file', { filePath, content: jsonContent })
-            .then(() => {
-              modalJS.showModal('ioBroker IDs erfolgreich gespeichert.');
-              editorJS.resetIoBrokerIDCache(); // Cache zurücksetzen
-              updateButtonAndDisplay();
-            })
-            .catch((error) => {
-              logdata('Fehler beim Speichern der ID-Datei: ' + error, 'error');
-            });
-        });
-      });
+        const ids = Object.keys(states);
+        const jsonContent = JSON.stringify(ids, null, 2);
+
+        await ipcRenderer.invoke('write-file', { filePath, content: jsonContent });
+        modalJS.showModal('ioBroker IDs erfolgreich gespeichert.');
+        editorJS.resetIoBrokerIDCache();
+
+        await updateButtonAndDisplay();
+      }
+      catch (error) {
+        logdata('Fehler beim Speichern / Abrufen: ' + error, 'error');
+      }
     });
+
 
     // Initiale Anzeige aktualisieren
     updateButtonAndDisplay();
